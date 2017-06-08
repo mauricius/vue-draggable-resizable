@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Vue-Draggable-Resizable | Vue2 Component for resizable and draggable elements</title>
+    <meta name="author" value="Maurizio Bonani">
+    <meta name="description" content="Vue2 Component for resizable and draggable elements.">
+    <meta property="og:title" content="Vue-Draggable-Resizable | Vue2 Component for resizable and draggable elements">
+    <meta property="og:site_name" content="Vue-Draggable-Resizable | Vue2 Component for resizable and draggable elements">
+    <meta property="og:description" content="Vue2 Component for resizable and draggable elements.">
+    <meta property="twitter:title" content="Vue-Draggable-Resizable | Vue2 Component for resizable and draggable elements">
+    <meta property="twitter:description" content="Vue2 Component for resizable and draggable elements.">
+    <link rel="stylesheet" href="resources/app.css">
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>VueDraggableResizable</h1>
+        <img src="resources/logo.png" alt="logo">
+        <p>Vue2 Component for resizable and draggable elements, without external dependencies.</p>
+      </header>
+
+      <section class="section-description">
+        <h2 class="section-title">Basic component</h2>
+        <p>The most basic component, without any props, free to move even outside the parent element.</p>
+        <pre>&lt;vue-draggable-resizable&gt;
+  &lt;p&gt;You can drag me around and resize me as you wish.&lt;/p&gt;
+&lt;/vue-draggable-resizable&gt;</pre>
+      </section>
+
+      <div id="app1">
+        <div style="height: 300px; border: 1px solid blue; margin: 1em;">
+          <vue-draggable-resizable style="border: 1px solid black;">
+            <p>You can drag me around and resize me as you wish.</p>
+          </vue-draggable-resizable>
+        </div>
+      </div>
+
+      <section class="section-description">
+        <h2 class="section-title">Component costraind in parent</h2>
+        <p>Component that cannot be dragged or resized outside its parent element, defined with the prop <code>:parent="true"</code></p>
+        <pre>&lt;vue-draggable-resizable :parent="true"&gt;
+  &lt;p&gt;You cannot move or resize me outside my parent.&lt;/p&gt;
+&lt;/vue-draggable-resizable&gt;</pre>
+        <p><b>Bonus:</b> a component constrained in parent, can automatically fill the space just by double-clicking on it.</p>
+      </section>
+
+      <div id="app2">
+        <div style="height: 300px; border: 1px solid blue; margin: 1em;">
+          <vue-draggable-resizable :parent="true" style="border: 1px solid black;">
+            <p>You cannot move me or resize me outside my parent.</p>
+          </vue-draggable-resizable>
+        </div>
+      </div>
+
+      <section class="section-description">
+        <h2 class="section-title">Component costrained on x axis</h2>
+        <p>Component that can be dragged and resized only on x axis. Drag constrain is defined using <code>axis="x"</code> prop, while resizing costrain can be achieved by defining only left and right handles <code>:handles="['ml','mr']"</code>.</p>
+        <pre>&lt;vue-draggable-resizable :parent="true" axis="x" :handles="['ml','mr']"&gt;
+  &lt;p&gt;You can move me or resize me only horizontally.&lt;/p&gt;
+&lt;/vue-draggable-resizable&gt;</pre>
+      </section>
+
+      <div id="app3">
+        <div style="height: 300px; border: 1px solid blue; margin: 1em;">
+          <vue-draggable-resizable :parent="true" axis="x" :handles="['ml','mr']" style="border: 1px solid black;">
+            <p>You can move me or resize me only horizontally.</p>
+          </vue-draggable-resizable>
+        </div>
+      </div>
+
+      <section class="section-description">
+        <h2 class="section-title">Component snap to grid</h2>
+        <p>Component that can be snapped to a grid. Just set the dimensions of grid cells (height and width in pixels) with the grid prop <code>:grid="[25,25]"</code></p>
+        <pre>&lt;vue-draggable-resizable :parent="true" :grid="[25,25]"&gt;
+  &lt;p&gt;You can snap me on a grid.&lt;/p&gt;
+&lt;/vue-draggable-resizable&gt;</pre>
+      </section>
+
+      <div id="app4">
+        <div style="height: 300px; border: 1px solid blue; margin: 1em;">
+          <vue-draggable-resizable :parent="true" :grid="[25,25]" style="border: 1px solid black;">
+            <p>You can snap me on a grid.</p>
+          </vue-draggable-resizable>
+        </div>
+      </div>
+
+      <section class="section-description">
+        <h2 class="section-title">Event handling</h2>
+        <p>More complex example with event handling.</p>
+        <pre>&lt;vue-draggable-resizable :parent="true" @activated="onActivate" @deactivated="onDeactivate" @resizing="onResize" @dragging="onDrag"&gt;
+  &lt;p&gt;I can render my position and my dimensions.&lt;/p&gt;
+&lt;/vue-draggable-resizable&gt;</pre>
+      </section>
+
+      <div id="app5">
+        <div style="height: 300px; border: 1px solid blue; margin: 1em;">
+          <vue-draggable-resizable :parent="true" style="border: 1px solid black;" @activated="onActivate" @deactivated="onDeactivate" @resizing="onResize" @dragging="onDrag">
+            <p>I can render my position and my dimensions.</p>
+            <span v-if="show_label" style="position: absolute; bottom: 0; color: white; background-color: black; padding: 3px; opacity: 0.7">
+              <b>X:</b> {{ x }}px / <b>Y:</b> {{ y }}px | <b>Width:</b> {{ width }}px / <b>Height:</b> {{ height }}px
+            </span>
+          </vue-draggable-resizable>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Created by Maurizio Bonani | Source code released under the <a href="https://github.com/mauricius/vue-draggable-resizable/blob/master/LICENSE">MIT</a> license on <a href="https://github.com/mauricius/vue-draggable-resizable">Github</a>
+    </footer>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="resources/app.min.js"></script>
+  </body>
+</html>
