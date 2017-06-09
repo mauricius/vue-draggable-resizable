@@ -14,6 +14,10 @@
 * Snap element to custom grid
 * Restrict drag to vertical or horizontal axis
 
+### Demo
+
+[Demo](https://mauricius.github.io/vue-draggable-resizable/)
+
 ---
 
 ## Install & basic usage
