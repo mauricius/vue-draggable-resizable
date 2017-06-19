@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown.stop.prevent="elmDown" @dblclick="maximize" :style="style">
+  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown="elmDown" @dblclick="maximize" :style="style">
     <div
       class="handle"
       v-if="resizable"
@@ -177,8 +177,6 @@ export default {
       }
     },
     deselect: function (e) {
-      if (e.preventDefault) e.preventDefault()
-
       let target = e.target || e.srcElement
       let regex = new RegExp('handle-([trmbl]{2})', '')
 
@@ -236,7 +234,6 @@ export default {
       window.requestAnimationFrame(animate)
     },
     handleMove: function (e) {
-      if (e.stopPropagation) e.stopPropagation()
       if (e.preventDefault) e.preventDefault()
 
       this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
