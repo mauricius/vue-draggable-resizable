@@ -306,8 +306,14 @@ export default {
     },
     handleUp: function (e) {
       this.handle = null
-      this.resizing = false
-      this.dragging = false
+      if (this.resizing) {
+        this.resizing = false
+        this.$emit('resizestop', this.left, this.top, this.width, this.height)
+      }
+      if (this.dragging) {
+        this.dragging = false
+        this.$emit('dragstop', this.left, this.top)
+      }
       this.opacity = 1
 
       this.elmX = this.left
