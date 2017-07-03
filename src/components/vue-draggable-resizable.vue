@@ -308,11 +308,11 @@ export default {
       this.handle = null
       if (this.resizing) {
         this.resizing = false
-        this.$emit('resizeStop', this.left, this.top, this.width, this.height)
+        this.$emit('resizestop', this.left, this.top, this.width, this.height)
       }
       if (this.dragging) {
         this.dragging = false
-        this.$emit('dragStop', this.left, this.top)
+        this.$emit('dragstop', this.left, this.top)
       }
       this.opacity = 1
 

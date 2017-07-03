@@ -308,6 +308,45 @@ describe('VueDraggableResizable.vue', function () {
         })
       })
     })
+
+    it('should emit "resizestop" event while resiz end the element', function (done) {
+      const resizing = sinon.spy()
+      const resizestop = sinon.spy()
+
+      const vm = mount(VueDraggableResizable, {
+        w: 100,
+        h: 100
+      }, {
+        resizing,
+        resizestop
+      })
+
+      simulate(vm.$el, 'mousedown')
+
+      nextTick().then(function () {
+        const rect = vm.$el.querySelector('div.handle-br').getBoundingClientRect()
+        const fromX = rect.left
+        const fromY = rect.top
+
+        vm.lastMouseX = fromX
+        vm.lastMouseY = fromY
+
+        Syn.drag(vm.$el.querySelector('div.handle-br'), {
+          from: {pageX: fromX, pageY: fromY},
+          to: {pageX: fromX + 10, pageY: fromY + 10}
+        }, function () {
+          nextTick().then(function () {
+            sinon.assert.calledWith(resizing, 0, 0, 110, 110)
+
+            simulate(vm.$el, 'mouseup')
+            nextTick().then(function () {
+              sinon.assert.calledWith(resizestop, 0, 0, 110, 110)
+            })
+            done()
+          })
+        })
+      })
+    })
   })
 
   /*******************
@@ -395,6 +434,41 @@ describe('VueDraggableResizable.vue', function () {
         }, function () {
           nextTick().then(function () {
             sinon.assert.calledWith(dragging, 10, 10)
+            done()
+          })
+        })
+      })
+    })
+
+    it('should emit "dragstop" event while drag end the element', function (done) {
+      const dragging = sinon.spy()
+      const dragstop = sinon.spy()
+
+      const vm = mount(VueDraggableResizable, {
+        w: 100,
+        h: 100
+      }, {
+        dragging,
+        dragstop
+      })
+
+      simulate(vm.$el, 'mousedown')
+
+      nextTick().then(function () {
+        vm.lastMouseX = 50
+        vm.lastMouseY = 50
+
+        Syn.drag(vm.$el, {
+          from: {pageX: 50, pageY: 50},
+          to: {pageX: 60, pageY: 60}
+        }, function () {
+          nextTick().then(function () {
+            sinon.assert.calledWith(dragging, 10, 10)
+
+            simulate(vm.$el, 'mouseup')
+            nextTick().then(function () {
+              sinon.assert.calledWith(dragstop, 10, 10)
+            })
             done()
           })
         })
