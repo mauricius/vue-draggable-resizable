@@ -309,15 +309,13 @@ describe('VueDraggableResizable.vue', function () {
       })
     })
 
-    it('should emit "resizestop" event while resiz end the element', function (done) {
-      const resizing = sinon.spy()
+    it('should emit "resizestop" event while stopping resizing the element', function (done) {
       const resizestop = sinon.spy()
 
       const vm = mount(VueDraggableResizable, {
         w: 100,
         h: 100
       }, {
-        resizing,
         resizestop
       })
 
@@ -336,13 +334,11 @@ describe('VueDraggableResizable.vue', function () {
           to: {pageX: fromX + 10, pageY: fromY + 10}
         }, function () {
           nextTick().then(function () {
-            sinon.assert.calledWith(resizing, 0, 0, 110, 110)
-
             simulate(vm.$el, 'mouseup')
             nextTick().then(function () {
               sinon.assert.calledWith(resizestop, 0, 0, 110, 110)
+              done()
             })
-            done()
           })
         })
       })
@@ -440,15 +436,13 @@ describe('VueDraggableResizable.vue', function () {
       })
     })
 
-    it('should emit "dragstop" event while drag end the element', function (done) {
-      const dragging = sinon.spy()
+    it('should emit "dragstop" event while stopping dragging the element', function (done) {
       const dragstop = sinon.spy()
 
       const vm = mount(VueDraggableResizable, {
         w: 100,
         h: 100
       }, {
-        dragging,
         dragstop
       })
 
@@ -463,13 +457,11 @@ describe('VueDraggableResizable.vue', function () {
           to: {pageX: 60, pageY: 60}
         }, function () {
           nextTick().then(function () {
-            sinon.assert.calledWith(dragging, 10, 10)
-
             simulate(vm.$el, 'mouseup')
             nextTick().then(function () {
               sinon.assert.calledWith(dragstop, 10, 10)
+              done()
             })
-            done()
           })
         })
       })

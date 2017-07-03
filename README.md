@@ -268,7 +268,7 @@ Parameters:
 * `width` the width of the element
 * `height` the height of the element
 
-Called whenever the component end resized.
+Called whenever the component stops getting resized.
 
 ```html
 <vue-draggable-resizable @resizestop="onResizstop">
@@ -294,7 +294,7 @@ Parameters:
 * `left` the X position of the element
 * `top` the Y position of the element
 
-Called whenever the component end dragged.
+Called whenever the component stops getting dragged.
 
 ```html
 <vue-draggable-resizable @dragstop="onDragstop">
