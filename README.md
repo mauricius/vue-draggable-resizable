@@ -5,6 +5,17 @@
 
 > Vue2 Component for draggable and resizable elements.
 
+## Table of Contents
+
+* [Features](#features)
+* [Demo](#demo)
+* [Install and basic usage](#install-and-basic-usage)
+  * [Props](#props)
+  * [Events](#events)
+* [Gotchas](#gotchas)
+* [Contributing](#contributing)
+* [License](#license)
+
 ### Features
 
 * No dependencies
@@ -20,7 +31,7 @@
 
 ---
 
-## Install & basic usage
+## Install and basic usage
 
 ```bash
 $ npm install --save vue-draggable-resizable
