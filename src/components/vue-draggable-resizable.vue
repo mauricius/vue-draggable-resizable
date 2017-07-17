@@ -86,6 +86,9 @@ export default {
     },
     parent: {
       type: Boolean, default: false
+    },
+    maximize: {
+      type: Boolean, default: true
     }
   },
   created: function () {
@@ -195,7 +198,7 @@ export default {
       this.resizing = true
     },
     maximize: function (e) {
-      if (!this.parent || !this.resizable) return
+      if (!this.parent || !this.resizable || !this.maximize) return
 
       let done = false
 

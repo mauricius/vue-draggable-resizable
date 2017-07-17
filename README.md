@@ -229,6 +229,17 @@ Restricts the movement and the dimensions of the element to the parent.
 <vue-draggable-resizable :parent="true">
 ```
 
+#### maximize
+Type: `Boolean`<br>
+Required: `false`<br>
+Default: `true`
+
+If set to `false` prevents the component to fill its parent when double-clicked.
+
+```html
+<vue-draggable-resizable :maximize="false">
+```
+
 ---
 
 ### Events
@@ -317,7 +328,7 @@ Be careful to use appropriate values for `x`, `y`, `w`, `h`, `minh` and `minh` p
 
 ### Bonus
 
-If `resizing` and `parent` props are both `true` you can double-click on the element to make it fill the parent.
+If `resizing`, `parent` and `maximize` props are `true` you can double-click on the element to make it fill the parent.
 
 ## Contributing
 
