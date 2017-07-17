@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown="elmDown" @dblclick="maximize" :style="style">
+  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown="elmDown" @dblclick="fillParent" :style="style">
     <div
       class="handle"
       v-if="resizable"
@@ -197,7 +197,7 @@ export default {
 
       this.resizing = true
     },
-    maximize: function (e) {
+    fillParent: function (e) {
       if (!this.parent || !this.resizable || !this.maximize) return
 
       let done = false
