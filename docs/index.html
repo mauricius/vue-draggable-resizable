@@ -104,6 +104,26 @@
           </vue-draggable-resizable>
         </div>
       </div>
+
+      <section class="section-description">
+        <h2 class="section-title">Multiple components</h2>
+        <p>Multiple resizable and draggable components. Notice how the Component 3 automatically fits in its parent, even if its default size exceeds the boudaries.</p>
+        <pre>&lt;template v-for="element in elements"&gt;
+  &lt;vue-draggable-resizable :parent="true" :resizable="true" :x="element.x" :y="element.y" style="border: 1px solid"&gt;
+    &lt;p&gt;{{ element.text }}&lt;/p&gt;
+  &lt;/vue-draggable-resizable&gt;
+&lt;/template&gt;</pre>
+      </section>
+
+      <div id="app6">
+        <div style="height: 300px; border: 1px solid blue; margin: 1em;">
+          <template v-for="element in elements">
+            <vue-draggable-resizable :parent="true" :resizable="true" :x="element.x" :y="element.y" style="border: 1px solid">
+              <p :style="{ color: element.color }">{{ element.text }}</p>
+            </vue-draggable-resizable>
+          </template>
+        </div>
+      </div>
     </div>
 
     <footer>

@@ -46,3 +46,29 @@ new Vue({
     }
   }
 });
+
+new Vue({
+  el: '#app6',
+  data: {
+    elements: [
+      {
+        text: 'Component 1',
+        x: 0,
+        y: 0,
+        color: 'red'
+      },
+      {
+        text: 'Component 2',
+        x: 200,
+        y: 0,
+        color: 'green'
+      },
+      {
+        text: 'Component 3',
+        x: 0,
+        y: 200,
+        color: 'blue'
+      }
+    ]
+  }
+});

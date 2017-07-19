@@ -357,7 +357,7 @@ export default {
 
 <style scoped>
   .vdr {
-    position: relative;
+    position: absolute;
     box-sizing: border-box;
   }
   .draggable:hover {
