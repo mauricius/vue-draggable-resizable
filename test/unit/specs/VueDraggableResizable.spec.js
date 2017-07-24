@@ -134,11 +134,15 @@ describe('VueDraggableResizable.vue', function () {
 
   describe('Clicking events', function () {
     it('should activate the element by clicking on it', function () {
-      const vm = mount(VueDraggableResizable)
+      const activated = sinon.spy()
+
+      const vm = mount(VueDraggableResizable, {}, { activated })
 
       simulate(vm.$el, 'mousedown')
 
       expect(vm.$data.active).to.equal(true)
+
+      sinon.assert.calledWith(activated)
     })
 
     it('should show the handles if the element is active', function (done) {
@@ -153,13 +157,18 @@ describe('VueDraggableResizable.vue', function () {
     })
 
     it('should deactivate the element by clicking outside it', function () {
-      const vm = mount(VueDraggableResizable)
+      const deactivated = sinon.spy()
+
+      const vm = mount(VueDraggableResizable, {}, { deactivated })
 
       simulate(vm.$el, 'mousedown')
       expect(vm.$data.active).to.equal(true)
 
       simulate(document.documentElement, 'mousedown')
       expect(vm.$data.active).to.equal(false)
+
+      sinon.assert.calledWith(deactivated)
+    })
     })
   })
 
@@ -482,6 +491,32 @@ describe('VueDraggableResizable.vue', function () {
         w: 100,
         h: 100,
         parent: false
+      }, {
+        resizing
+      })
+
+      simulate(vm.$el, 'dblclick')
+
+      nextTick().then(function () {
+        sinon.assert.calledOnce(resizing)
+        expect(vm.$el.style.top).to.equal('10px')
+        expect(vm.$el.style.left).to.equal('10px')
+        expect(vm.$el.style.width).to.equal('100px')
+        expect(vm.$el.style.height).to.equal('100px')
+        done()
+      })
+    })
+
+    it('should should not maximize the element if maximize prop is false', function (done) {
+      const resizing = sinon.spy()
+
+      const vm = mount(VueDraggableResizable, {
+        x: 10,
+        y: 10,
+        w: 100,
+        h: 100,
+        parent: true,
+        maximize: true
       }, {
         resizing
       })
