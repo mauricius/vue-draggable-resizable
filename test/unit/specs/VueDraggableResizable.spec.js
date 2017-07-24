@@ -169,6 +169,18 @@ describe('VueDraggableResizable.vue', function () {
 
       sinon.assert.calledWith(deactivated)
     })
+
+    it('should emit "deactivated" event only once', function () {
+      const deactivated = sinon.spy()
+
+      const vm = mount(VueDraggableResizable, {}, { deactivated })
+
+      simulate(vm.$el, 'mousedown')
+
+      simulate(document.documentElement, 'mousedown')
+      simulate(document.documentElement, 'mousedown')
+
+      sinon.assert.calledOnce(deactivated)
     })
   })
 

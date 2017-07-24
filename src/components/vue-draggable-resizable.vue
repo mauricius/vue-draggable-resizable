@@ -184,9 +184,11 @@ export default {
       let regex = new RegExp('handle-([trmbl]{2})', '')
 
       if (target !== this.$el && !regex.test(target.className)) {
-        this.active = false
+        if (this.active) {
+          this.active = false
 
-        this.$emit('deactivated')
+          this.$emit('deactivated')
+        }
       }
     },
     handleDown: function (handle, e) {
