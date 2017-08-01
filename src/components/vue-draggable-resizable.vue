@@ -162,21 +162,25 @@ export default {
   },
   methods: {
     elmDown: function (e) {
-      if (!this.active) {
-        this.zIndex += 1
-        this.active = true
+      const tag = e.target.tagName.toLowerCase()
 
-        this.$emit('activated')
-      }
+      if (tag !== 'textarea' && tag !== 'input') {
+        if (!this.active) {
+          this.zIndex += 1
+          this.active = true
 
-      this.elmX = parseInt(this.$el.style.left)
-      this.elmY = parseInt(this.$el.style.top)
-      this.elmW = this.$el.offsetWidth || this.$el.clientWidth
-      this.elmH = this.$el.offsetHeight || this.$el.clientHeight
+          this.$emit('activated')
+        }
 
-      if (this.draggable) {
-        this.opacity = 0.6
-        this.dragging = true
+        this.elmX = parseInt(this.$el.style.left)
+        this.elmY = parseInt(this.$el.style.top)
+        this.elmW = this.$el.offsetWidth || this.$el.clientWidth
+        this.elmH = this.$el.offsetHeight || this.$el.clientHeight
+
+        if (this.draggable) {
+          this.opacity = 0.6
+          this.dragging = true
+        }
       }
     },
     deselect: function (e) {
@@ -256,8 +260,6 @@ export default {
       window.requestAnimationFrame(animate)
     },
     handleMove: function (e) {
-      if (e.preventDefault) e.preventDefault()
-
       this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
       this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
 
