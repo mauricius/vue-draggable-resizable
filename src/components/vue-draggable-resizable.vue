@@ -122,10 +122,8 @@ export default {
     if (this.minh > this.h) this.height = this.minh
 
     if (this.parent) {
-      const style = window.getComputedStyle(this.$el.parentNode, null)
-
-      const parentW = parseInt(style.getPropertyValue('width'), 10)
-      const parentH = parseInt(style.getPropertyValue('height'), 10)
+      const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
+      const parentH = parseInt(this.$el.parentNode.clientHeight, 10)
 
       this.parentW = parentW
       this.parentH = parentH
