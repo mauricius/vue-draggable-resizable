@@ -519,7 +519,7 @@ describe('VueDraggableResizable.vue', function () {
    *************************/
 
   describe('Double click function', function () {
-    it('should should not maximize the element if parent prop is false', function (done) {
+    it('should not maximize the element if parent prop is false', function (done) {
       const resizing = sinon.spy()
 
       const vm = mount(VueDraggableResizable, {
@@ -527,7 +527,8 @@ describe('VueDraggableResizable.vue', function () {
         y: 10,
         w: 100,
         h: 100,
-        parent: false
+        parent: false,
+        maximize: true
       }, {
         resizing
       })
@@ -544,7 +545,7 @@ describe('VueDraggableResizable.vue', function () {
       })
     })
 
-    it('should should not maximize the element if maximize prop is false', function (done) {
+    it('should not maximize the element if maximize prop is false', function (done) {
       const resizing = sinon.spy()
 
       const vm = mount(VueDraggableResizable, {
@@ -553,7 +554,7 @@ describe('VueDraggableResizable.vue', function () {
         w: 100,
         h: 100,
         parent: true,
-        maximize: true
+        maximize: false
       }, {
         resizing
       })

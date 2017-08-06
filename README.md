@@ -232,12 +232,12 @@ Restricts the movement and the dimensions of the element to the parent.
 #### maximize
 Type: `Boolean`<br>
 Required: `false`<br>
-Default: `true`
+Default: `false`
 
-If set to `false` prevents the component to fill its parent when double-clicked.
+If set to `true` allows the component to fill its parent when double-clicked.
 
 ```html
-<vue-draggable-resizable :maximize="false">
+<vue-draggable-resizable :maximize="true">
 ```
 
 ---
