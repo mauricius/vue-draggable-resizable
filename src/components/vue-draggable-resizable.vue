@@ -160,9 +160,9 @@ export default {
   },
   methods: {
     elmDown: function (e) {
-      const tag = e.target.tagName.toLowerCase()
+      const target = e.target || e.srcElement
 
-      if (tag !== 'textarea' && tag !== 'input') {
+      if (this.$el.contains(target)) {
         if (!this.active) {
           this.zIndex += 1
           this.active = true
@@ -182,10 +182,10 @@ export default {
       }
     },
     deselect: function (e) {
-      let target = e.target || e.srcElement
-      let regex = new RegExp('handle-([trmbl]{2})', '')
+      const target = e.target || e.srcElement
+      const regex = new RegExp('handle-([trmbl]{2})', '')
 
-      if (target !== this.$el && !regex.test(target.className)) {
+      if (!this.$el.contains(target) && !regex.test(target.className)) {
         if (this.active) {
           this.active = false
 

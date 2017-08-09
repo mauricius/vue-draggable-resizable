@@ -182,31 +182,6 @@ describe('VueDraggableResizable.vue', function () {
 
       sinon.assert.calledOnce(deactivated)
     })
-
-    it('should not activate the element if it contains an input or a textarea', function () {
-      const activated = sinon.spy()
-
-      const Component = {
-        template: `<div class="parent" style="width: 500px; height: 500px;">
-          <vue-draggable-resizable :w="600" :h="600" :parent="true">
-            <input type="text" />
-            <textarea></textarea>
-          </vue-draggable-resizable>
-        </div>`,
-        components: {
-          VueDraggableResizable
-        }
-      }
-
-      const vm = mount(Component, {}, { activated })
-
-      simulate(document.getElementsByTagName('input')[0], 'mousedown')
-      simulate(document.getElementsByTagName('textarea')[0], 'mousedown')
-
-      expect(vm.$children[0].$data.active).to.equal(false)
-
-      sinon.assert.notCalled(activated)
-    })
   })
 
   /*******************
