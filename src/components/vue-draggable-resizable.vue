@@ -1,5 +1,5 @@
 <template>
-  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active }" @mousedown="elmDown" @dblclick="fillParent" :style="style">
+  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active, dragging: dragging, resizing: resizing }" @mousedown="elmDown" @dblclick="fillParent" :style="style">
     <div
       class="handle"
       v-if="resizable"
@@ -153,7 +153,6 @@ export default {
       resizing: false,
       dragging: false,
       active: false,
-      opacity: 1,
       handle: null,
       zIndex: 1
     }
@@ -176,7 +175,6 @@ export default {
         this.elmH = this.$el.offsetHeight || this.$el.clientHeight
 
         if (this.draggable) {
-          this.opacity = 0.6
           this.dragging = true
         }
       }
@@ -336,7 +334,6 @@ export default {
         this.dragging = false
         this.$emit('dragstop', this.left, this.top)
       }
-      this.opacity = 1
 
       this.elmX = this.left
       this.elmY = this.top

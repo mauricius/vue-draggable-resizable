@@ -254,6 +254,8 @@ describe('VueDraggableResizable.vue', function () {
           from: {pageX: fromX, pageY: fromY},
           to: {pageX: fromX + 10, pageY: fromY + 10}
         }, function () {
+          expect(vm.$el.className).to.have.string('resizing')
+
           nextTick().then(function () {
             expect(vm.$el.style.width).to.equal('110px')
             expect(vm.$el.style.height).to.equal('110px')
@@ -419,6 +421,8 @@ describe('VueDraggableResizable.vue', function () {
           from: {pageX: 50, pageY: 50},
           to: {pageX: 60, pageY: 60}
         }, function () {
+          expect(vm.$el.className).to.have.string('dragging')
+
           nextTick().then(function () {
             expect(vm.$el.style.top).to.equal('10px')
             expect(vm.$el.style.left).to.equal('10px')

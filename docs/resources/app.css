@@ -94,3 +94,8 @@ footer a {
 footer a:hover {
   color: #444;
 }
+
+.vdr.resizing,
+.vdr.dragging {
+  opacity: 0.6;
+}
