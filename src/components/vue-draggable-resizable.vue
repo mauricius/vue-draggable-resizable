@@ -346,8 +346,7 @@ export default {
         left: this.left + 'px',
         width: this.width + 'px',
         height: this.height + 'px',
-        zIndex: this.zIndex,
-        opacity: this.opacity
+        zIndex: this.zIndex
       }
     }
   }
