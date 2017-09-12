@@ -17,6 +17,9 @@ export default {
   replace: true,
   name: 'vue-draggable-resizable',
   props: {
+    startActive: {
+      type: Boolean, default: false
+    },
     draggable: {
       type: Boolean, default: true
     },
@@ -152,7 +155,7 @@ export default {
       height: this.h,
       resizing: false,
       dragging: false,
-      active: false,
+      active: this.startActive,
       handle: null,
       zIndex: 1
     }
