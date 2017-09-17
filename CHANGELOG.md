@@ -2,6 +2,9 @@
 
 All notable changes to `vue-draggable-resizable` will be documented in this file
 
+## 1.4.0 - 2017-09-17
+- add `active` synched prop
+
 ## 1.3.0 - 2017-09-11
 - add `resizing` and `dragging` css classes
 

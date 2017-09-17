@@ -1,11 +1,11 @@
 <template>
-  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: active, dragging: dragging, resizing: resizing }" @mousedown="elmDown" @dblclick="fillParent" :style="style">
+  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: enabled, dragging: dragging, resizing: resizing }" @mousedown="elmDown" @dblclick="fillParent" :style="style">
     <div
       class="handle"
       v-if="resizable"
       v-for="handle in handles"
       :class="'handle-' + handle"
-      :style="{ display: active ? 'block' : 'none'}"
+      :style="{ display: enabled ? 'block' : 'none'}"
       @mousedown.stop.prevent="handleDown(handle, $event)"
     ></div>
     <slot></slot>
@@ -17,6 +17,9 @@ export default {
   replace: true,
   name: 'vue-draggable-resizable',
   props: {
+    active: {
+      type: Boolean, default: false
+    },
     draggable: {
       type: Boolean, default: true
     },
@@ -152,7 +155,7 @@ export default {
       height: this.h,
       resizing: false,
       dragging: false,
-      active: false,
+      enabled: this.active,
       handle: null,
       zIndex: 1
     }
@@ -162,11 +165,12 @@ export default {
       const target = e.target || e.srcElement
 
       if (this.$el.contains(target)) {
-        if (!this.active) {
+        if (!this.enabled) {
           this.zIndex += 1
-          this.active = true
+          this.enabled = true
 
           this.$emit('activated')
+          this.$emit('update:active', true)
         }
 
         this.elmX = parseInt(this.$el.style.left)
@@ -184,10 +188,11 @@ export default {
       const regex = new RegExp('handle-([trmbl]{2})', '')
 
       if (!this.$el.contains(target) && !regex.test(target.className)) {
-        if (this.active) {
-          this.active = false
+        if (this.enabled) {
+          this.enabled = false
 
           this.$emit('deactivated')
+          this.$emit('update:active', false)
         }
       }
     },
@@ -348,6 +353,11 @@ export default {
         height: this.height + 'px',
         zIndex: this.zIndex
       }
+    }
+  },
+  watch: {
+    active: function (val) {
+      this.enabled = val
     }
   }
 }

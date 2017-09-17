@@ -128,6 +128,20 @@ describe('VueDraggableResizable.vue', function () {
     })
   })
 
+  /***************
+   * Active prop *
+   ***************/
+
+  describe('Active prop', function () {
+    it('should enable the element through active prop', function () {
+      const vm = mount(VueDraggableResizable, {
+        active: true
+      })
+
+      expect(vm.$data.enabled).to.equal(true)
+    })
+  })
+
   /*******************
    * Clicking events *
    *******************/
@@ -135,14 +149,19 @@ describe('VueDraggableResizable.vue', function () {
   describe('Clicking events', function () {
     it('should activate the element by clicking on it', function () {
       const activated = sinon.spy()
+      const update = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {}, { activated })
+      const vm = mount(VueDraggableResizable, {}, {
+        activated,
+        'update:active': update
+      })
 
       simulate(vm.$el, 'mousedown')
 
-      expect(vm.$data.active).to.equal(true)
+      expect(vm.$data.enabled).to.equal(true)
 
       sinon.assert.calledWith(activated)
+      sinon.assert.calledWith(update)
     })
 
     it('should show the handles if the element is active', function (done) {
@@ -158,16 +177,21 @@ describe('VueDraggableResizable.vue', function () {
 
     it('should deactivate the element by clicking outside it', function () {
       const deactivated = sinon.spy()
+      const update = sinon.spy()
 
-      const vm = mount(VueDraggableResizable, {}, { deactivated })
+      const vm = mount(VueDraggableResizable, {}, {
+        deactivated,
+        'update:active': update
+      })
 
       simulate(vm.$el, 'mousedown')
-      expect(vm.$data.active).to.equal(true)
+      expect(vm.$data.enabled).to.equal(true)
 
       simulate(document.documentElement, 'mousedown')
-      expect(vm.$data.active).to.equal(false)
+      expect(vm.$data.enabled).to.equal(false)
 
       sinon.assert.calledWith(deactivated)
+      sinon.assert.calledWith(update)
     })
 
     it('should emit "deactivated" event only once', function () {

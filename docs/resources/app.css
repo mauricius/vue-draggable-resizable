@@ -80,6 +80,24 @@ pre {
   padding: 0 .25em;
 }
 
+.btn {
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #ffffff;
+  background: #41B883;
+  padding: 8px;
+  border: solid #35495E 1px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #35996C;
+  text-decoration: none;
+}
+
 footer {
   color: #888;
   display: block;

@@ -89,6 +89,17 @@ export default {
 
 ### Props
 
+#### active
+Type: `Boolean`<br>
+Required: `false`<br>
+Default: `false`
+
+Determines if the component should be active or not. The prop reacts to changes and also can be used with the `sync`[modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) to keep the state in sync with the parent.
+
+```html
+<vue-draggable-resizable :active="true">
+```
+
 #### draggable
 Type: `Boolean`<br>
 Required: `false`<br>

@@ -124,6 +124,27 @@
           </template>
         </div>
       </div>
+
+      <section class="section-description">
+        <h2 class="section-title">External activation</h2>
+        <p>You can sync the `active` prop in order to activate the component externally, e.g. using a button.</p>
+        <pre>&lt;vue-draggable-resizable :parent="true" :resizable="true" :active.sync="true" style="border: 1px solid"&gt;
+  &lt;p&gt;Use the button to activate me!&lt;/p&gt;
+&lt;/vue-draggable-resizable&gt;</pre>
+      </section>
+
+      <div id="app7">
+        <div style="height: 300px; border: 1px solid blue; margin: 1em;">
+          <vue-draggable-resizable :parent="true" :resizable="true" :active.sync="active" style="border: 1px solid;">
+            <p>Use the button to activate me!</p>
+          </vue-draggable-resizable>
+        </div>
+        <div style="margin: 1em;">
+          <button class="btn" @click="active = true">Activate Component</button>
+          Is active? {{ active ? '&check;' : '&times;' }}
+        </div>
+      </div>
+
     </div>
 
     <footer>
