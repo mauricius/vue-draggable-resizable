@@ -68,6 +68,14 @@ export default {
         return val >= 0
       }
     },
+    z: {
+      type: [ String, Number ],
+      default: 'auto',
+      validator: function (val) {
+        let valid = (typeof val === 'string') ? val === 'auto' : val >= 0
+        return valid
+      }
+    },
     handles: {
       type: Array,
       default: function () {
@@ -157,7 +165,7 @@ export default {
       dragging: false,
       enabled: this.active,
       handle: null,
-      zIndex: 1
+      zIndex: this.z
     }
   },
   methods: {
@@ -166,7 +174,6 @@ export default {
 
       if (this.$el.contains(target)) {
         if (!this.enabled) {
-          this.zIndex += 1
           this.enabled = true
 
           this.$emit('activated')
@@ -358,6 +365,11 @@ export default {
   watch: {
     active: function (val) {
       this.enabled = val
+    },
+    z: function (val) {
+      if (val >= 0 || val === 'auto') {
+        this.zIndex = val
+      }
     }
   }
 }
