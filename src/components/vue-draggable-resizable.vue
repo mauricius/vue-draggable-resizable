@@ -149,6 +149,7 @@ export default {
     }
 
     this.$emit('resizing', this.left, this.top, this.width, this.height)
+    this.emitUpdates()
   },
   beforeDestroy: function () {
     document.documentElement.removeEventListener('mousemove', this.handleMove, true)
@@ -263,6 +264,7 @@ export default {
         }
 
         this.$emit('resizing', this.left, this.top, this.width, this.height)
+        this.emitUpdates()
       }
 
       window.requestAnimationFrame(animate)
@@ -316,6 +318,7 @@ export default {
         this.height = (Math.round(this.elmH / this.grid[1]) * this.grid[1])
 
         this.$emit('resizing', this.left, this.top, this.width, this.height)
+        this.emitUpdates()
       } else if (this.dragging) {
         if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
         else if (this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
@@ -334,6 +337,7 @@ export default {
         }
 
         this.$emit('dragging', this.left, this.top)
+        this.emitUpdates()
       }
     },
     handleUp: function (e) {
@@ -341,14 +345,22 @@ export default {
       if (this.resizing) {
         this.resizing = false
         this.$emit('resizestop', this.left, this.top, this.width, this.height)
+        this.emitUpdates()
       }
       if (this.dragging) {
         this.dragging = false
         this.$emit('dragstop', this.left, this.top)
+        this.emitUpdates()
       }
 
       this.elmX = this.left
       this.elmY = this.top
+    },
+    emitUpdates: function () {
+      this.$emit('update:x', this.left)
+      this.$emit('update:y', this.top)
+      this.$emit('update:w', this.width)
+      this.$emit('update:h', this.height)
     }
   },
   computed: {
