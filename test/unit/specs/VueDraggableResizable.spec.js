@@ -142,6 +142,44 @@ describe('VueDraggableResizable.vue', function () {
     })
   })
 
+  /***************
+   * zIndex prop *
+   ***************/
+
+  describe('zIndex prop', function () {
+    it('should set the zIndex throug z prop', function () {
+      const vm = mount(VueDraggableResizable, {
+        z: 99
+      })
+
+      expect(vm.$el.style.zIndex).to.equal('99')
+    })
+
+    it('should set "auto" as defaul value for zIndex', function () {
+      const vm = mount(VueDraggableResizable)
+
+      expect(vm.$el.style.zIndex).to.equal('auto')
+    })
+
+    it('should react to z prop changes', function () {
+      const vm = mount(VueDraggableResizable, {
+        z: 99
+      })
+
+      vm.z = 999
+
+      vm.$forceUpdate()
+
+      vm._watchers.forEach((watcher) => {
+        if (watcher.expression === 'z') {
+          watcher.run()
+        }
+      })
+
+      expect(vm.$data.zIndex).to.equal(999)
+    })
+  })
+
   /*******************
    * Clicking events *
    *******************/

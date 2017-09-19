@@ -2,6 +2,9 @@
 
 All notable changes to `vue-draggable-resizable` will be documented in this file
 
+## 1.5.0 - 2017-09-19
+- implement :z prop and watcher
+
 ## 1.4.0 - 2017-09-17
 - add `active` synched prop
 
