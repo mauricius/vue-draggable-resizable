@@ -188,6 +188,17 @@ Define the initial y position of the element.
 <vue-draggable-resizable :y="0">
 ```
 
+#### z
+Type: `Number|String`<br>
+Required: `false`<br>
+Default: `auto`
+
+Define the zIndex of the element.
+
+```html
+<vue-draggable-resizable :z="999">
+```
+
 #### handles
 Type: `Array`<br>
 Required: `false`<br>

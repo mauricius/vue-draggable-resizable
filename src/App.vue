@@ -1,11 +1,8 @@
 <template>
   <div id="app">
     <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red; position: relative;">
-      <vue-draggable-resizable class="comp2" :x="50" :y="50" :z="zIndex1" :parent="true">
-        <p>Component1</p>
-      </vue-draggable-resizable>
-      <vue-draggable-resizable class="comp1" :x="30" :y="30" :z="zIndex2" :parent="true">
-        <p>Component2</p>
+      <vue-draggable-resizable :x="50" :y="50" :w="400" :h="400" :parent="true">
+        <p>Component</p>
       </vue-draggable-resizable>
     </div>
     z1 <input v-model.number.lazy="zIndex1">
