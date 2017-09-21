@@ -5,8 +5,6 @@
         <p>Component</p>
       </vue-draggable-resizable>
     </div>
-    z1 <input v-model.number.lazy="zIndex1">
-    z2 <input v-model.number.lazy="zIndex2">
   </div>
 </template>
 
@@ -17,27 +15,12 @@ export default {
   name: 'app',
   components: {
     'vue-draggable-resizable': VueDraggableResizable
-  },
-  data () {
-    return {
-      zIndex1: 'auto',
-      zIndex2: 'auto'
-    }
   }
-
 }
 </script>
 
 <style>
   .active {
     border: 1px dashed black;
-  }
-
-  .comp1 {
-    background-color: blue;
-  }
-
-  .comp2 {
-    background-color: red;
   }
 </style>
