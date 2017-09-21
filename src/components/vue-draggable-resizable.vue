@@ -1,5 +1,7 @@
 <template>
-  <div class="vdr" :class="{ draggable: draggable, resizable: resizable, active: enabled, dragging: dragging, resizing: resizing }" @mousedown="elmDown" @dblclick="fillParent" :style="style">
+  <div class="vdr" @mousedown.stop="elmDown" @dblclick="fillParent" :style="style"
+    :class="{ draggable: draggable, resizable: resizable, active: enabled, dragging: dragging, resizing: resizing }"
+  >
     <div
       class="handle"
       v-if="resizable"
@@ -128,27 +130,7 @@ export default {
     document.documentElement.addEventListener('mousedown', this.deselect, true)
     document.documentElement.addEventListener('mouseup', this.handleUp, true)
 
-    if (this.minw > this.w) this.width = this.minw
-
-    if (this.minh > this.h) this.height = this.minh
-
-    if (this.parent) {
-      const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
-      const parentH = parseInt(this.$el.parentNode.clientHeight, 10)
-
-      this.parentW = parentW
-      this.parentH = parentH
-
-      if (this.w > this.parentW) this.width = parentW
-
-      if (this.h > this.parentH) this.height = parentH
-
-      if ((this.x + this.w) > this.parentW) this.width = parentW - this.x
-
-      if ((this.y + this.h) > this.parentH) this.height = parentH - this.y
-    }
-
-    this.$emit('resizing', this.left, this.top, this.width, this.height)
+    this.reviewDimensions()
   },
   beforeDestroy: function () {
     document.documentElement.removeEventListener('mousemove', this.handleMove, true)
@@ -169,10 +151,34 @@ export default {
     }
   },
   methods: {
+    reviewDimensions: function () {
+      if (this.minw > this.w) this.width = this.minw
+
+      if (this.minh > this.h) this.height = this.minh
+
+      if (this.parent) {
+        const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
+        const parentH = parseInt(this.$el.parentNode.clientHeight, 10)
+
+        this.parentW = parentW
+        this.parentH = parentH
+
+        if (this.w > this.parentW) this.width = parentW
+
+        if (this.h > this.parentH) this.height = parentH
+
+        if ((this.x + this.w) > this.parentW) this.width = parentW - this.x
+
+        if ((this.y + this.h) > this.parentH) this.height = parentH - this.y
+      }
+
+      this.$emit('resizing', this.left, this.top, this.width, this.height)
+    },
     elmDown: function (e) {
       const target = e.target || e.srcElement
 
       if (this.$el.contains(target)) {
+        this.reviewDimensions()
         if (!this.enabled) {
           this.enabled = true
 
