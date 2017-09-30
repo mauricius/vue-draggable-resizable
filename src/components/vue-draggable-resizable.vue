@@ -130,6 +130,11 @@ export default {
     document.documentElement.addEventListener('mousedown', this.deselect, true)
     document.documentElement.addEventListener('mouseup', this.handleUp, true)
 
+    this.elmX = parseInt(this.$el.style.left)
+    this.elmY = parseInt(this.$el.style.top)
+    this.elmW = this.$el.offsetWidth || this.$el.clientWidth
+    this.elmH = this.$el.offsetHeight || this.$el.clientHeight
+
     this.reviewDimensions()
   },
   beforeDestroy: function () {
@@ -170,6 +175,9 @@ export default {
         if ((this.x + this.w) > this.parentW) this.width = parentW - this.x
 
         if ((this.y + this.h) > this.parentH) this.height = parentH - this.y
+
+        this.elmW = this.width
+        this.elmH = this.height
       }
 
       this.$emit('resizing', this.left, this.top, this.width, this.height)
@@ -179,17 +187,13 @@ export default {
 
       if (this.$el.contains(target)) {
         this.reviewDimensions()
+
         if (!this.enabled) {
           this.enabled = true
 
           this.$emit('activated')
           this.$emit('update:active', true)
         }
-
-        this.elmX = parseInt(this.$el.style.left)
-        this.elmY = parseInt(this.$el.style.top)
-        this.elmW = this.$el.offsetWidth || this.$el.clientWidth
-        this.elmH = this.$el.offsetHeight || this.$el.clientHeight
 
         if (this.draggable) {
           this.dragging = true
