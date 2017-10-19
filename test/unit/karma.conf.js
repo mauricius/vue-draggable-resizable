@@ -2,13 +2,11 @@ var webpackConfig = require('../../build/webpack.test')
 
 module.exports = function (config) {
   config.set({
-    // to run in additional browsers:
-    // 1. install corresponding karma launcher
-    //    http://karma-runner.github.io/0.13/config/browsers.html
-    // 2. add it to the `browsers` array below.
-    browsers: ['PhantomJS'],
+    browsers: ['ChromeHeadless'],
     frameworks: ['mocha', 'sinon-chai', 'chai-dom', 'chai'],
     reporters: ['spec', 'coverage'],
+    port: 9876,  // karma web server port
+    colors: true,
     files: ['./index.js'],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']
