@@ -100,6 +100,9 @@ export default {
     parent: {
       type: Boolean, default: false
     },
+    parentId: {
+      type: String, default: ''
+    },
     maximize: {
       type: Boolean, default: false
     }
@@ -161,7 +164,21 @@ export default {
 
       if (this.minh > this.h) this.height = this.minh
 
-      if (this.parent) {
+      if (this.parentId !== '') {
+        const parentW = parseInt(document.getElementById(this.parentId).clientWidth, 10)
+        const parentH = parseInt(document.getElementById(this.parentId).clientHeight, 10)
+
+        this.parentW = parentW
+        this.parentH = parentH
+
+        if (this.w > this.parentW) this.width = parentW
+        if (this.h > this.parentH) this.height = parentH
+        if ((this.x + this.w) > this.parentW) this.width = parentW - this.x
+        if ((this.y + this.h) > this.parentH) this.height = parentH - this.y
+
+        this.elmW = this.width
+        this.elmH = this.height
+      } else if (this.parent) {
         const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
         const parentH = parseInt(this.$el.parentNode.clientHeight, 10)
 
@@ -327,7 +344,7 @@ export default {
 
         this.$emit('resizing', this.left, this.top, this.width, this.height)
       } else if (this.dragging) {
-        if (this.parent) {
+        if (this.parent || this.parentId !== '') {
           if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
           else if (this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
 

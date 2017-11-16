@@ -253,6 +253,19 @@ Restricts the movement and the dimensions of the element to the parent.
 <vue-draggable-resizable :parent="true">
 ```
 
+#### parent id
+Type: `String`<br>
+Required: `false`<br>
+Default: ``
+
+Specify the parent element ID to restrict movement and dimensions to.
+
+```html
+<div id="parent">
+ <vue-draggable-resizable :parentId="parent">
+</div>
+```
+
 #### maximize
 Type: `Boolean`<br>
 Required: `false`<br>
