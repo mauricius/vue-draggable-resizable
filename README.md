@@ -13,6 +13,7 @@
 * [Demo](#demo)
 * [Install and basic usage](#install-and-basic-usage)
   * [Props](#props)
+  * [Methods](#methods)
   * [Events](#events)
 * [Gotchas](#gotchas)
 * [Contributing](#contributing)
@@ -266,6 +267,35 @@ If set to `true` allows the component to fill its parent when double-clicked.
 
 ---
 
+
+### Methods
+
+#### setPosition
+Programatically alter the elements position.
+
+Parameters:
+* `left` the new X position of the element
+* `top` the new Y position of the element
+
+```javascript
+onDragStop: function (x, y, el) {
+   el.setPosition(x + 10, y + 10)
+}
+```
+
+#### setDimensions
+Programatically alter the elements dimensions.
+
+Parameters:
+* `width` the new width of the element
+* `height` the new height of the element
+
+```javascript
+onResize: function (x, y, width, height, el) {
+  el.setDimensions(width + 10, height + 10)
+}
+```
+
 ### Events
 
 #### activated
@@ -298,6 +328,7 @@ Parameters:
 * `top` the Y position of the element
 * `width` the width of the element
 * `height` the height of the element
+* `this` the draggable-resizable Vue component
 
 Called whenever the component gets resized.
 
@@ -313,6 +344,7 @@ Parameters:
 * `top` the Y position of the element
 * `width` the width of the element
 * `height` the height of the element
+* `this` the draggable-resizable Vue component
 
 Called whenever the component stops getting resized.
 
@@ -326,6 +358,7 @@ Required: `false`<br>
 Parameters:
 * `left` the X position of the element
 * `top` the Y position of the element
+* `this` the draggable-resizable Vue component
 
 Called whenever the component gets dragged.
 
@@ -339,6 +372,7 @@ Required: `false`<br>
 Parameters:
 * `left` the X position of the element
 * `top` the Y position of the element
+* `this` the draggable-resizable Vue component
 
 Called whenever the component stops getting dragged.
 

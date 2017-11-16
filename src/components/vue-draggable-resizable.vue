@@ -180,7 +180,7 @@ export default {
         this.elmH = this.height
       }
 
-      this.$emit('resizing', this.left, this.top, this.width, this.height)
+      this.$emit('resizing', this.left, this.top, this.width, this.height, this)
     },
     elmDown: function (e) {
       const target = e.target || e.srcElement
@@ -272,7 +272,7 @@ export default {
           }
         }
 
-        this.$emit('resizing', this.left, this.top, this.width, this.height)
+        this.$emit('resizing', this.left, this.top, this.width, this.height, this)
       }
 
       window.requestAnimationFrame(animate)
@@ -325,7 +325,7 @@ export default {
         this.width = (Math.round(this.elmW / this.grid[0]) * this.grid[0])
         this.height = (Math.round(this.elmH / this.grid[1]) * this.grid[1])
 
-        this.$emit('resizing', this.left, this.top, this.width, this.height)
+        this.$emit('resizing', this.left, this.top, this.width, this.height, this)
       } else if (this.dragging) {
         if (this.parent) {
           if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
@@ -345,22 +345,32 @@ export default {
           this.top = (Math.round(this.elmY / this.grid[1]) * this.grid[1])
         }
 
-        this.$emit('dragging', this.left, this.top)
+        this.$emit('dragging', this.left, this.top, this)
       }
     },
     handleUp: function (e) {
       this.handle = null
       if (this.resizing) {
         this.resizing = false
-        this.$emit('resizestop', this.left, this.top, this.width, this.height)
+        this.$emit('resizestop', this.left, this.top, this.width, this.height, this)
       }
       if (this.dragging) {
         this.dragging = false
-        this.$emit('dragstop', this.left, this.top)
+        this.$emit('dragstop', this.left, this.top, this)
       }
 
       this.elmX = this.left
       this.elmY = this.top
+    },
+    setPosition: function (left, top) {
+      this.left = left
+      this.top = top
+      this.reviewDimensions()
+    },
+    setDimensions: function (width, height) {
+      this.width = width
+      this.height = height
+      this.reviewDimensions()
     }
   },
   computed: {
