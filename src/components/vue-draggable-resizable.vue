@@ -201,6 +201,12 @@ export default {
       }
     },
     deselect: function (e) {
+      this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
+      this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
+
+      this.lastMouseX = this.mouseX
+      this.lastMouseY = this.mouseY
+
       const target = e.target || e.srcElement
       const regex = new RegExp('handle-([trmbl]{2})', '')
 
