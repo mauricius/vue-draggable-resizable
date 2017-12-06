@@ -102,6 +102,9 @@ export default {
     },
     maximize: {
       type: Boolean, default: false
+    },
+    auto_deselect: {
+      type: Boolean, default: true
     }
   },
   created: function () {
@@ -201,6 +204,9 @@ export default {
       }
     },
     deselect: function (e) {
+      if (this.auto_deselect === false) {
+        return
+      }
       this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
       this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
 
