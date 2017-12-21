@@ -175,10 +175,10 @@ export default {
         if ((this.x + this.w) > this.parentW) this.width = parentW - this.x
 
         if ((this.y + this.h) > this.parentH) this.height = parentH - this.y
-
-        this.elmW = this.width
-        this.elmH = this.height
       }
+
+      this.elmW = this.width
+      this.elmH = this.height
 
       this.$emit('resizing', this.left, this.top, this.width, this.height)
     },
