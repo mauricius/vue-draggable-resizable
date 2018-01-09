@@ -388,6 +388,9 @@ export default {
       if (val >= 0 || val === 'auto') {
         this.zIndex = val
       }
+    },
+    draggable (val) {
+      this.dragging = val
     }
   }
 }
