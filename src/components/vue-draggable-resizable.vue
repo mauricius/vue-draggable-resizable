@@ -82,6 +82,11 @@ export default {
       type: Array,
       default: function () {
         return ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml']
+      },
+      validator: function (val) {
+        var s = new Set(['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'])
+
+        return new Set(val.filter(h => s.has(h))).size === val.length
       }
     },
     axis: {
