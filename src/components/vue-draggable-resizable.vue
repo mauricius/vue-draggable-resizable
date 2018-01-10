@@ -1,11 +1,22 @@
 <template>
-  <div class="vdr" @mousedown.stop="elmDown" @dblclick="fillParent" :style="style"
-    :class="{ draggable: draggable, resizable: resizable, active: enabled, dragging: dragging, resizing: resizing }"
+  <div
+    class="vdr"
+    :style="style"
+    :class="{
+      draggable: draggable,
+      resizable: resizable,
+      active: enabled,
+      dragging: dragging,
+      resizing: resizing
+    }"
+    @mousedown.stop="elmDown"
+    @dblclick="fillParent"
   >
     <div
-      class="handle"
-      v-if="resizable"
       v-for="handle in handles"
+      v-if="resizable"
+      class="handle"
+      :key="handle"
       :class="'handle-' + handle"
       :style="{ display: enabled ? 'block' : 'none'}"
       @mousedown.stop.prevent="handleDown(handle, $event)"
@@ -17,7 +28,7 @@
 <script>
 export default {
   replace: true,
-  name: 'vue-draggable-resizable',
+  name: 'VueDraggableResizable',
   props: {
     active: {
       type: Boolean, default: false
@@ -109,6 +120,7 @@ export default {
       type: Boolean, default: false
     }
   },
+
   created: function () {
     this.parentX = 0
     this.parentW = 9999
@@ -147,6 +159,7 @@ export default {
     document.documentElement.removeEventListener('mousedown', this.deselect, true)
     document.documentElement.removeEventListener('mouseup', this.handleUp, true)
   },
+
   data: function () {
     return {
       top: this.y,
@@ -160,6 +173,7 @@ export default {
       zIndex: this.z
     }
   },
+
   methods: {
     reviewDimensions: function () {
       if (this.minw > this.w) this.width = this.minw
@@ -374,6 +388,7 @@ export default {
       this.elmY = this.top
     }
   },
+
   computed: {
     style: function () {
       return {
@@ -385,6 +400,7 @@ export default {
       }
     }
   },
+
   watch: {
     active: function (val) {
       this.enabled = val
