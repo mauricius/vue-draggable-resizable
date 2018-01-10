@@ -362,6 +362,48 @@ describe('VueDraggableResizable.vue', function () {
       })
     })
 
+    it('should resize the component outside the parent if parent prop is false', function (done) {
+      const ParentComponent = {
+        template: `<div class="parent" style="width: 500px; height: 500px;">
+          <vue-draggable-resizable :x="0" :y="0" :w="200" :h="200" :parent="false">
+            <p>Resize Me</p>
+          </vue-draggable-resizable>
+        </div>`,
+        components: {
+          VueDraggableResizable
+        }
+      }
+
+      const pvm = mount(ParentComponent)
+      const vm = pvm.$children[0]
+      const $el = pvm.$el.childNodes[0]
+
+      simulate($el, 'mousedown')
+
+      nextTick().then(function () {
+        const rect = $el.querySelector('div.handle-tl').getBoundingClientRect()
+        const fromX = rect.left
+        const fromY = rect.top
+
+        vm.lastMouseX = fromX
+        vm.lastMouseY = fromY
+
+        Syn.drag($el.querySelector('div.handle-tl'), {
+          from: {pageX: fromX, pageY: fromY},
+          to: {pageX: fromX - 50, pageY: fromY - 50}
+        }, function () {
+          nextTick().then(function () {
+            expect($el.style.top).to.equal('-50px')
+            expect($el.style.left).to.equal('-50px')
+            expect($el.style.width).to.equal('250px')
+            expect($el.style.height).to.equal('250px')
+            expect(vm.$data.resizing).to.equal(false)
+            done()
+          })
+        })
+      })
+    })
+
     it('should emit "resizing" event while resizing the element', function (done) {
       const resizing = sinon.spy()
 
