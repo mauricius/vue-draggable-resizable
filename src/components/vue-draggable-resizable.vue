@@ -8,6 +8,7 @@
       v-for="handle in handles"
       :class="'handle-' + handle"
       :style="{ display: enabled ? 'block' : 'none'}"
+      :key="handle"
       @mousedown.stop.prevent="handleDown(handle, $event)"
     ></div>
     <slot></slot>
@@ -52,6 +53,20 @@ export default {
     minh: {
       type: Number,
       default: 50,
+      validator: function (val) {
+        return val > 0
+      }
+    },
+    maxw: {
+      type: Number,
+      default: 500,
+      validator: function (val) {
+        return val > 0
+      }
+    },
+    maxh: {
+      type: Number,
+      default: 500,
       validator: function (val) {
         return val > 0
       }
@@ -160,6 +175,10 @@ export default {
       if (this.minw > this.w) this.width = this.minw
 
       if (this.minh > this.h) this.height = this.minh
+
+      if (this.maxw < this.w) this.width = this.maxw
+
+      if (this.maxh < this.h) this.height = this.maxh
 
       if (this.parent) {
         const parentW = parseInt(this.$el.parentNode.clientWidth, 10)
@@ -301,6 +320,7 @@ export default {
       if (this.resizing) {
         if (this.handle.indexOf('t') >= 0) {
           if (this.elmH - dY < this.minh) this.mouseOffY = (dY - (diffY = this.elmH - this.minh))
+          else if (this.elmH - dY > this.maxh) this.mouseOffY = (dY - (diffY = this.elmH - this.maxh))
           else if (this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
           this.elmY += diffY
           this.elmH -= diffY
@@ -308,12 +328,14 @@ export default {
 
         if (this.handle.indexOf('b') >= 0) {
           if (this.elmH + dY < this.minh) this.mouseOffY = (dY - (diffY = this.minh - this.elmH))
+          else if (this.elmH + dY > this.maxh) this.mouseOffY = (dY - (diffY = this.maxh - this.elmH))
           else if (this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
           this.elmH += diffY
         }
 
         if (this.handle.indexOf('l') >= 0) {
           if (this.elmW - dX < this.minw) this.mouseOffX = (dX - (diffX = this.elmW - this.minw))
+          else if (this.elmW - dX > this.maxw) this.mouseOffX = (dX - (diffX = this.elmW - this.maxw))
           else if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
           this.elmX += diffX
           this.elmW -= diffX
@@ -321,6 +343,7 @@ export default {
 
         if (this.handle.indexOf('r') >= 0) {
           if (this.elmW + dX < this.minw) this.mouseOffX = (dX - (diffX = this.minw - this.elmW))
+          else if (this.elmW + dX > this.maxw) this.mouseOffX = (dX - (diffX = this.maxw - this.elmW))
           else if (this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
           this.elmW += diffX
         }
