@@ -1,11 +1,22 @@
 <template>
-  <div class="vdr" @mousedown.stop="elmDown" @dblclick="fillParent" :style="style"
-    :class="{ draggable: draggable, resizable: resizable, active: enabled, dragging: dragging, resizing: resizing }"
+  <div
+    class="vdr"
+    :style="style"
+    :class="{
+      draggable: draggable,
+      resizable: resizable,
+      active: enabled,
+      dragging: dragging,
+      resizing: resizing
+    }"
+    @mousedown.stop="elmDown"
+    @dblclick="fillParent"
   >
     <div
-      class="handle"
-      v-if="resizable"
       v-for="handle in handles"
+      v-if="resizable"
+      class="handle"
+      :key="handle"
       :class="'handle-' + handle"
       :style="{ display: enabled ? 'block' : 'none'}"
       @mousedown.stop.prevent="handleDown(handle, $event)"
@@ -17,7 +28,7 @@
 <script>
 export default {
   replace: true,
-  name: 'vue-draggable-resizable',
+  name: 'VueDraggableResizable',
   props: {
     active: {
       type: Boolean, default: false
@@ -82,6 +93,11 @@ export default {
       type: Array,
       default: function () {
         return ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml']
+      },
+      validator: function (val) {
+        var s = new Set(['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'])
+
+        return new Set(val.filter(h => s.has(h))).size === val.length
       }
     },
     axis: {
@@ -104,6 +120,7 @@ export default {
       type: Boolean, default: false
     }
   },
+
   created: function () {
     this.parentX = 0
     this.parentW = 9999
@@ -142,6 +159,7 @@ export default {
     document.documentElement.removeEventListener('mousedown', this.deselect, true)
     document.documentElement.removeEventListener('mouseup', this.handleUp, true)
   },
+
   data: function () {
     return {
       top: this.y,
@@ -155,6 +173,7 @@ export default {
       zIndex: this.z
     }
   },
+
   methods: {
     reviewDimensions: function () {
       if (this.minw > this.w) this.width = this.minw
@@ -301,27 +320,27 @@ export default {
       if (this.resizing) {
         if (this.handle.indexOf('t') >= 0) {
           if (this.elmH - dY < this.minh) this.mouseOffY = (dY - (diffY = this.elmH - this.minh))
-          else if (this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
+          else if (this.parent && this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
           this.elmY += diffY
           this.elmH -= diffY
         }
 
         if (this.handle.indexOf('b') >= 0) {
           if (this.elmH + dY < this.minh) this.mouseOffY = (dY - (diffY = this.minh - this.elmH))
-          else if (this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
+          else if (this.parent && this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
           this.elmH += diffY
         }
 
         if (this.handle.indexOf('l') >= 0) {
           if (this.elmW - dX < this.minw) this.mouseOffX = (dX - (diffX = this.elmW - this.minw))
-          else if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
+          else if (this.parent && this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
           this.elmX += diffX
           this.elmW -= diffX
         }
 
         if (this.handle.indexOf('r') >= 0) {
           if (this.elmW + dX < this.minw) this.mouseOffX = (dX - (diffX = this.minw - this.elmW))
-          else if (this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
+          else if (this.parent && this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
           this.elmW += diffX
         }
 
@@ -369,6 +388,7 @@ export default {
       this.elmY = this.top
     }
   },
+
   computed: {
     style: function () {
       return {
@@ -380,6 +400,7 @@ export default {
       }
     }
   },
+
   watch: {
     active: function (val) {
       this.enabled = val
