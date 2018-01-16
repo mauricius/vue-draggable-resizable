@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { matchesSelectorToParentElements } from '../utils/dom'
+
 export default {
   replace: true,
   name: 'VueDraggableResizable',
@@ -99,6 +101,14 @@ export default {
 
         return new Set(val.filter(h => s.has(h))).size === val.length
       }
+    },
+    dragHandle: {
+      type: String,
+      default: null
+    },
+    dragCancel: {
+      type: String,
+      default: null
     },
     axis: {
       type: String,
@@ -205,6 +215,12 @@ export default {
       const target = e.target || e.srcElement
 
       if (this.$el.contains(target)) {
+        if (
+          (this.dragHandle && !matchesSelectorToParentElements(target, this.dragHandle, this.$el)) ||
+          (this.dragCancel && matchesSelectorToParentElements(target, this.dragCancel, this.$el))) {
+          return
+        }
+
         this.reviewDimensions()
 
         if (!this.enabled) {
@@ -418,9 +434,6 @@ export default {
   .vdr {
     position: absolute;
     box-sizing: border-box;
-  }
-  .draggable:hover {
-    cursor: move;
   }
   .handle {
     box-sizing: border-box;

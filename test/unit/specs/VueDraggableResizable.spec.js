@@ -595,6 +595,46 @@ describe('VueDraggableResizable.vue', function () {
         })
       })
     })
+
+    it('should drag the component only by the dragHandle selector', function () {
+      const activated = sinon.spy()
+
+      const vm = mount(VueDraggableResizable, {
+        dragHandle: '.drag'
+      }, {
+        activated
+      }, '<div class="drag">Handle</div>')
+
+      simulate(vm.$el, 'mousedown')
+
+      expect(vm.$data.enabled).to.equal(false)
+
+      simulate(vm.$el.querySelector('.drag'), 'mousedown')
+
+      expect(vm.$data.enabled).to.equal(true)
+
+      sinon.assert.calledWith(activated)
+    })
+
+    it('should not drag the component by the dragCancel selector', function () {
+      const activated = sinon.spy()
+
+      const vm = mount(VueDraggableResizable, {
+        dragCancel: '.cancel'
+      }, {
+        activated
+      }, '<div class="cancel">Cancel</div>')
+
+      simulate(vm.$el.querySelector('.cancel'), 'mousedown')
+
+      expect(vm.$data.enabled).to.equal(false)
+
+      sinon.assert.notCalled(activated)
+
+      simulate(vm.$el, 'mousedown')
+
+      expect(vm.$data.enabled).to.equal(true)
+    })
   })
 
   /*************************

@@ -145,6 +145,29 @@
         </div>
       </div>
 
+      <section class="section-description">
+        <h2 class="section-title">Drag Handle and Drag Cancel</h2>
+        <p>Component that can be dragged only through a handle <code>:drag-handle="'.drag'"</code> and component that cannot be dragged from a handle <code>:drag-cancel="'.cancel'"</code></p>
+        <pre>&lt;vue-draggable-resizable :parent="true" style="border: 1px solid black;" :drag-handle="'.drag'"&gt;
+  &lt;div class="drag" style="padding: 6px; margin: 6px; background-color: #CCC; border: 2px solid"&gt;Drag Only Here&lt;/div&gt;
+&lt;/vue-draggable-resizable&gt;
+&lt;vue-draggable-resizable :x="300" :y="0" :parent="true" style="border: 1px solid black;" :drag-cancel="'.cancel'"&gt;
+  &lt;div class="cancel" style="padding: 6px; margin: 6px; background-color: #CCC; border: 2px solid"&gt;Cannot Drag Here&lt;/div&gt;
+&lt;/vue-draggable-resizable>
+        </pre>
+      </section>
+
+      <div id="app8">
+        <div style="height: 300px; border: 1px solid blue; margin: 1em;">
+          <vue-draggable-resizable :parent="true" style="border: 1px solid black;" :drag-handle="'.drag'">
+            <div class="drag" style="padding: 6px; margin: 6px; background-color: #CCC; border: 2px solid">Drag Only Here</div>
+          </vue-draggable-resizable>
+          <vue-draggable-resizable :x="300" :y="0" :parent="true" style="border: 1px solid black;" :drag-cancel="'.cancel'">
+            <div class="cancel" style="padding: 6px; margin: 6px; background-color: #CCC; border: 2px solid">Cannot Drag Here</div>
+          </vue-draggable-resizable>
+        </div>
+      </div>
+
     </div>
 
     <footer>

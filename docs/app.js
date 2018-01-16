@@ -79,3 +79,7 @@ new Vue({
     active: false
   }
 });
+
+new Vue({
+  el: '#app8'
+});
