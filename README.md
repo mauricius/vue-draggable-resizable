@@ -253,6 +253,26 @@ Restricts the movement and the dimensions of the element to the parent.
 <vue-draggable-resizable :parent="true">
 ```
 
+#### dragHandle
+Type: `String`<br>
+Required: `false`
+
+Defines the selector that should be used to drag the component.
+
+```html
+<vue-draggable-resizable :drag-handle=".drag">
+```
+
+#### dragCancel
+Type: `String`<br>
+Required: `false`
+
+Defines a selector that should be used to prevent drag initialization.
+
+```html
+<vue-draggable-resizable :drag-handle=".drag">
+```
+
 #### maximize
 Type: `Boolean`<br>
 Required: `false`<br>

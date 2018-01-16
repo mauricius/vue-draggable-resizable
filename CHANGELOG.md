@@ -2,6 +2,9 @@
 
 All notable changes to `vue-draggable-resizable` will be documented in this file
 
+## 1.6.0 - 2018-01-16
+- add `dragHandle` and `dragCancel` props
+
 ## 1.5.0 - 2017-09-19
 - implement :z prop and watcher
 
