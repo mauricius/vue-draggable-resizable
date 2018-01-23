@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].js',
-    library: 'vue-draggable-resizable',
+    library: 'VueDraggableResizable',
     libraryTarget: 'umd'
   },
   devtool: false,
