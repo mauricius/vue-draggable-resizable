@@ -162,7 +162,7 @@ export default {
     this.elmW = this.$el.offsetWidth || this.$el.clientWidth
     this.elmH = this.$el.offsetHeight || this.$el.clientHeight
 
-    this.reviewDimensions()
+    this.reviewDimensions(true)
   },
   beforeDestroy: function () {
     document.documentElement.removeEventListener('mousemove', this.handleMove, true)
@@ -185,7 +185,7 @@ export default {
   },
 
   methods: {
-    reviewDimensions: function () {
+    reviewDimensions: function (forceEmit) {
       if (this.minw > this.w) this.width = this.minw
 
       if (this.minh > this.h) this.height = this.minh
@@ -209,7 +209,9 @@ export default {
       this.elmW = this.width
       this.elmH = this.height
 
-      this.$emit('resizing', this.left, this.top, this.width, this.height)
+      if (this.enabled || forceEmit) {
+        this.$emit('resizing', this.left, this.top, this.width, this.height)
+      }
     },
     elmDown: function (e) {
       const target = e.target || e.srcElement
