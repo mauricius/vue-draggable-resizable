@@ -41,6 +41,9 @@ export default {
     resizable: {
       type: Boolean, default: true
     },
+    autosize: {
+      type: Boolean, default: false
+    },
     w: {
       type: Number,
       default: 200,
@@ -410,8 +413,8 @@ export default {
       return {
         top: this.top + 'px',
         left: this.left + 'px',
-        width: this.width + 'px',
-        height: this.height + 'px',
+        width: !this.resizable && this.autosize ? "auto" : this.width + 'px',
+        height: !this.resizable && this.autosize ? "auto" : this.height + 'px',
         zIndex: this.zIndex
       }
     }
