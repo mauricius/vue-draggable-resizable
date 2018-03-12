@@ -228,7 +228,7 @@ Default: `both`
 Define the axis on which the element is draggable. Available values are `x`, `y` or `both`.
 
 ```html
-<vue-draggable-resizable :axis="x">
+<vue-draggable-resizable axis="x">
 ```
 
 #### grid
