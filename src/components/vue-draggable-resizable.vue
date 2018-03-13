@@ -28,6 +28,20 @@
 <script>
 import { matchesSelectorToParentElements } from '../utils/dom'
 
+let current = null
+
+document.documentElement.addEventListener('mousemove', function (evt) {
+  if (current !== null) current.handleMove(evt)
+}, true)
+
+document.documentElement.addEventListener('mousedown', function (evt) {
+  if (current !== null) current.deselect(evt)
+}, true)
+
+document.documentElement.addEventListener('mouseup', function (evt) {
+  if (current !== null) current.handleUp(evt)
+}, true)
+
 export default {
   replace: true,
   name: 'VueDraggableResizable',
@@ -153,21 +167,12 @@ export default {
     this.elmH = 0
   },
   mounted: function () {
-    document.documentElement.addEventListener('mousemove', this.handleMove, true)
-    document.documentElement.addEventListener('mousedown', this.deselect, true)
-    document.documentElement.addEventListener('mouseup', this.handleUp, true)
-
     this.elmX = parseInt(this.$el.style.left)
     this.elmY = parseInt(this.$el.style.top)
     this.elmW = this.$el.offsetWidth || this.$el.clientWidth
     this.elmH = this.$el.offsetHeight || this.$el.clientHeight
 
     this.reviewDimensions()
-  },
-  beforeDestroy: function () {
-    document.documentElement.removeEventListener('mousemove', this.handleMove, true)
-    document.documentElement.removeEventListener('mousedown', this.deselect, true)
-    document.documentElement.removeEventListener('mouseup', this.handleUp, true)
   },
 
   data: function () {
@@ -185,9 +190,15 @@ export default {
   },
 
   methods: {
+    focus: function (e) {
+      // Set the current element that receives mouse events (deactivate previously selected element)
+      if (current !== null) {
+        current.deselect(e)
+      }
+      current = this
+    },
     reviewDimensions: function () {
       if (this.minw > this.w) this.width = this.minw
-
       if (this.minh > this.h) this.height = this.minh
 
       if (this.parent) {
@@ -228,6 +239,7 @@ export default {
 
           this.$emit('activated')
           this.$emit('update:active', true)
+          this.focus(e)
         }
 
         if (this.draggable) {
@@ -251,6 +263,7 @@ export default {
 
           this.$emit('deactivated')
           this.$emit('update:active', false)
+          current = null
         }
       }
     },
@@ -261,6 +274,7 @@ export default {
       if (e.preventDefault) e.preventDefault()
 
       this.resizing = true
+      this.focus(e)
     },
     fillParent: function (e) {
       if (!this.parent || !this.resizable || !this.maximize) return
