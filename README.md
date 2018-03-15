@@ -260,7 +260,7 @@ Required: `false`
 Defines the selector that should be used to drag the component.
 
 ```html
-<vue-draggable-resizable :drag-handle=".drag">
+<vue-draggable-resizable drag-handle=".drag">
 ```
 
 #### dragCancel
@@ -270,7 +270,7 @@ Required: `false`
 Defines a selector that should be used to prevent drag initialization.
 
 ```html
-<vue-draggable-resizable :drag-cancel=".drag">
+<vue-draggable-resizable drag-cancel=".drag">
 ```
 
 #### maximize
