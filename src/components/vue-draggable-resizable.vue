@@ -10,7 +10,7 @@
       resizing: resizing
     }"
     @mousedown.stop="elmDown"
-    @touchstart.stop="elmDown"
+    @touchstart.prevent.stop="elmDown"
     @dblclick="fillParent"
   >
     <div
@@ -161,7 +161,7 @@ export default {
 
     // touch events bindings
     document.documentElement.addEventListener('touchmove', this.handleMove, true)
-    document.documentElement.addEventListener('touchend', this.deselect, true)
+    document.documentElement.addEventListener('touchend touchcancel', this.deselect, true)
     document.documentElement.addEventListener('touchstart', this.handleUp, true)
 
     this.elmX = parseInt(this.$el.style.left)
@@ -178,7 +178,7 @@ export default {
 
     // touch events bindings removed
     document.documentElement.addEventListener('touchmove', this.handleMove, true)
-    document.documentElement.addEventListener('touchend', this.deselect, true)
+    document.documentElement.addEventListener('touchend touchcancel', this.deselect, true)
     document.documentElement.addEventListener('touchstart', this.handleUp, true)
   },
 
@@ -248,7 +248,7 @@ export default {
       }
     },
     deselect: function (e) {
-      if (e.type.indexOf('touchend') !== -1) {
+      if (e.type.indexOf('touch') !== -1) {
         this.mouseX = e.changedTouches[0].clientX
         this.mouseY = e.changedTouches[0].clientY
       } else {
@@ -337,9 +337,12 @@ export default {
     },
     handleMove: function (e) {
       const isTouchMove = e.type.indexOf('touchmove') !== -1
-
-      this.mouseX = isTouchMove ? e.touches[0].clientX : e.pageX || e.clientX + document.documentElement.scrollLeft
-      this.mouseY = isTouchMove ? e.touches[0].clientY : e.pageY || e.clientY + document.documentElement.scrollTop
+      this.mouseX = isTouchMove
+        ? e.touches[0].clientX
+        : e.pageX || e.clientX + document.documentElement.scrollLeft
+      this.mouseY = isTouchMove
+        ? e.touches[0].clientY
+        : e.pageY || e.clientY + document.documentElement.scrollTop
 
       let diffX = this.mouseX - this.lastMouseX + this.mouseOffX
       let diffY = this.mouseY - this.lastMouseY + this.mouseOffY
@@ -409,6 +412,10 @@ export default {
       }
     },
     handleUp: function (e) {
+      if (e.type.indexOf('touch') !== -1) {
+        this.lastMouseX = e.changedTouches[0].clientX
+        this.lastMouseY = e.changedTouches[0].clientY
+      }
       this.handle = null
       if (this.resizing) {
         this.resizing = false
