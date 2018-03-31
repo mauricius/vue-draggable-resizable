@@ -515,4 +515,15 @@ export default {
     right: -10px;
     cursor: se-resize;
   }
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="handle-"]:before {
+      content: '';
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      top: -10px;
+      position: absolute;
+    }
+  }
 </style>
