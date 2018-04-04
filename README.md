@@ -15,6 +15,7 @@
   * [Props](#props)
   * [Events](#events)
 * [Gotchas](#gotchas)
+* [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
 
@@ -373,6 +374,16 @@ Be careful to use appropriate values for `x`, `y`, `w`, `h`, `minh` and `minh` p
 ### Bonus
 
 If `resizing`, `parent` and `maximize` props are `true` you can double-click on the element to make it fill the parent.
+
+## Roadmap
+
+- [x] Touch support (thanks @ojczeo)
+- [ ] Fix grid issues (#34, #58) - In progress
+- [ ] Implement Storybook - In progress
+- [ ] Aspect ratio on resizing (#26) - In progress
+- [ ] `maxWidth` and `maxHeight` props (#76) - In progress
+- [ ] Different approach with CSS styles (#73)
+- [ ] Watching props for changes (requires refactoring and possibly breaking changes)
 
 ## Contributing
 
