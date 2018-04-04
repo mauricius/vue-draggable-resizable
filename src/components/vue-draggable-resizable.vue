@@ -10,6 +10,7 @@
       resizing: resizing
     }"
     @mousedown.stop="elmDown"
+    @touchstart.prevent.stop="elmDown"
     @dblclick="fillParent"
   >
     <div
@@ -20,6 +21,7 @@
       :class="'handle-' + handle"
       :style="{ display: enabled ? 'block' : 'none'}"
       @mousedown.stop.prevent="handleDown(handle, $event)"
+      @touchstart.stop.prevent="handleDown(handle, $event)"
     ></div>
     <slot></slot>
   </div>
@@ -157,6 +159,11 @@ export default {
     document.documentElement.addEventListener('mousedown', this.deselect, true)
     document.documentElement.addEventListener('mouseup', this.handleUp, true)
 
+    // touch events bindings
+    document.documentElement.addEventListener('touchmove', this.handleMove, true)
+    document.documentElement.addEventListener('touchend touchcancel', this.deselect, true)
+    document.documentElement.addEventListener('touchstart', this.handleUp, true)
+
     this.elmX = parseInt(this.$el.style.left)
     this.elmY = parseInt(this.$el.style.top)
     this.elmW = this.$el.offsetWidth || this.$el.clientWidth
@@ -168,6 +175,11 @@ export default {
     document.documentElement.removeEventListener('mousemove', this.handleMove, true)
     document.documentElement.removeEventListener('mousedown', this.deselect, true)
     document.documentElement.removeEventListener('mouseup', this.handleUp, true)
+
+    // touch events bindings removed
+    document.documentElement.addEventListener('touchmove', this.handleMove, true)
+    document.documentElement.addEventListener('touchend touchcancel', this.deselect, true)
+    document.documentElement.addEventListener('touchstart', this.handleUp, true)
   },
 
   data: function () {
@@ -236,8 +248,13 @@ export default {
       }
     },
     deselect: function (e) {
-      this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
-      this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
+      if (e.type.indexOf('touch') !== -1) {
+        this.mouseX = e.changedTouches[0].clientX
+        this.mouseY = e.changedTouches[0].clientY
+      } else {
+        this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
+        this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
+      }
 
       this.lastMouseX = this.mouseX
       this.lastMouseY = this.mouseY
@@ -319,8 +336,13 @@ export default {
       window.requestAnimationFrame(animate)
     },
     handleMove: function (e) {
-      this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
-      this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
+      const isTouchMove = e.type.indexOf('touchmove') !== -1
+      this.mouseX = isTouchMove
+        ? e.touches[0].clientX
+        : e.pageX || e.clientX + document.documentElement.scrollLeft
+      this.mouseY = isTouchMove
+        ? e.touches[0].clientY
+        : e.pageY || e.clientY + document.documentElement.scrollTop
 
       let diffX = this.mouseX - this.lastMouseX + this.mouseOffX
       let diffY = this.mouseY - this.lastMouseY + this.mouseOffY
@@ -390,6 +412,10 @@ export default {
       }
     },
     handleUp: function (e) {
+      if (e.type.indexOf('touch') !== -1) {
+        this.lastMouseX = e.changedTouches[0].clientX
+        this.lastMouseY = e.changedTouches[0].clientY
+      }
       this.handle = null
       if (this.resizing) {
         this.resizing = false
@@ -488,5 +514,16 @@ export default {
     bottom: -10px;
     right: -10px;
     cursor: se-resize;
+  }
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="handle-"]:before {
+      content: '';
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      top: -10px;
+      position: absolute;
+    }
   }
 </style>
