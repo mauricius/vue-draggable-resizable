@@ -61,14 +61,14 @@ export default {
       type: Number,
       default: 50,
       validator: function (val) {
-        return val > 0
+        return val >= 0
       }
     },
     minh: {
       type: Number,
       default: 50,
       validator: function (val) {
-        return val > 0
+        return val >= 0
       }
     },
     x: {
