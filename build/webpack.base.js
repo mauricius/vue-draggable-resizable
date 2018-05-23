@@ -27,14 +27,14 @@ module.exports = {
         }
       },
       {
-        test: /\.js$/,
-        loader: ['babel-loader'],
-        include: [resolve('src'), resolve('test')]
-      },
-      {
         test: /\.vue$/,
         loader: ['vue-loader']
       },
+      {
+        test: /\.js$/,
+        loader: ['babel-loader'],
+        include: [resolve('src'), resolve('test')]
+      }
     ]
   }
 }
