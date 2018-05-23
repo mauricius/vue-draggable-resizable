@@ -1,1 +1,3 @@
-export { default as VueDraggableResizable } from './components/vue-draggable-resizable'
+import VueDraggableResizable from './components'
+
+export default VueDraggableResizable
