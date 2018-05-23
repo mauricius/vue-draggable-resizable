@@ -12,7 +12,6 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "prepublish": "npm run test; npm run build",
-    "postinstall": "npm run build",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "repository": {
