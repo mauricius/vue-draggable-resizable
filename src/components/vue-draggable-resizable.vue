@@ -28,7 +28,8 @@
 </template>
 
 <script>
-import { matchesSelectorToParentElements } from '../utils/dom'
+import { matchesSelectorToParentElements } from './utils/dom'
+import { isNumber } from './utils/fns'
 
 export default {
   replace: true,
@@ -61,32 +62,28 @@ export default {
       type: Number,
       default: 50,
       validator: function (val) {
-        return val >= 0
+        return val > 0
       }
     },
     minh: {
       type: Number,
       default: 50,
       validator: function (val) {
-        return val >= 0
+        return val > 0
       }
     },
     x: {
       type: Number,
       default: 0,
-      validator: function (val) {
-        return typeof val === 'number'
-      }
+      validator: isNumber
     },
     y: {
       type: Number,
       default: 0,
-      validator: function (val) {
-        return typeof val === 'number'
-      }
+      validator: isNumber
     },
     z: {
-      type: [ String, Number ],
+      type: [String, Number],
       default: 'auto',
       validator: function (val) {
         let valid = (typeof val === 'string') ? val === 'auto' : val >= 0
@@ -447,6 +444,26 @@ export default {
     active: function (val) {
       this.enabled = val
     },
+    x: function (val) {
+      if (isNumber(val)) {
+        this.left = val
+      }
+    },
+    y: function (val) {
+      if (isNumber(val)) {
+        this.top = val
+      }
+    },
+    w: function (val) {
+      if (isNumber(val)) {
+        this.width = val
+      }
+    },
+    h: function (val) {
+      if (isNumber(val)) {
+        this.height = val
+      }
+    },
     z: function (val) {
       if (val >= 0 || val === 'auto') {
         this.zIndex = val
@@ -461,6 +478,7 @@ export default {
     position: absolute;
     box-sizing: border-box;
   }
+
   .handle {
     box-sizing: border-box;
     display: none;
@@ -471,50 +489,59 @@ export default {
     background: #EEE;
     border: 1px solid #333;
   }
+
   .handle-tl {
     top: -10px;
     left: -10px;
     cursor: nw-resize;
   }
+
   .handle-tm {
     top: -10px;
     left: 50%;
     margin-left: -5px;
     cursor: n-resize;
   }
+
   .handle-tr {
     top: -10px;
     right: -10px;
     cursor: ne-resize;
   }
+
   .handle-ml {
     top: 50%;
     margin-top: -5px;
     left: -10px;
     cursor: w-resize;
   }
+
   .handle-mr {
     top: 50%;
     margin-top: -5px;
     right: -10px;
     cursor: e-resize;
   }
+
   .handle-bl {
     bottom: -10px;
     left: -10px;
     cursor: sw-resize;
   }
+
   .handle-bm {
     bottom: -10px;
     left: 50%;
     margin-left: -5px;
     cursor: s-resize;
   }
+
   .handle-br {
     bottom: -10px;
     right: -10px;
     cursor: se-resize;
   }
+
   @media only screen and (max-width: 768px) {
     /* For mobile phones: */
     [class*="handle-"]:before {
