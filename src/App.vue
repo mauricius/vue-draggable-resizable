@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div style="margin: 0 20px">
-      Respect aspect ration: <input type="checkbox" @change="respectAspectRatio = !respectAspectRatio">
+      Respect aspect ration: <input type="checkbox" :checked="respectAspectRatio" @change="respectAspectRatio = !respectAspectRatio">
     </div>
     <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red; position: relative;">
       <VueDraggableResizable :x="50" :y="500 - 200" :w="400" :h="200" axis="xb" :parent="true" :aspect="respectAspectRatio">
@@ -42,7 +42,7 @@ export default {
   name: 'app',
   data () {
     return {
-      respectAspectRatio: false
+      respectAspectRatio: true
     }
   },
   components: {
