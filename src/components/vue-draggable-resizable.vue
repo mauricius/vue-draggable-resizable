@@ -119,7 +119,7 @@ export default {
       type: String,
       default: 'both',
       validator: function (val) {
-        return ['x', 'y', 'both'].indexOf(val) !== -1
+        return ['x', 'xb', 'xt', 'y', 'yl', 'yr', 'both'].indexOf(val) !== -1
       }
     },
     grid: {
@@ -191,6 +191,7 @@ export default {
       left: this.x,
       width: this.w,
       height: this.h,
+      aspectRatio: this.w / this.h,
       resizing: false,
       dragging: false,
       enabled: this.active,
@@ -360,40 +361,86 @@ export default {
 
       if (this.resizing) {
         if (this.handle.indexOf('t') >= 0) {
-          if (this.elmH - dY < this.minh) this.mouseOffY = (dY - (diffY = this.elmH - this.minh))
-          else if (this.parent && this.elmY + dY < this.parentY) this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
+          if (this.elmH - dY < this.minh) {
+            this.mouseOffY = (dY - (diffY = this.elmH - this.minh))
+          } else if (this.parent && this.elmY + dY < this.parentY) {
+            this.mouseOffY = (dY - (diffY = this.parentY - this.elmY))
+          }
+
           this.elmY += diffY
           this.elmH -= diffY
+
           if (this.aspect) {
-            this.elmW = (this.elmH / this.elmW) * this.elmW
+            this.elmW = this.elmH * this.aspectRatio
           }
         }
 
         if (this.handle.indexOf('b') >= 0) {
-          if (this.elmH + dY < this.minh) this.mouseOffY = (dY - (diffY = this.minh - this.elmH))
-          else if (this.parent && this.elmY + this.elmH + dY > this.parentH) this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
+          if (this.elmH + dY < this.minh) {
+            this.mouseOffY = (dY - (diffY = this.minh - this.elmH))
+          } else if (this.parent && this.elmY + this.elmH + dY > this.parentH) {
+            this.mouseOffY = (dY - (diffY = this.parentH - this.elmY - this.elmH))
+          }
+
           this.elmH += diffY
+
           if (this.aspect) {
-            this.elmW = (this.elmH / this.elmW) * this.elmW
+            this.elmW = this.elmH * this.aspectRatio
           }
         }
 
         if (this.handle.indexOf('l') >= 0) {
-          if (this.elmW - dX < this.minw) this.mouseOffX = (dX - (diffX = this.elmW - this.minw))
-          else if (this.parent && this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
+          if (this.elmW - dX < this.minw) {
+            this.mouseOffX = (dX - (diffX = this.elmW - this.minw))
+          } else if (this.parent && this.elmX + dX < this.parentX) {
+            this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
+          }
+
           this.elmX += diffX
           this.elmW -= diffX
+
           if (this.aspect) {
-            this.elmH = (this.elmW / this.elmH) * this.elmH
+            this.elmH = this.elmW / this.aspectRatio
           }
         }
 
         if (this.handle.indexOf('r') >= 0) {
-          if (this.elmW + dX < this.minw) this.mouseOffX = (dX - (diffX = this.minw - this.elmW))
-          else if (this.parent && this.elmX + this.elmW + dX > this.parentW) this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
+          if (this.elmW + dX < this.minw) {
+            this.mouseOffX = (dX - (diffX = this.minw - this.elmW))
+          } else if (this.parent && this.elmX + this.elmW + dX > this.parentW) {
+            this.mouseOffX = (dX - (diffX = this.parentW - this.elmX - this.elmW))
+          }
+
           this.elmW += diffX
+
           if (this.aspect) {
-            this.elmH = (this.elmW / this.elmH) * this.elmH
+            this.elmH = this.elmW / this.aspectRatio
+          }
+        }
+
+        if (this.axis.indexOf('x') >= 0) {
+          let magnetic = 't'
+          if (this.axis.length > 1) {
+            magnetic = this.axis.substring(1, 2)
+          }
+
+          if (magnetic === 't') {
+            this.elmY = this.y
+          } else if (magnetic === 'b') {
+            this.elmY = Math.floor((this.y + this.h) - this.elmH)
+          }
+        }
+
+        if (this.axis.indexOf('y') >= 0) {
+          let magnetic = 'l'
+          if (this.axis.length > 1) {
+            magnetic = this.axis.substring(1, 2)
+          }
+
+          if (magnetic === 'l') {
+            this.elmX = this.x
+          } else if (magnetic === 'r') {
+            this.elmX = Math.floor((this.x + this.w) - this.elmW)
           }
         }
 

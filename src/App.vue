@@ -4,7 +4,7 @@
       Respect aspect ration: <input type="checkbox" @change="respectAspectRatio = !respectAspectRatio">
     </div>
     <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red; position: relative;">
-      <VueDraggableResizable :x="50" :y="50" :w="400" :h="400" axis="x" :parent="true" :aspect="respectAspectRatio">
+      <VueDraggableResizable :x="50" :y="500 - 200" :w="400" :h="200" axis="yr" :parent="true" :aspect="respectAspectRatio">
         <p>Component</p>
       </VueDraggableResizable>
     </div>
