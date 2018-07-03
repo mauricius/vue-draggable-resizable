@@ -293,11 +293,11 @@ export default {
           window.requestAnimationFrame(animate)
         }
 
-        if (this.axis === 'x') {
+        if (this.axis.indexOf('x') >= 0) {
           if (
             this.width === this.parentW && this.left === this.parentX
           ) done = true
-        } else if (this.axis === 'y') {
+        } else if (this.axis.indexOf('y') >= 0) {
           if (
             this.height === this.parentH && this.top === this.parentY
           ) done = true
@@ -310,7 +310,7 @@ export default {
           ) done = true
         }
 
-        if (this.axis === 'x' || this.axis === 'both') {
+        if (this.axis.indexOf('x') >= 0 || this.axis === 'both') {
           if (this.width < this.parentW) {
             this.width++
             this.elmW++
@@ -322,7 +322,7 @@ export default {
           }
         }
 
-        if (this.axis === 'y' || this.axis === 'both') {
+        if (this.axis.indexOf('y') >= 0 || this.axis === 'both') {
           if (this.height < this.parentH) {
             this.height++
             this.elmH++
@@ -463,10 +463,11 @@ export default {
         this.elmX += diffX
         this.elmY += diffY
 
-        if (this.axis === 'x' || this.axis === 'both') {
+        if (this.axis.indexOf('x') >= 0 || this.axis === 'both') {
           this.left = (Math.round(this.elmX / this.grid[0]) * this.grid[0])
         }
-        if (this.axis === 'y' || this.axis === 'both') {
+
+        if (this.axis.indexOf('y') >= 0 || this.axis === 'both') {
           this.top = (Math.round(this.elmY / this.grid[1]) * this.grid[1])
         }
 
