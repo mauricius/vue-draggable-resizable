@@ -221,7 +221,7 @@ export default {
       this.elmW = this.width
       this.elmH = this.height
 
-      this.$emit('resizing', this.left, this.top, this.width, this.height)
+      this.$emit('resizing', this.left, this.top, this.width, this.height, this.$el)
     },
     elmDown: function (e) {
       const target = e.target || e.srcElement
@@ -238,8 +238,8 @@ export default {
         if (!this.enabled) {
           this.enabled = true
 
-          this.$emit('activated')
-          this.$emit('update:active', true)
+          this.$emit('activated', this.$el)
+          this.$emit('update:active', true, this.$el)
         }
 
         if (this.draggable) {
@@ -266,8 +266,8 @@ export default {
         if (this.enabled) {
           this.enabled = false
 
-          this.$emit('deactivated')
-          this.$emit('update:active', false)
+          this.$emit('deactivated', this.$el)
+          this.$emit('update:active', false, this.$el)
         }
       }
     },
@@ -330,7 +330,7 @@ export default {
           }
         }
 
-        this.$emit('resizing', this.left, this.top, this.width, this.height)
+        this.$emit('resizing', this.left, this.top, this.width, this.height, this.$el)
       }
 
       window.requestAnimationFrame(animate)
@@ -388,7 +388,7 @@ export default {
         this.width = (Math.round(this.elmW / this.grid[0]) * this.grid[0])
         this.height = (Math.round(this.elmH / this.grid[1]) * this.grid[1])
 
-        this.$emit('resizing', this.left, this.top, this.width, this.height)
+        this.$emit('resizing', this.left, this.top, this.width, this.height, this.$el)
       } else if (this.dragging) {
         if (this.parent) {
           if (this.elmX + dX < this.parentX) this.mouseOffX = (dX - (diffX = this.parentX - this.elmX))
@@ -408,7 +408,7 @@ export default {
           this.top = (Math.round(this.elmY / this.grid[1]) * this.grid[1])
         }
 
-        this.$emit('dragging', this.left, this.top)
+        this.$emit('dragging', this.left, this.top, this.$el)
       }
     },
     handleUp: function (e) {
@@ -419,11 +419,11 @@ export default {
       this.handle = null
       if (this.resizing) {
         this.resizing = false
-        this.$emit('resizestop', this.left, this.top, this.width, this.height)
+        this.$emit('resizestop', this.left, this.top, this.width, this.height, this.$el)
       }
       if (this.dragging) {
         this.dragging = false
-        this.$emit('dragstop', this.left, this.top)
+        this.$emit('dragstop', this.left, this.top, this.$el)
       }
 
       this.elmX = this.left
