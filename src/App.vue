@@ -6,6 +6,11 @@
       </VueDraggableResizable>
     </div>
     <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red; position: relative;">
+      <VueDraggableResizable :x="50" :y="50" :w="400" :h="400" :parent="true" :maximize="true" :animate="true">
+        <p>Component - Snap to parent size on maximize</p>
+      </VueDraggableResizable>
+    </div>
+    <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red; position: relative;">
       <h2>Grid 30x30</h2>
       <VueDraggableResizable :x="50" :y="50" :w="400" :h="400" :grid="[30, 30]" :parent="true">
       <p>Component</p>

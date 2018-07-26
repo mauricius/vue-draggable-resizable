@@ -130,6 +130,9 @@ export default {
     },
     maximize: {
       type: Boolean, default: false
+    },
+    amimate: {
+      type: Boolean, default: true
     }
   },
 
@@ -282,58 +285,65 @@ export default {
     fillParent: function (e) {
       if (!this.parent || !this.resizable || !this.maximize) return
 
-      let done = false
+      if (this.animate) {
+        let done = false
 
-      const animate = () => {
-        if (!done) {
-          window.requestAnimationFrame(animate)
-        }
-
-        if (this.axis === 'x') {
-          if (
-            this.width === this.parentW && this.left === this.parentX
-          ) done = true
-        } else if (this.axis === 'y') {
-          if (
-            this.height === this.parentH && this.top === this.parentY
-          ) done = true
-        } else if (this.axis === 'both') {
-          if (
-            this.width === this.parentW &&
-            this.height === this.parentH &&
-            this.top === this.parentY &&
-            this.left === this.parentX
-          ) done = true
-        }
-
-        if (this.axis === 'x' || this.axis === 'both') {
-          if (this.width < this.parentW) {
-            this.width++
-            this.elmW++
+        const animate = () => {
+          if (!done) {
+            window.requestAnimationFrame(animate)
           }
 
-          if (this.left > this.parentX) {
-            this.left--
-            this.elmX--
+          if (this.axis === 'x') {
+            if (
+              this.width === this.parentW && this.left === this.parentX
+            ) done = true
+          } else if (this.axis === 'y') {
+            if (
+              this.height === this.parentH && this.top === this.parentY
+            ) done = true
+          } else if (this.axis === 'both') {
+            if (
+              this.width === this.parentW &&
+              this.height === this.parentH &&
+              this.top === this.parentY &&
+              this.left === this.parentX
+            ) done = true
           }
+
+          if (this.axis === 'x' || this.axis === 'both') {
+            if (this.width < this.parentW) {
+              this.width++
+              this.elmW++
+            }
+
+            if (this.left > this.parentX) {
+              this.left--
+              this.elmX--
+            }
+          }
+
+          if (this.axis === 'y' || this.axis === 'both') {
+            if (this.height < this.parentH) {
+              this.height++
+              this.elmH++
+            }
+
+            if (this.top > this.parentY) {
+              this.top--
+              this.elmY--
+            }
+          }
+
+          this.$emit('resizing', this.left, this.top, this.width, this.height)
         }
 
-        if (this.axis === 'y' || this.axis === 'both') {
-          if (this.height < this.parentH) {
-            this.height++
-            this.elmH++
-          }
-
-          if (this.top > this.parentY) {
-            this.top--
-            this.elmY--
-          }
-        }
-
-        this.$emit('resizing', this.left, this.top, this.width, this.height)
+        window.requestAnimationFrame(animate)
+      } else {
+        this.width = this.parentW
+        this.height = this.parentH
+        this.top = this.parentY
+        this.left = this.parentX
       }
-
-      window.requestAnimationFrame(animate)
     },
     handleMove: function (e) {
       const isTouchMove = e.type.indexOf('touchmove') !== -1
