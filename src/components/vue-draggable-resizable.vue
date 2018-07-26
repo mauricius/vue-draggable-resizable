@@ -339,10 +339,18 @@ export default {
 
         window.requestAnimationFrame(animate)
       } else {
-        this.width = this.parentW
-        this.height = this.parentH
-        this.top = this.parentY
-        this.left = this.parentX
+        if (this.axis === 'x') {
+          this.width = this.parentW
+          this.left = this.parentX
+        } else if (this.axis === 'y') {
+          this.height = this.parentH
+          this.top = this.parentY
+        } else if (this.axis === 'both') {
+          this.width = this.parentW
+          this.height = this.parentH
+          this.top = this.parentY
+          this.left = this.parentX
+        }
       }
     },
     handleMove: function (e) {
