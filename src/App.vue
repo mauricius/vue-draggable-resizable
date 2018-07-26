@@ -6,8 +6,16 @@
       </VueDraggableResizable>
     </div>
     <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red; position: relative;">
-      <VueDraggableResizable :x="50" :y="50" :w="400" :h="400" :parent="true" :maximize="true" :animate="true">
-        <p>Component - Snap to parent size on maximize</p>
+      <VueDraggableResizable :x="50" :y="50" :w="150" :h="150" :parent="true" :maximize="true" :animate="true">
+        <p>Component - Snap to parent size on maximize (both)</p>
+      </VueDraggableResizable>
+
+      <VueDraggableResizable :x="200" :y="50" :w="150" :h="150" :parent="true" :maximize="true" :animate="true" axis="x" :handles="['ml','mr']">
+        <p>Component - Snap to parent size on maximize (x)</p>
+      </VueDraggableResizable>
+
+      <VueDraggableResizable :x="350" :y="50" :w="150" :h="150" :parent="true" :maximize="true" :animate="true" axis="y" :handles="['tm','bm']">
+        <p>Component - Snap to parent size on maximize (y)</p>
       </VueDraggableResizable>
     </div>
     <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red; position: relative;">
