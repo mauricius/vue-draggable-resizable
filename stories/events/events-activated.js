@@ -2,26 +2,21 @@ import Vue from 'vue'
 
 export default () => ({
   template: `
-    <vue-draggable-resizable :w="200" :h="200" @activated="onActivated">
+    <vue-draggable-resizable :w="200" :h="200" @activated="onActivated" @deactivated="onDeactivated">
       <p v-if="active">The component has been activated.</p>
     </vue-draggable-resizable>
   `,
   data () {
     return {
-      active: false,
-      timer: null
+      active: false
     }
-  },
-  beforeDestroy: function () {
-    clearTimeout(this.timer)
   },
   methods: {
     onActivated () {
       this.active = true
-
-      this.timer = setTimeout(() => {
-        this.active = false
-      }, 1000)
+    },
+    onDeactivated () {
+      this.active = false
     }
   }
 })

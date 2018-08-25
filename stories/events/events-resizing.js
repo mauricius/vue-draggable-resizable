@@ -24,8 +24,10 @@ export default () => ({
       this.width = width
       this.height = height
     },
-    onResizeStop: function (x, y) {
+    onResizeStop: function (x, y, width, height) {
       this.resizing = false
+
+      console.log(arguments)
     }
   }
 })
