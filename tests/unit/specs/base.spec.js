@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 

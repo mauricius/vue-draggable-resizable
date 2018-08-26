@@ -1,12 +1,10 @@
-import Vue from 'vue'
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
-import syn from 'syn'
 
 let wrapper
 
 describe('style props', function () {
-  it('should provide the className as prop', function () {
+  it('should provide the default class name as prop', function () {
     wrapper = mount(VueDraggableResizable, {
       propsData: {
         className: 'my-class'
@@ -17,7 +15,7 @@ describe('style props', function () {
     expect(wrapper.classes()).to.contain('my-class')
   })
 
-  it('should provide the classNameActive as prop', function () {
+  it('should provide the active class name as prop', function () {
     wrapper = mount(VueDraggableResizable, {
       propsData: {
         classNameActive: 'my-active-class',
@@ -29,7 +27,7 @@ describe('style props', function () {
     expect(wrapper.classes()).to.contain('my-active-class')
   })
 
-  it('should provide the classNameDragging as prop', function () {
+  it('should provide the dragging class name as prop', function () {
     wrapper = mount(VueDraggableResizable, {
       propsData: {
         classNameDragging: 'my-dragging-class'
@@ -39,7 +37,7 @@ describe('style props', function () {
     expect(wrapper.props().classNameDragging).to.equal('my-dragging-class')
   })
 
-  it('should provide the classNameResizing as prop', function () {
+  it('should provide the resizing class name as prop', function () {
     wrapper = mount(VueDraggableResizable, {
       propsData: {
         classNameResizing: 'my-resizing-class'
@@ -49,7 +47,7 @@ describe('style props', function () {
     expect(wrapper.props().classNameResizing).to.equal('my-resizing-class')
   })
 
-  it('should provide the classNameHandle as prop', function () {
+  it('should provide the handle class name as prop', function () {
     wrapper = mount(VueDraggableResizable, {
       propsData: {
         classNameHandle: 'my-handle-class'
@@ -60,14 +58,28 @@ describe('style props', function () {
     expect(wrapper.findAll('div.my-handle-class').length).to.equal(8)
   })
 
-  it('should provide a component for handles using named slots', function () {
+  it('should provide handles for the component using named slots', function () {
     wrapper = mount(VueDraggableResizable, {
       slots: {
-        tl: '<span>TL</span>'
+        tl: '<span>TL</span>',
+        tm: '<span>TM</span>',
+        tr: '<span>TR</span>',
+        mr: '<span>MR</span>',
+        br: '<span>BR</span>',
+        bm: '<span>BM</span>',
+        bl: '<span>BL</span>',
+        ml: '<span>ML</span>'
       }
     })
 
     expect(wrapper.find('div.handle-tl').html()).to.contain('<span>TL</span>')
+    expect(wrapper.find('div.handle-tm').html()).to.contain('<span>TM</span>')
+    expect(wrapper.find('div.handle-tr').html()).to.contain('<span>TR</span>')
+    expect(wrapper.find('div.handle-mr').html()).to.contain('<span>MR</span>')
+    expect(wrapper.find('div.handle-br').html()).to.contain('<span>BR</span>')
+    expect(wrapper.find('div.handle-bm').html()).to.contain('<span>BM</span>')
+    expect(wrapper.find('div.handle-bl').html()).to.contain('<span>BL</span>')
+    expect(wrapper.find('div.handle-ml').html()).to.contain('<span>ML</span>')
   })
 
   afterEach(() => wrapper.destroy())

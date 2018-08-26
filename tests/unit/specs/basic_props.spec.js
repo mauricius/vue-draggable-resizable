@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
@@ -86,7 +85,7 @@ describe('basic props', function () {
         }
       })
 
-      expect(wrapper.props().active).to.equal(true)
+      expect(wrapper.props().active).to.be.true
       expect(wrapper.classes()).to.contain('active')
     })
 
@@ -97,7 +96,7 @@ describe('basic props', function () {
         }
       })
 
-      expect(wrapper.find('div.handle').isVisible()).to.equal(false)
+      expect(wrapper.find('div.handle').isVisible()).to.be.false
     })
 
     it('should show handles if the element is active', function () {
@@ -139,6 +138,8 @@ describe('basic props', function () {
 
       wrapper.vm.$nextTick(() => {
         expect(wrapper.classes()).to.not.contain('active')
+        expect(wrapper.emitted()).to.have.property('deactivated')
+        expect(wrapper.emitted()).to.have.property('update:active')
 
         done()
       })
@@ -159,12 +160,14 @@ describe('basic props', function () {
         }
       })
 
-      expect(wrapper.props().preventDeactivation).to.equal(true)
+      expect(wrapper.props().preventDeactivation).to.be.true
 
       syn.click(document.documentElement)
 
       wrapper.vm.$nextTick(() => {
-        expect(wrapper.props().active).to.equal(true)
+        expect(wrapper.props().active).to.be.true
+        expect(wrapper.emitted()).to.not.have.property('deactivated')
+
         done()
       })
     })

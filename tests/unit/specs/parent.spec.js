@@ -1,6 +1,5 @@
-import Vue from 'vue'
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import syn from 'syn'
 
 let wrapper
@@ -9,7 +8,6 @@ describe('parent prop', function () {
   /************
    * Dragging *
    ************/
-
   it('should drag the component outside the parent if parent prop is false', function (done) {
     const ParentComponent = {
       template: `<div class="parent" style="width: 200px; height: 200px;">
@@ -84,6 +82,9 @@ describe('parent prop', function () {
     })
   })
 
+  /************
+   * Resizing *
+   ************/
   it('should resize the component outside the parent if parent prop is false', function (done) {
     const ParentComponent = {
       template: `<div class="parent" style="width: 200px; height: 200px;">

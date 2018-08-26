@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
@@ -30,7 +29,7 @@ describe('grid prop', function () {
     expect(wrapper.props().grid[1]).to.equal(30)
   })
 
-  it('should not drag the component on the grid if the drag is too small', function (done) {
+  it('should not drag the component on the grid if the drag movement is too small', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -65,7 +64,7 @@ describe('grid prop', function () {
     })
   })
 
-  it('should drag the component on the grid if the drag is correct', function (done) {
+  it('should drag the component on the grid if the drag movement matches the grid', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -100,7 +99,7 @@ describe('grid prop', function () {
     })
   })
 
-  it('should not resize the component on the grid if the resize is too small', function (done) {
+  it('should not resize the component on the grid if the resize movement is too small', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -136,7 +135,7 @@ describe('grid prop', function () {
     })
   })
 
-  it('should resize the component on the grid if the resize is correct', function (done) {
+  it('should resize the component on the grid if the resize movement matches the grid', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -172,7 +171,7 @@ describe('grid prop', function () {
     })
   })
 
-  it('should not resize the component lower grid values even if minHeight and minWidth are lower', function (done) {
+  it('should not resize the component under lower grid values even if minHeight and minWidth are lower', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
