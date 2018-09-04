@@ -14,7 +14,8 @@
     "unit": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/unit/karma.conf.js --single-run",
     "unit-watch": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/unit/karma.conf.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "docs": "build-storybook -c .storybook -o docs"
+    "docs": "build-storybook -c .storybook -o docs",
+    "prepublish": "npm run unit; npm run build-bundle",
   },
   "peerDependencies": {
     "vue": "^2.5.16"
@@ -45,6 +46,13 @@
     "syn": "^0.5.0",
     "vue-template-compiler": "^2.5.16"
   },
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
