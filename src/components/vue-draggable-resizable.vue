@@ -10,7 +10,7 @@
       resizing: resizing
     }"
     @mousedown.stop="elmDown"
-    @touchstart.prevent.stop="elmDown"
+    @touchstart.stop="elmDown"
     @dblclick="fillParent"
   >
     <div
@@ -232,6 +232,8 @@ export default {
           (this.dragCancel && matchesSelectorToParentElements(target, this.dragCancel, this.$el))) {
           return
         }
+
+        e.preventDefault()
 
         this.reviewDimensions()
 
