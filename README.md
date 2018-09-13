@@ -378,12 +378,12 @@ If `resizing`, `parent` and `maximize` props are `true` you can double-click on 
 ## Roadmap
 
 - [x] Touch support (thanks @ojczeo)
-- [ ] Fix grid issues (#34, #58) - In progress
-- [ ] Implement Storybook - In progress
-- [ ] Aspect ratio on resizing (#26) - In progress
+- [x] Fix grid issues (#34, #58) - Version 2
+- [x] Implement Storybook - Version 2
+- [x] Aspect ratio on resizing (#26) - Version 2
 - [ ] `maxWidth` and `maxHeight` props (#76) - In progress
-- [ ] Different approach with CSS styles (#73)
-- [ ] Watching props for changes (requires refactoring and possibly breaking changes)
+- [x] Different approach with CSS styles (#73) - Version 2
+- [x] Watching props for changes (requires refactoring and possibly breaking changes) - Version 2
 
 ## Contributing
 
