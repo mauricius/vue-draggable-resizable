@@ -40,7 +40,7 @@
       <section class="section-description">
         <h2 class="section-title">Component costraind in parent</h2>
         <p>Component that cannot be dragged or resized outside its parent element, defined with the prop <code>:parent="true"</code></p>
-        <pre>&lt;vue-draggable-resizable :parent="true"&gt;
+        <pre>&lt;vue-draggable-resizable :parent="true" :maximize="true"&gt;
   &lt;p&gt;You cannot move or resize me outside my parent.&lt;/p&gt;
 &lt;/vue-draggable-resizable&gt;</pre>
         <p><b>Bonus:</b> a component constrained in parent, can automatically fill the space just by double-clicking on it.</p>
@@ -48,7 +48,7 @@
 
       <div id="app2">
         <div style="height: 300px; border: 1px solid blue; margin: 1em;">
-          <vue-draggable-resizable :parent="true" style="border: 1px solid black;">
+          <vue-draggable-resizable :parent="true" :maximize="true" style="border: 1px solid black;">
             <p>You cannot move me or resize me outside my parent.</p>
           </vue-draggable-resizable>
         </div>
