@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { matchesSelectorToParentElements } from '../utils/dom'
+import { matchesSelectorToParentElements } from '../utils/dom' // 将选择器与父元素匹配
 
 export default {
   replace: true,
@@ -130,6 +130,22 @@ export default {
     },
     maximize: {
       type: Boolean, default: false
+    },
+    /* 定义组件是否开启冲突检测 */
+    isConflictCheck: {
+      type: Boolean, default: false
+    },
+    /* 是否开启元素对齐 */
+    snap: {
+      type: Boolean, default: false
+    },
+    /* 当调用对齐时，draggable 与元素之间的距离，以像素为单位 */
+    snapTolerance: {
+      type: Number,
+      default: 5,
+      validator: function (val) {
+        return typeof val === 'number'
+      }
     }
   },
 
@@ -164,10 +180,9 @@ export default {
     document.documentElement.addEventListener('touchend touchcancel', this.deselect, true)
     document.documentElement.addEventListener('touchstart', this.handleUp, true)
 
-    this.elmX = parseInt(this.$el.style.left)
-    this.elmY = parseInt(this.$el.style.top)
-    this.elmW = this.$el.offsetWidth || this.$el.clientWidth
-    this.elmH = this.$el.offsetHeight || this.$el.clientHeight
+    this.setSnap()
+    this.setConflictCheck()
+    this.getElmPosition()
 
     this.reviewDimensions()
   },
@@ -192,11 +207,125 @@ export default {
       dragging: false,
       enabled: this.active,
       handle: null,
-      zIndex: this.z
+      zIndex: this.z,
+      /* 如果组件之间存在冲突，用来记录原位置信息 */
+      restoreY: 0,
+      restoreX: 0,
+      restoreW: 0,
+      restoreH: 0
     }
   },
 
   methods: {
+    setSnap: function () {
+      if (this.snap) {
+        this.$el.setAttribute('data-is-snap', 'true')
+      } else {
+        this.$el.setAttribute('data-is-snap', 'false')
+      }
+    }, // 设置对齐元素
+    snapCheck: function () {
+      if (this.snap) {
+        let p = this.$el.parentNode.childNodes // 获取当前父节点下所有子节点
+        if (p.length > 1) {
+          let x1 = this.left
+          let x2 = this.left + this.width
+          let y1 = this.top
+          let y2 = this.top + this.height
+          for (let i = 0; i < p.length; i++) {
+            if (p[i] !== this.$el && p[i].className !== undefined && p[i].getAttribute('data-is-snap') !== 'false') {
+              let l = p[i].offsetLeft // 对齐目标的left
+              let r = l + p[i].offsetWidth // 对齐目标右侧距离窗口的left
+              let t = p[i].offsetTop// 对齐目标的top
+              let b = t + p[i].offsetHeight // 对齐目标右侧距离窗口的top
+
+              let ts = Math.abs(t - y2) <= this.snapTolerance
+              let bs = Math.abs(b - y1) <= this.snapTolerance
+              let ls = Math.abs(l - x2) <= this.snapTolerance
+              let rs = Math.abs(r - x1) <= this.snapTolerance
+              if (ts) {
+                this.top = t - this.height
+              }
+              if (bs) {
+                this.top = b
+              }
+              if (ls) {
+                this.left = l - this.width
+              }
+              if (rs) {
+                this.left = r
+              }
+            }
+          }
+        }
+      }
+    }, // 检测对齐元素
+    getElmPosition: function () {
+      this.elmX = parseInt(this.$el.style.left)
+      this.elmY = parseInt(this.$el.style.top)
+      this.elmW = this.$el.offsetWidth || this.$el.clientWidth
+      this.elmH = this.$el.offsetHeight || this.$el.clientHeight
+    }, // 获得激活组件的位置信息
+    setConflictCheck: function () {
+      if (this.isConflictCheck) {
+        this.$el.setAttribute('data-is-check', 'true')
+      } else {
+        this.$el.setAttribute('data-is-check', 'false')
+      }
+    }, // 设置冲突检测
+    conflictCheck: function () {
+      if (this.isConflictCheck) {
+        let p = this.$el.parentNode.childNodes // 获取当前父节点下所有子节点
+        if (p.length > 1) {
+          for (let i = 0; i < p.length; i++) {
+            if (p[i] !== this.$el && p[i].className !== undefined && p[i].getAttribute('data-is-check') !== 'false') {
+              let tw = p[i].offsetWidth
+              let th = p[i].offsetHeight
+              let tl = p[i].offsetLeft
+              let tt = p[i].offsetTop
+              // 如果冲突，就将回退到移动前的位置
+              if (this.top >= tt && this.left >= tl && tt + th > this.top && tl + tw > this.left ||
+                this.top <= tt && this.left < tl && this.top + this.height > tt && this.left + this.width > tl) { /* 左上角与右下角重叠 */
+                this.top = this.restoreY
+                this.left = this.restoreX
+                this.width = this.restoreW
+                this.height = this.restoreH
+              } else if (this.left <= tl && this.top >= tt && this.left + this.width > tl && this.top < tt + th ||
+                this.top < tt && this.left > tl && this.top + this.height > tt && this.left < tl + tw) { /* 右上角与左下角重叠 */
+                this.top = this.restoreY
+                this.left = this.restoreX
+                this.width = this.restoreW
+                this.height = this.restoreH
+              } else if (this.top < tt && this.left <= tl && this.top + this.height > tt && this.left + this.width > tl ||
+                this.top > tt && this.left >= tl && this.top < tt + th && this.left < tl + tw) { /* 下边与上边重叠 */
+                this.top = this.restoreY
+                this.left = this.restoreX
+                this.width = this.restoreW
+                this.height = this.restoreH
+              } else if (this.top <= tt && this.left >= tl && this.top + this.height > tt && this.left < tl + tw ||
+                this.top >= tt && this.left <= tl && this.top < tt + th && this.left > tl + tw) { /* 上边与下边重叠（宽度不一样） */
+                this.top = this.restoreY
+                this.left = this.restoreX
+                this.width = this.restoreW
+                this.height = this.restoreH
+              } else if (this.left >= tl && this.top >= tt && this.left < tl + tw && this.top < tt + th ||
+                this.top > tt && this.left <= tl && this.left + this.width > tl && this.top < tt + th) { /* 左边与右边重叠 */
+                this.top = this.restoreY
+                this.left = this.restoreX
+                this.width = this.restoreW
+                this.height = this.restoreH
+              } else if (this.top <= tt && this.left >= tl && this.top + this.height > tt && this.left < tl + tw ||
+                this.top >= tt && this.left <= tl && this.top < tt + th && this.left + this.width > tl) { /* 左边与右边重叠（高度不一样） */
+                this.top = this.restoreY
+                this.left = this.restoreX
+                this.width = this.restoreW
+                this.height = this.restoreH
+              }
+            }
+          }
+        }
+      }
+    }, // 冲突检测
     reviewDimensions: function () {
       if (this.minw > this.w) this.width = this.minw
 
@@ -222,7 +351,7 @@ export default {
       this.elmH = this.height
 
       this.$emit('resizing', this.left, this.top, this.width, this.height)
-    },
+    }, // 检测尺寸
     elmDown: function (e) {
       const target = e.target || e.srcElement
 
@@ -243,12 +372,18 @@ export default {
           this.$emit('activated')
           this.$emit('update:active', true)
         }
-
+        // 激活区域块时获取当前区域块的X,Y,W,H
+        this.getElmPosition()
         if (this.draggable) {
           this.dragging = true
+          // 将移动前的位置存储
+          this.restoreY = this.top
+          this.restoreX = this.left
+          this.restoreW = this.width
+          this.restoreH = this.height
         }
       }
-    },
+    }, // 鼠标激活当前组件
     deselect: function (e) {
       if (e.type.indexOf('touch') !== -1) {
         this.mouseX = e.changedTouches[0].clientX
@@ -272,15 +407,23 @@ export default {
           this.$emit('update:active', false)
         }
       }
-    },
+    }, // 取消激活
     handleDown: function (handle, e) {
       this.handle = handle
 
       if (e.stopPropagation) e.stopPropagation()
       if (e.preventDefault) e.preventDefault()
 
+      // 当区域块处于被激活状态时，手柄被点击时获取当前区域块的X,Y,W,H（如果不加进来，会出现区域块会跳动到回退前的位置）
+      this.getElmPosition()
+
+      this.restoreY = this.top           // 将移动前的位置存储
+      this.restoreX = this.left
+      this.restoreW = this.width
+      this.restoreH = this.height
+      // END
       this.resizing = true
-    },
+    }, // 鼠标按下控制点
     fillParent: function (e) {
       if (!this.parent || !this.resizable || !this.maximize) return
 
@@ -336,7 +479,7 @@ export default {
       }
 
       window.requestAnimationFrame(animate)
-    },
+    }, // 最大化
     handleMove: function (e) {
       const isTouchMove = e.type.indexOf('touchmove') !== -1
       this.mouseX = isTouchMove
@@ -409,10 +552,10 @@ export default {
         if (this.axis === 'y' || this.axis === 'both') {
           this.top = (Math.round(this.elmY / this.grid[1]) * this.grid[1])
         }
-
+        this.snapCheck()
         this.$emit('dragging', this.left, this.top)
       }
-    },
+    }, // 鼠标移动
     handleUp: function (e) {
       if (e.type.indexOf('touch') !== -1) {
         this.lastMouseX = e.changedTouches[0].clientX
@@ -421,16 +564,18 @@ export default {
       this.handle = null
       if (this.resizing) {
         this.resizing = false
+        this.conflictCheck() // 冲突检测
         this.$emit('resizestop', this.left, this.top, this.width, this.height)
       }
       if (this.dragging) {
         this.dragging = false
+        this.conflictCheck() // 冲突检测
         this.$emit('dragstop', this.left, this.top)
       }
 
       this.elmX = this.left
       this.elmY = this.top
-    }
+    } // 鼠标松开
   },
 
   computed: {
@@ -474,47 +619,47 @@ export default {
     border: 1px solid #333;
   }
   .handle-tl {
-    top: -10px;
-    left: -10px;
+    top: -5px;
+    left: -5px;
     cursor: nw-resize;
   }
   .handle-tm {
-    top: -10px;
+    top: -5px;
     left: 50%;
     margin-left: -5px;
     cursor: n-resize;
   }
   .handle-tr {
-    top: -10px;
-    right: -10px;
+    top: -5px;
+    right: -5px;
     cursor: ne-resize;
   }
   .handle-ml {
     top: 50%;
     margin-top: -5px;
-    left: -10px;
+    left: -5px;
     cursor: w-resize;
   }
   .handle-mr {
     top: 50%;
     margin-top: -5px;
-    right: -10px;
+    right: -5px;
     cursor: e-resize;
   }
   .handle-bl {
-    bottom: -10px;
-    left: -10px;
+    bottom: -5px;
+    left: -5px;
     cursor: sw-resize;
   }
   .handle-bm {
-    bottom: -10px;
+    bottom: -5px;
     left: 50%;
     margin-left: -5px;
     cursor: s-resize;
   }
   .handle-br {
-    bottom: -10px;
-    right: -10px;
+    bottom: -5px;
+    right: -5px;
     cursor: se-resize;
   }
   @media only screen and (max-width: 768px) {
