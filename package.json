@@ -1,6 +1,6 @@
 {
-  "name": "vue-draggable-resizable",
-  "version": "1.7.2",
+  "name": "vue-draggable-resizable-gorkys",
+  "version": "1.0.0",
   "description": "Vue2 Component for resizable and draggable elements",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
   "main": "dist/index.js",
@@ -16,13 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mauricius/vue-draggable-resizable.git"
+    "url": "https://github.com/gorkys/vue-draggable-resizable.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mauricius/vue-draggable-resizable/issues"
+    "url": "https://github.com/gorkys/vue-draggable-resizable/issues"
   },
-  "homepage": "https://github.com/mauricius/vue-draggable-resizable",
+  "homepage": "https://github.com/gorkys/vue-draggable-resizable",
   "keywords": [
     "vue",
     "component",

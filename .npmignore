@@ -2,3 +2,5 @@
 .git
 test
 npm-debug.log
+.idea/
+.git/
