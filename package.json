@@ -1,17 +1,15 @@
 {
   "name": "vue-draggable-resizable-gorkys",
-  "version": "1.0.0",
-  "description": "Vue2 Component for resizable and draggable elements",
+  "version": "1.0.1",
+  "description": "Vue 用于可调整大小和可拖动元素的组件并支持组件之间的冲突检测与组件对齐",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
     "dev": "node build/dev-server.js",
     "docs": "webpack --config build/webpack.docs.js",
-    "build": "rm -rf dist && webpack --config build/webpack.dist.js",
+    "build": "webpack --config build/webpack.dist.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "test": "npm run unit",
-    "prepublish": "npm run test; npm run build",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "repository": {
