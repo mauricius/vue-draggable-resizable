@@ -9,7 +9,7 @@
       [classNameResizable]: resizable
     }, className]"
     @mousedown.stop="elementDown"
-    @touchstart.prevent.stop="elementTouchDown"
+    @touchstart.stop="elementTouchDown"
   >
     <div
       v-for="handle in actualHandles"
@@ -313,6 +313,8 @@ export default {
         ) {
           return
         }
+
+        e.preventDefault()
 
         if (!this.enabled) {
           this.enabled = true
