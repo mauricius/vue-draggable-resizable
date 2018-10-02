@@ -449,6 +449,16 @@ export default {
     active: function (val) {
       this.enabled = val
     },
+    x: function (val) {
+      if (val >= 0) {
+        this.left = val
+      }
+    },
+    w: function (val) {
+      if (val >= 0) {
+        this.width = val
+      }
+    },
     z: function (val) {
       if (val >= 0 || val === 'auto') {
         this.zIndex = val
