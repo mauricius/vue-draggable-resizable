@@ -237,12 +237,12 @@ export default {
 
         this.reviewDimensions()
 
-        if (!this.enabled) {
-          this.enabled = true
+        // if (!this.enabled) {
+        //   this.enabled = true
 
-          this.$emit('activated')
-          this.$emit('update:active', true)
-        }
+        //   this.$emit('activated')
+        //   this.$emit('update:active', true)
+        // }
 
         if (this.draggable) {
           this.dragging = true
@@ -264,14 +264,14 @@ export default {
       const target = e.target || e.srcElement
       const regex = new RegExp('handle-([trmbl]{2})', '')
 
-      if (!this.$el.contains(target) && !regex.test(target.className)) {
-        if (this.enabled) {
-          this.enabled = false
+      // if (!this.$el.contains(target) && !regex.test(target.className)) {
+      //   if (this.enabled) {
+      //     this.enabled = false
 
-          this.$emit('deactivated')
-          this.$emit('update:active', false)
-        }
-      }
+      //     this.$emit('deactivated')
+      //     this.$emit('update:active', false)
+      //   }
+      // }
     },
     handleDown: function (handle, e) {
       this.handle = handle
