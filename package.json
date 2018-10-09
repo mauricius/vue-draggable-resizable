@@ -3,7 +3,7 @@
   "version": "1.7.2",
   "description": "Vue2 Component for resizable and draggable elements",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
     "dev": "node build/dev-server.js",
