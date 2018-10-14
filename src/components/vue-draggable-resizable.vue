@@ -400,6 +400,7 @@ export default {
       this.bounds = this.calcResizeLimits()
 
       addEvent(document.documentElement, eventsFor.move, this.handleMove)
+      addEvent(document.documentElement, eventsFor.stop, this.handleUp)
     },
     calcResizeLimits () {
       let minW = this.minW

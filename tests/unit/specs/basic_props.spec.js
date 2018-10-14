@@ -111,6 +111,40 @@ describe('basic props', function () {
       expect(wrapper.find('div.handle').isVisible()).to.be.true
     })
 
+    it('should resize the component also when it is activated using prop', function (done) {
+      wrapper = mount(VueDraggableResizable, {
+        attachToDocument: true,
+        propsData: {
+          w: 100,
+          h: 100,
+          active: false
+        }
+      })
+
+      wrapper.setProps({ active: true })
+
+      wrapper.vm.$nextTick().then(function () {
+        const $el = wrapper.vm.$el
+        const rect = $el.querySelector('div.handle-br').getBoundingClientRect()
+        const fromX = rect.left
+        const fromY = rect.top
+
+        syn.drag(
+          $el.querySelector('div.handle-br'),
+          {
+            from: { pageX: fromX, pageY: fromY },
+            to: { pageX: fromX + 10, pageY: fromY + 10 }
+          },
+          function () {
+            expect(wrapper.emitted()).to.have.property('resizing')
+            expect(wrapper.emitted().resizing.pop()).to.deep.equal([0, 0, 110, 110])
+
+            done()
+          }
+        )
+      })
+    })
+
     it('should activate the component when clicking on it', function (done) {
       wrapper = mount(VueDraggableResizable, {
         attachToDocument: true
