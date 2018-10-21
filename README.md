@@ -371,6 +371,11 @@ Called whenever the component stops getting dragged.
 
 Be careful to use appropriate values for `x`, `y`, `w`, `h`, `minh` and `minh` props when you want to restrict the component in its parent element.
 
+If you have contents inside a component that shall be selectable or get the
+window's focus (e.g. `input` elements), use the [`dragHandle`](#draghandle)
+property to explicitly define the draggable area or [`dragCancel`](#dragCancel)
+to exclude elements from being so.
+
 ### Bonus
 
 If `resizing`, `parent` and `maximize` props are `true` you can double-click on the element to make it fill the parent.
