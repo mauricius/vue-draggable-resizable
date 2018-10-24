@@ -9,7 +9,7 @@
       dragging: dragging,
       resizing: resizing
     }"
-    @mousedown.stop="elmDown"
+    @mousedown="elmDown"
     @touchstart.stop="elmDown"
     @dblclick="fillParent"
   >
@@ -233,6 +233,7 @@ export default {
           return
         }
 
+        e.stopPropagation()
         e.preventDefault()
 
         this.reviewDimensions()
