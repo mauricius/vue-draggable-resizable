@@ -130,6 +130,14 @@ export default {
     },
     maximize: {
       type: Boolean, default: false
+    },
+    unitType: {
+      type: String,
+      default: 'px',
+      validator: function (val) {
+        return ['cm', 'mm', 'in', 'px', 'pt', 'pc'].indexOf(val) !== -1
+      }
+
     }
   },
 
@@ -437,10 +445,10 @@ export default {
   computed: {
     style: function () {
       return {
-        top: this.top + 'px',
-        left: this.left + 'px',
-        width: this.width + 'px',
-        height: this.height + 'px',
+        top: this.top + this.unitType,
+        left: this.left + this.unitType,
+        width: this.width + this.unitType,
+        height: this.height + this.unitType,
         zIndex: this.zIndex
       }
     }
