@@ -285,6 +285,15 @@ If set to `true` allows the component to fill its parent when double-clicked.
 <vue-draggable-resizable :maximize="true">
 ```
 
+#### unitType
+Type: `String`<br>
+Required: `false`<br>
+Default: `px`
+
+Available values are `cm`, `mm`, `in`, `px`, `pt` or `pc`
+```html
+<vue-draggable-resizable :unit-type="in">
+```
 ---
 
 ### Events
