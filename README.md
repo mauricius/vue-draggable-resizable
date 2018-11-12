@@ -292,7 +292,7 @@ Default: `px`
 
 Available values are `cm`, `mm`, `in`, `px`, `pt` or `pc`
 ```html
-<vue-draggable-resizable :unit-type="in">
+<vue-draggable-resizable unit-type="in">
 ```
 ---
 
