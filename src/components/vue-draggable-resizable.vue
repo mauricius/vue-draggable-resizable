@@ -139,7 +139,7 @@ export default {
     snap: {
       type: Boolean, default: false
     },
-    /* 当调用对齐时，draggable 与元素之间的距离，以像素为单位 */
+    /* 当调用对齐时，用来设置组件与组件之间的对齐距离，以像素为单位。 */
     snapTolerance: {
       type: Number,
       default: 5,
@@ -617,6 +617,7 @@ export default {
     font-size: 1px;
     background: #EEE;
     border: 1px solid #333;
+    z-index: 999;
   }
   .handle-tl {
     top: -5px;
