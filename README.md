@@ -19,6 +19,7 @@
 **新增特征**
 * 组件之间的冲突检测（不允许组件之间重叠）
 * 组件与组件之间进行对齐（类似于吸附效果）
+* x,y,w,h的change的监测(方便在组件外通过`input`改变组件位置大小)
 ### Demo
 
 [Demo](https://mauricius.github.io/vue-draggable-resizable/)
