@@ -598,6 +598,26 @@ export default {
       if (val >= 0 || val === 'auto') {
         this.zIndex = val
       }
+    },
+    y: function (val) {
+      if (val >= 0) {
+        this.top = val
+      }
+    },
+    x: function (val) {
+      if (val >= 0) {
+        this.left = val
+      }
+    },
+    w: function (val) {
+      if (val >= 0) {
+        this.width = val
+      }
+    },
+    h: function (val) {
+      if (val >= 0) {
+        this.height = val
+      }
     }
   }
 }
