@@ -377,11 +377,7 @@ export default {
         this.getElmPosition()
         if (this.draggable) {
           this.dragging = true
-          // 将移动前的位置存储
-          this.restoreY = this.top
-          this.restoreX = this.left
-          this.restoreW = this.width
-          this.restoreH = this.height
+          this.recording()
         }
       }
     }, // 鼠标激活当前组件
@@ -418,10 +414,7 @@ export default {
       // 当区域块处于被激活状态时，手柄被点击时获取当前区域块的X,Y,W,H（如果不加进来，会出现区域块会跳动到回退前的位置）
       this.getElmPosition()
 
-      this.restoreY = this.top           // 将移动前的位置存储
-      this.restoreX = this.left
-      this.restoreW = this.width
-      this.restoreH = this.height
+      this.recording()
       // END
       this.resizing = true
     }, // 鼠标按下控制点
@@ -576,7 +569,14 @@ export default {
 
       this.elmX = this.left
       this.elmY = this.top
-    } // 鼠标松开
+    }, // 鼠标松开
+    recording: function () {
+      // 将移动前的位置存储
+      this.restoreY = this.top
+      this.restoreX = this.left
+      this.restoreW = this.width
+      this.restoreH = this.height
+    }
   },
 
   computed: {
@@ -602,22 +602,30 @@ export default {
     },
     y: function (val) {
       if (val >= 0) {
+        this.recording()
         this.top = val
+        this.conflictCheck()
       }
     },
     x: function (val) {
       if (val >= 0) {
+        this.recording()
         this.left = val
+        this.conflictCheck()
       }
     },
     w: function (val) {
       if (val >= 0) {
+        this.recording()
         this.width = val
+        this.conflictCheck()
       }
     },
     h: function (val) {
       if (val >= 0) {
+        this.recording()
         this.height = val
+        this.conflictCheck()
       }
     }
   }
