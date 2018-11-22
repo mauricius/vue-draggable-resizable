@@ -177,9 +177,9 @@ export default {
     document.documentElement.removeEventListener('mouseup', this.handleUp, true)
 
     // touch events bindings removed
-    document.documentElement.addEventListener('touchmove', this.handleMove, true)
-    document.documentElement.addEventListener('touchend touchcancel', this.deselect, true)
-    document.documentElement.addEventListener('touchstart', this.handleUp, true)
+    document.documentElement.removeEventListener('touchmove', this.handleMove, true)
+    document.documentElement.removeEventListener('touchend touchcancel', this.deselect, true)
+    document.documentElement.removeEventListener('touchstart', this.handleUp, true)
   },
 
   data: function () {
