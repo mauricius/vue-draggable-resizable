@@ -10,7 +10,7 @@
       resizing: resizing
     }"
     @mousedown="elmDown"
-    @touchstart.stop="elmDown"
+    @touchstart="elmDown"
     @dblclick="fillParent"
   >
     <div
@@ -20,8 +20,8 @@
       :key="handle"
       :class="'handle-' + handle"
       :style="{ display: enabled ? 'block' : 'none'}"
-      @mousedown.stop.prevent="handleDown(handle, $event)"
-      @touchstart.stop.prevent="handleDown(handle, $event)"
+      @mousedown="handleDown(handle, $event)"
+      @touchstart="handleDown(handle, $event)"
     ></div>
     <slot></slot>
   </div>
@@ -233,8 +233,10 @@ export default {
           return
         }
 
-        e.stopPropagation()
-        e.preventDefault()
+        if (e.cancelable) {
+          e.stopPropagation()
+          e.preventDefault()
+        }
 
         this.reviewDimensions()
 
@@ -277,8 +279,10 @@ export default {
     handleDown: function (handle, e) {
       this.handle = handle
 
-      if (e.stopPropagation) e.stopPropagation()
-      if (e.preventDefault) e.preventDefault()
+      if (e.cancelable) {
+        e.stopPropagation()
+        e.preventDefault()
+      }
 
       this.resizing = true
     },
