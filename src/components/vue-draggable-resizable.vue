@@ -605,6 +605,7 @@ export default {
         this.recording()
         this.top = val
         this.conflictCheck()
+        this.reviewDimensions()
       }
     },
     x: function (val) {
@@ -612,6 +613,7 @@ export default {
         this.recording()
         this.left = val
         this.conflictCheck()
+        this.reviewDimensions()
       }
     },
     w: function (val) {
@@ -619,6 +621,7 @@ export default {
         this.recording()
         this.width = val
         this.conflictCheck()
+        this.reviewDimensions()
       }
     },
     h: function (val) {
@@ -626,6 +629,7 @@ export default {
         this.recording()
         this.height = val
         this.conflictCheck()
+        this.reviewDimensions()
       }
     }
   }
