@@ -244,6 +244,19 @@ describe('VueDraggableResizable.vue', function () {
 
       sinon.assert.calledOnce(deactivated)
     })
+
+    it('should permit focusing a form input inside the slot', function (done) {
+      const vm = mount(VueDraggableResizable, {}, {}, '<input type="text" class="input" />')
+
+      simulate(document.querySelector('.input'), 'mousedown')
+
+      expect(vm.$data.enabled).to.equal(true)
+
+      nextTick().then(function () {
+        expect(vm.$el.className).to.contain('active')
+        done()
+      })
+    })
   })
 
   /*******************

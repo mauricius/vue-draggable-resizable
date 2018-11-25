@@ -235,11 +235,6 @@ export default {
           return
         }
 
-        if (e.cancelable) {
-          e.stopPropagation()
-          e.preventDefault()
-        }
-
         this.reviewDimensions()
 
         if (!this.enabled) {
@@ -467,6 +462,7 @@ export default {
 
 <style scoped>
   .vdr {
+    touch-action: none;
     position: absolute;
     box-sizing: border-box;
   }
