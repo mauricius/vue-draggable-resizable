@@ -16,7 +16,7 @@ export default () => ({
   `,
   methods: {
     onSubmit(e) {
-      alert("Yay!")
+      alert("You just submitted the form!")
     }
   }
 })

@@ -3,7 +3,7 @@
 A basic component, with Min Height and Min Width provided respectively by <b>`:minw`</b> and <b>`:minh`</b> props.
 
 ~~~js
-<vue-draggable-resizable>
+<vue-draggable-resizable :min-width="minWidth" :min-height="minHeight">
   <p>Basic component with programmable <b>minw</b> and <b>minh</b> props.</p>
 </vue-draggable-resizable>
 ~~~

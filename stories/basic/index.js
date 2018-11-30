@@ -5,6 +5,7 @@ import BasicNotes from './notes/basic.md'
 import BasicMinWidthHeight from './basic-min-width-height'
 import BasicMinWidthHeightNotes from './notes/basic-min-width-height.md'
 import BasicWithForm from './basic-with-form'
+import BasicWithFormNotes from './notes/basic-with-form.md'
 import BasicActive from './basic-active'
 import BasicActiveNotes from './notes/basic-active.md'
 import BasicPreventDeactivation from './basic-prevent-deactivation'
@@ -31,7 +32,7 @@ import BasicAxisNotes from './notes/basic-axis.md'
 export default {
   'Basic component' : withMarkdownNotes(BasicNotes)(() => (new Basic)),
   'Basic component with minw and minh' : withMarkdownNotes(BasicMinWidthHeightNotes)(() => (new BasicMinWidthHeight)),
-  'Basic component with form inside' : () => (new BasicWithForm),
+  'Basic component with form inside' : withMarkdownNotes(BasicWithFormNotes)(() => (new BasicWithForm)),
   'Basic component with active prop' : withMarkdownNotes(BasicActiveNotes)(() => (new BasicActive)),
   'Basic component with deactivation prevented' : withMarkdownNotes(BasicPreventDeactivationNotes)(() => (new BasicPreventDeactivation)),
   'Basic component not draggable' : withMarkdownNotes(BasicNotDraggableNotes)(() => (new BasicNotDraggable)),
