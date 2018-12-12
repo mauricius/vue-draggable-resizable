@@ -29,5 +29,22 @@ describe('base functions', function () {
     expect(wrapper.findAll('div.handle').length).to.equal(8)
   })
 
+  it('should permit focusing a form input inside the slot', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      slots: {
+        default: '<input type="text" class="input" />'
+      }
+    })
+
+    wrapper.find('.input').trigger('mousedown')
+
+    expect(wrapper.emitted()).to.have.property('activated')
+
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.classes()).to.contain('active')
+      done()
+    })
+  })
+
   afterEach(() => wrapper.destroy())
 })

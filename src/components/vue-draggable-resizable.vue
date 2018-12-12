@@ -8,8 +8,8 @@
       [classNameDraggable]: draggable,
       [classNameResizable]: resizable
     }, className]"
-    @mousedown.stop="elementDown"
-    @touchstart.stop="elementTouchDown"
+    @mousedown="elementDown"
+    @touchstart="elementTouchDown"
   >
     <div
       v-for="handle in actualHandles"
@@ -314,8 +314,6 @@ export default {
           return
         }
 
-        e.preventDefault()
-
         if (!this.enabled) {
           this.enabled = true
 
@@ -549,7 +547,6 @@ export default {
     width () {
       return this.parentWidth - this.left - this.right
     },
-
     height () {
       return this.parentHeight - this.top - this.bottom
     },
