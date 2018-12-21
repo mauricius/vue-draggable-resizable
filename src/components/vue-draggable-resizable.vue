@@ -9,8 +9,8 @@
       dragging: dragging,
       resizing: resizing
     }"
-    @mousedown="elmDown"
-    @touchstart="elmDown"
+    @mousedown.stop="elmDown"
+    @touchstart.stop="elmDown"
     @dblclick="fillParent"
   >
     <div
