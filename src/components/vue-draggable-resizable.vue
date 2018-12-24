@@ -11,7 +11,7 @@
     }"
     @mousedown.stop="elmDown"
     @touchstart.stop="elmDown"
-    @dblclick="fillParent"
+    @dblclick.stop="fillParent"
   >
     <div
       v-for="handle in handles"
