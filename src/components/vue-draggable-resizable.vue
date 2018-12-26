@@ -141,6 +141,16 @@ export default {
       default: 0,
       validator: (val) => val >= 0
     },
+    maxWidth: {
+      type: Number,
+      default: null,
+      validator: (val) => val >= 0
+    },
+    maxHeight: {
+      type: Number,
+      default: null,
+      validator: (val) => val >= 0
+    },
     x: {
       type: Number,
       default: 0,
@@ -160,7 +170,7 @@ export default {
       type: Array,
       default: () => ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'],
       validator: (val) => {
-        var s = new Set(['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'])
+        const s = new Set(['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'])
 
         return new Set(val.filter(h => s.has(h))).size === val.length
       }
@@ -210,6 +220,9 @@ export default {
       minW: this.minWidth,
       minH: this.minHeight,
 
+      maxW: this.maxWidth,
+      maxH: this.maxHeight,
+
       handle: null,
       enabled: this.active,
       resizing: false,
@@ -219,6 +232,9 @@ export default {
   },
 
   created: function () {
+    if (this.maxWidth && this.minWidth > this.maxWidth) console.warn('[Vdr warn]: Invalid prop: minWidth cannot be greater than maxWidth')
+    if (this.maxWidth && this.minHeight > this.maxHeight) console.warn('[Vdr warn]: Invalid prop: minHeight cannot be greater than maxHeight')
+
     this.resetBoundsAndMouseState()
   },
   mounted: function () {
@@ -280,9 +296,11 @@ export default {
       const parent = this.parent
 
       if (parent === true) {
+        const style = window.getComputedStyle(this.$el.parentNode, null)
+
         return [
-          this.$el.parentNode.offsetWidth,
-          this.$el.parentNode.offsetHeight
+          parseInt(style.getPropertyValue('width'), 10),
+          parseInt(style.getPropertyValue('height'), 10)
         ]
       }
 
@@ -403,15 +421,17 @@ export default {
     calcResizeLimits () {
       let minW = this.minW
       let minH = this.minH
+      let maxW = this.maxW
+      let maxH = this.maxH
 
       const aspectFactor = this.aspectFactor
       const [gridX, gridY] = this.grid
       const width = this.width
       const height = this.height
-      const bottom = this.bottom
-      const top = this.top
       const left = this.left
+      const top = this.top
       const right = this.right
+      const bottom = this.bottom
 
       if (this.lockAspectRatio) {
         if (minW / minH > aspectFactor) {
@@ -419,31 +439,83 @@ export default {
         } else {
           minW = aspectFactor * minH
         }
+
+        if (maxW && maxH) {
+          maxW = Math.min(maxW, aspectFactor * maxH)
+          maxH = Math.min(maxH, maxW / aspectFactor)
+        } else if (maxW) {
+          maxH = maxW / aspectFactor
+        } else if (maxH) {
+          maxW = aspectFactor * maxH
+        }
       }
+
+      maxW = maxW - (maxW % gridX)
+      maxH = maxH - (maxH % gridY)
 
       const limits = {
-        minLeft: this.parent ? (this.parentWidth + left) % gridX : null,
-        maxLeft: left + Math.floor((width - minW) / gridX) * gridX,
-        minRight: this.parent ? (this.parentWidth + right) % gridX : null,
-        maxRight: right + Math.floor((width - minW) / gridX) * gridX,
-        minTop: this.parent ? (this.parentHeight + top) % gridY : null,
-        maxTop: top + Math.floor((height - minH) / gridY) * gridY,
-        minBottom: this.parent ? (this.parentHeight + bottom) % gridY : null,
-        maxBottom: bottom + Math.floor((height - minH) / gridY) * gridY
+        minLeft: null,
+        maxLeft: null,
+        minTop: null,
+        maxTop: null,
+        minRight: null,
+        maxRight: null,
+        minBottom: null,
+        maxBottom: null
       }
 
-      if (this.lockAspectRatio && this.parent) {
-        const aspectRatioLimits = {
-          minLeft: left - top * aspectFactor,
-          minRight: right - bottom * aspectFactor,
-          minTop: top - left / aspectFactor,
-          minBottom: bottom - right / aspectFactor
+      if (this.parent) {
+        limits.minLeft = (this.parentWidth + left) % gridX
+        limits.maxLeft = left + Math.floor((width - minW) / gridX) * gridX
+        limits.minTop = (this.parentHeight + top) % gridY
+        limits.maxTop = top + Math.floor((height - minH) / gridY) * gridY
+        limits.minRight = (this.parentWidth + right) % gridX
+        limits.maxRight = right + Math.floor((width - minW) / gridX) * gridX
+        limits.minBottom = (this.parentHeight + bottom) % gridY
+        limits.maxBottom = bottom + Math.floor((height - minH) / gridY) * gridY
+
+        if (maxW) {
+          limits.minLeft = Math.max(limits.minLeft, this.parentWidth - right - maxW)
+          limits.minRight = Math.max(limits.minRight, this.parentWidth - left - maxW)
         }
 
-        limits.minTop = Math.max(limits.minTop, aspectRatioLimits.minTop)
-        limits.minLeft = Math.max(limits.minLeft, aspectRatioLimits.minLeft)
-        limits.minRight = Math.max(limits.minRight, aspectRatioLimits.minRight)
-        limits.minBottom = Math.max(limits.minBottom, aspectRatioLimits.minBottom)
+        if (maxH) {
+          limits.minTop = Math.max(limits.minTop, this.parentHeight - bottom - maxH)
+          limits.minBottom = Math.max(limits.minBottom, this.parentHeight - top - maxH)
+        }
+
+        if (this.lockAspectRatio) {
+          limits.minLeft = Math.max(limits.minLeft, left - top * aspectFactor)
+          limits.minTop = Math.max(limits.minTop, top - left / aspectFactor)
+          limits.minRight = Math.max(limits.minRight, right - bottom * aspectFactor)
+          limits.minBottom = Math.max(limits.minBottom, bottom - right / aspectFactor)
+        }
+      } else {
+        limits.minLeft = null
+        limits.maxLeft = left + Math.floor((width - minW) / gridX) * gridX
+        limits.minTop = null
+        limits.maxTop = top + Math.floor((height - minH) / gridY) * gridY
+        limits.minRight = null
+        limits.maxRight = right + Math.floor((width - minW) / gridX) * gridX
+        limits.minBottom = null
+        limits.maxBottom = bottom + Math.floor((height - minH) / gridY) * gridY
+
+        if (maxW) {
+          limits.minLeft = -(right + maxW)
+          limits.minRight = -(left + maxW)
+        }
+
+        if (maxH) {
+          limits.minTop = -(bottom + maxH)
+          limits.minBottom = -(top + maxH)
+        }
+
+        if (this.lockAspectRatio && (maxW && maxH)) {
+          limits.minLeft = Math.min(limits.minLeft, -(right + maxW))
+          limits.minTop = Math.min(limits.minTop, -(maxH + bottom))
+          limits.minRight = Math.min(limits.minRight, -left - maxW)
+          limits.minBottom = Math.min(limits.minBottom, -top - maxH)
+        }
       }
 
       return limits
@@ -700,6 +772,12 @@ export default {
       if (val > 0 && val <= this.height) {
         this.minH = val
       }
+    },
+    maxWidth (val) {
+      this.maxW = val
+    },
+    maxHeight (val) {
+      this.maxH = val
     },
     w () {
       if (this.resizing || this.dragging) {

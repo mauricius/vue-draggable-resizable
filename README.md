@@ -300,6 +300,28 @@ Define the minimal height of the element.
 <vue-draggable-resizable :min-height="50">
 ```
 
+#### maxWidth
+Type: `Number`<br>
+Required: `false`<br>
+Default: `null`
+
+Define the maximum width of the element.
+
+```html
+<vue-draggable-resizable :max-width="400">
+```
+
+#### maxHeight
+Type: `Number`<br>
+Required: `false`<br>
+Default: `null`
+
+Define the maximum height of the element.
+
+```html
+<vue-draggable-resizable :max-height="50">
+```
+
 #### x
 Type: `Number`<br>
 Required: `false`<br>
