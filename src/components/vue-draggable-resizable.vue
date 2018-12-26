@@ -195,6 +195,14 @@ export default {
     parent: {
       type: [Boolean, String],
       default: false
+    },
+    onDragStart: {
+      type: Function,
+      default: null
+    },
+    onResizeStart: {
+      type: Function,
+      default: null
     }
   },
 
@@ -325,6 +333,10 @@ export default {
       const target = e.target || e.srcElement
 
       if (this.$el.contains(target)) {
+        if (this.onDragStart && this.onDragStart(e) === false) {
+          return
+        }
+
         if (
           (this.dragHandle && !matchesSelectorToParentElements(target, this.dragHandle, this.$el)) ||
           (this.dragCancel && matchesSelectorToParentElements(target, this.dragCancel, this.$el))
@@ -394,6 +406,10 @@ export default {
       this.handleDown(handle, e)
     },
     handleDown (handle, e) {
+      if (this.onResizeStart && this.onResizeStart(handle, e) === false) {
+        return
+      }
+
       if (e.stopPropagation) e.stopPropagation()
 
       // Here we avoid a dangerous recursion by faking

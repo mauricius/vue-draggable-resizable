@@ -442,6 +442,43 @@ The `lockAspectRatio` property is used to lock aspect ratio. This property doesn
 <vue-draggable-resizable :lock-aspect-ratio="true">
 ```
 
+#### onDragStart
+Type: `Function`<br>
+Required: `false`<br>
+Default: `null`
+
+Called when dragging starts (element is clicked or touched). If `false` is returned by any handler, the action will cancel. You can use this function to prevent bubbling of events.
+
+```html
+<vue-draggable-resizable :onDragStart="onDragStartCallback">
+```
+
+```js
+function onDragStartCallback(ev){
+   ...
+   // return false; — for cancel
+}
+```
+
+
+#### onResizeStart
+Type: `Function`<br>
+Required: `false`<br>
+Default: `null`
+
+Called when resizing starts (handle is clicked or touched). If `false` is returned by any handler, the action will cancel.
+
+```html
+<vue-draggable-resizable :onResizeStart="onResizeStartCallback">
+```
+
+```js
+
+function onResizeStartCallback(handle, ev){
+   ...
+   // return false; — for cancel
+}
+```
 ---
 
 ### Events
