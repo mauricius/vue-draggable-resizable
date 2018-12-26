@@ -1,4 +1,4 @@
-# Component with Aspect Ratio and Min Height, Min Width
+# Component with Aspect Ratio and minHeight, minWidth
 
 A component, with <b>`lock-aspect-ratio`</b> prop and Min Height set to 100 and Min Width set to 50. Notice that locking the aspect ratio also forces the Min Width to be 100 (Factor: 1 / 1).
 

@@ -11,6 +11,6 @@ Component with a custom class name, provided with the prop <b>`class-name`</b>.
 ~~~css
 .my-class {
     background-color: green;
-    border: 1px solid black;
+    border: 1px solid red;
 }
 ~~~

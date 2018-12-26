@@ -14,7 +14,7 @@ html, body, #root, #root > div {
   position: absolute;
   bottom: 0;
   height: 24px;
-  padding: 5px 0;
+  padding: 12px 0;
   width: 100%;
   border-top: 1px solid #999;
   background-color: #CCC;
