@@ -16,6 +16,7 @@ import ParentGridMaxWidthMaxHeight from './parent-grid-maxw-maxh'
 import ParentGridMaxWidthMaxHeightNotes from './notes/parent-grid-maxw-maxh.md'
 import ParentControlledComponent from './parent-controlled-component'
 import ParentControlledComponentNotes from './notes/parent-controlled-component.md'
+import ParentUserSelect from './parent-user-select'
 
 export default {
   'Parent Basic Case' : withMarkdownNotes(ParentBasicCaseNotes)(() => (new ParentBasicCase)),
@@ -26,4 +27,5 @@ export default {
   'Parent Grid With Even Offset' : withMarkdownNotes(ParentGridWithEvenOffsetNotes)(() => (new ParentGridWithEvenOffset)),
   'Parent Grid With MaxWidth MaxHeight' : withMarkdownNotes(ParentGridMaxWidthMaxHeightNotes)(() => (new ParentGridMaxWidthMaxHeight)),
   'Parent Controlled Component' : withMarkdownNotes(ParentControlledComponentNotes)(() => (new ParentControlledComponent)),
+  'Parent User Select': () => new ParentUserSelect
 }
