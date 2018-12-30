@@ -30,6 +30,10 @@ import BasicHandles from './basic-handles'
 import BasicHandlesNotes from './notes/basic-handles.md'
 import BasicAxis from './basic-axis'
 import BasicAxisNotes from './notes/basic-axis.md'
+import BasicOnDragStart from './basic-on-drag-start'
+import BasicOnDragStartNotes from './notes/basic-on-drag-start.md'
+import BasicOnResizeStart from './basic-on-resize-start'
+import BasicOnResizeStartNotes from './notes/basic-on-resize-start.md'
 
 export default {
   'Basic component' : withMarkdownNotes(BasicNotes)(() => (new Basic)),
@@ -47,4 +51,6 @@ export default {
   'Basic component with z-index prop' : withMarkdownNotes(BasicZIndexNotes)(() => (new BasicZIndex)),
   'Basic component with handles prop' : withMarkdownNotes(BasicHandlesNotes)(() => (new BasicHandles)),
   'Basic component with axis prop' : withMarkdownNotes(BasicAxisNotes)(() => (new BasicAxis)),
+  'Basic component with onDragStart callback' : withMarkdownNotes(BasicOnDragStartNotes)(() => (new BasicOnDragStart)),
+  'Basic component with onResizeStart callback' : withMarkdownNotes(BasicOnResizeStartNotes)(() => (new BasicOnResizeStart))
 }
