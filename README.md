@@ -15,8 +15,6 @@
   * [Props](#props)
   * [Events](#events)
   * [Styling](#styling)
-* [Gotchas](#gotchas)
-* [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
 
