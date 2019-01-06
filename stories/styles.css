@@ -1,17 +1,17 @@
 html, body, #root, #root > div {
-    height: 100%;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: Arial;
-  }
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
 
 #root > div {
-    position: relative;
-    padding: 0px;
+  position: relative;
+  padding: 0px;
 }
 
 #toolbar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   height: 24px;
   padding: 12px 0;
