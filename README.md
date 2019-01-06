@@ -565,6 +565,10 @@ The component also provides [named slots](https://vuejs.org/v2/guide/components-
 
 Thanks to @kirillmurashov for his work on [vue-drag-resize](https://github.com/kirillmurashov/vue-drag-resize) component.
 
+## Security
+
+If you discover any security related issues, please email maurizio.bonani@gmail.com instead of using the issue tracker.
+
 ## Contributing
 
 Any contribution to the code or any part of the documentation and any idea and/or suggestion are very welcome.
@@ -580,7 +584,7 @@ npm run build
 npm run docs
 
 # run unit tests
-npm run test
+npm run unit
 
 # run storybook at localhost:9001
 npm run storybook
@@ -588,4 +592,4 @@ npm run storybook
 
 ## License
 
-[MIT license](LICENSE)
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
