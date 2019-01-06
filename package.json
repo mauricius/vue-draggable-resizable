@@ -2,8 +2,9 @@
   "name": "vue-draggable-resizable",
   "version": "2.0.0-rc1",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
-  "main": "dist/index.js",
-  "jsnext:main": "src/index.js",
+  "main": "dist/vue-draggable-resizable.umd.min.js",
+  "module": "dist/vue-draggable-resizable.common.js",
+  "unpkg": "dist/vue-draggable-resizable.umd.min.js",
   "private": false,
   "description": "Vue2 Component for resizable and draggable elements",
   "scripts": {
@@ -14,21 +15,19 @@
     "unit": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/unit/karma.conf.js --single-run",
     "unit-watch": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/unit/karma.conf.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "docs": "build-storybook -c .storybook -o docs",
-    "prepublish": "npm run unit; npm run build-bundle"
-  },
-  "peerDependencies": {
-    "vue": "^2.5.16"
+    "docs": "build-storybook -c .storybook -o docs"
   },
   "devDependencies": {
-    "@storybook/addon-notes": "^4.0.0-alpha.16",
-    "@storybook/vue": "^4.0.0-alpha.16",
+    "@babel/core": "^7.2.2",
+    "@storybook/addon-notes": "^4.1.4",
+    "@storybook/vue": "^4.1.4",
     "@vue/cli-plugin-babel": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-standard": "^3.0.1",
     "@vue/test-utils": "^1.0.0-beta.24",
     "babel-plugin-istanbul": "^4.1.6",
+    "babel-preset-vue": "^2.0.2",
     "chai": "^4.1.2",
     "cross-env": "^5.2.0",
     "karma": "^3.0.0",
@@ -44,12 +43,12 @@
     "sinon": "^6.1.5",
     "style-loader": "^0.22.1",
     "syn": "^0.5.0",
-    "vue-template-compiler": "^2.5.16"
+    "vue": "^2.5.21",
+    "vue-template-compiler": "^2.5.21"
   },
   "files": [
     "dist/*",
     "src/*",
-    "public/*",
     "*.json",
     "*.js"
   ],
@@ -71,9 +70,5 @@
     "component",
     "dragabble",
     "resizable"
-  ],
-  "dependencies": {
-    "vue": "^2.5.16",
-    "vuedraggable": "^2.16.0"
-  }
+  ]
 }

@@ -715,7 +715,6 @@ describe('basic props', function () {
           }
         )
       })
-
     })
   })
 

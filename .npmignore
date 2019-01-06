@@ -1,4 +1,7 @@
 .DS_Store
 .git
-test
+.storybook
+public
+stories
+tests
 npm-debug.log
