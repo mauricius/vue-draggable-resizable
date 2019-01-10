@@ -3,7 +3,6 @@
   "version": "2.0.0-rc1",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
   "main": "dist/vue-draggable-resizable.umd.min.js",
-  "module": "dist/vue-draggable-resizable.common.js",
   "unpkg": "dist/vue-draggable-resizable.umd.min.js",
   "private": false,
   "description": "Vue2 Component for resizable and draggable elements",
@@ -11,7 +10,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-bundle": "vue-cli-service build --target lib --name vue-draggable-resizable ./src/index.js",
+    "build-bundle": "vue-cli-service build --target lib --name VueDraggableResizable ./src/index.js",
     "unit": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/unit/karma.conf.js --single-run",
     "unit-watch": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/unit/karma.conf.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
@@ -47,8 +46,8 @@
     "vue-template-compiler": "^2.5.21"
   },
   "files": [
-    "dist/*",
-    "src/*",
+    "/dist/*",
+    "/src/*",
     "*.json",
     "*.js"
   ],
