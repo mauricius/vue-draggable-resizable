@@ -1,7 +1,7 @@
 var path = require('path')
 var webpackConfig = require('../../webpack.test')
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     browsers: ['ChromeHeadless'],
     frameworks: ['mocha', 'chai'],

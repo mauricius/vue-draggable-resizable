@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader')
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
@@ -29,7 +29,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ['style-loader','css-loader']
+        loader: ['style-loader', 'css-loader']
       },
       {
         test: /\.js$/,
