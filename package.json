@@ -4,6 +4,9 @@
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
   "main": "dist/VueDraggableResizable.umd.min.js",
   "unpkg": "dist/VueDraggableResizable.umd.min.js",
+  "browser": {
+    "./sfc": "src/vue-draggable-resizable.vue"
+  },
   "private": false,
   "description": "Vue2 Component for resizable and draggable elements",
   "scripts": {
