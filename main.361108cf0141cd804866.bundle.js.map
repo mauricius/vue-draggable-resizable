@@ -1,0 +1,1 @@
+{"version":3,"file":"main.361108cf0141cd804866.bundle.js","sources":["webpack:///./stories/basic/basic.js"],"sourcesContent":["import Vue from 'vue'\n\nexport default () => ({\n  template: `\n    <vue-draggable-resizable>\n      <p>You can drag me around and resize me as you wish.</p>\n    </vue-draggable-resizable>\n  `\n})"],"mappings":"AAEA","sourceRoot":""}
