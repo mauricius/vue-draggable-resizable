@@ -240,7 +240,9 @@ export default {
   },
 
   created: function () {
+    // eslint-disable-next-line
     if (this.maxWidth && this.minWidth > this.maxWidth) console.warn('[Vdr warn]: Invalid prop: minWidth cannot be greater than maxWidth')
+    // eslint-disable-next-line
     if (this.maxWidth && this.minHeight > this.maxHeight) console.warn('[Vdr warn]: Invalid prop: minHeight cannot be greater than maxHeight')
 
     this.resetBoundsAndMouseState()
