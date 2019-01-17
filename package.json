@@ -17,7 +17,10 @@
     "unit": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/unit/karma.conf.js --single-run",
     "unit-watch": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/unit/karma.conf.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "docs": "build-storybook -c .storybook -o docs"
+    "gh-pages:clean": "rm -rf docs",
+    "gh-pages:build": "build-storybook -c .storybook -o docs",
+    "gh-pages:publish": "$(npm bin)/git-directory-deploy --directory docs",
+    "gh-pages": "npm run gh-pages:clean && npm run gh-pages:build && npm run gh-pages:publish"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -32,6 +35,7 @@
     "babel-preset-vue": "^2.0.2",
     "chai": "^4.1.2",
     "cross-env": "^5.2.0",
+    "git-directory-deploy": "^1.5.1",
     "karma": "^3.0.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
