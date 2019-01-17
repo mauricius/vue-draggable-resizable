@@ -1,4 +1,4 @@
-<p align="center"><img src="https://rawgit.com/mauricius/vue-draggable-resizable/master/docs/resources/logo.png" alt="logo"></p>
+<p align="center"><img src="https://rawgit.com/mauricius/vue-draggable-resizable/v1/docs/resources/logo.png" alt="logo"></p>
 <h1 align="center">VueDraggableResizable 2</h1>
 
 [![Latest Version on NPM](https://img.shields.io/npm/v/vue-draggable-resizable.svg?style=flat-square)](https://npmjs.com/package/vue-draggable-resizable)
@@ -7,10 +7,12 @@
 
 > Vue2 Component for draggable and resizable elements.
 
+If you are looking for the version 1 of the component, it is available on the [v1 branch](/tree/v1).
+
 ## Table of Contents
 
 * [Features](#features)
-* [Demo](#demo)
+* [Libe Playground](#live-playground)
 * [Install and basic usage](#install-and-basic-usage)
   * [Props](#props)
   * [Events](#events)
@@ -31,9 +33,16 @@
 * Use your own classes
 * Provide your own markup for handles
 
-### Demo
+### Live Playground
 
-[Demo](https://mauricius.github.io/vue-draggable-resizable/)
+For examples of the component go to the [live playground](https://mauricius.github.io/vue-draggable-resizable/)
+
+Alternatively you can run the playground on your own computer:
+
+* Clone this repository
+* `npm install`
+* `npm run storybook`
+* Visit [http://localhost:9001/](http://localhost:9001/)
 
 ---
 
@@ -581,7 +590,7 @@ npm run serve
 npm run build
 
 # build the storybook docs into gh-pages
-npm run docs
+npm run gh-pages:build
 
 # run unit tests
 npm run unit
