@@ -12,7 +12,7 @@ If you are looking for the version 1 of the component, it is available on the [v
 ## Table of Contents
 
 * [Features](#features)
-* [Libe Playground](#live-playground)
+* [Live Playground](#live-playground)
 * [Install and basic usage](#install-and-basic-usage)
   * [Props](#props)
   * [Events](#events)
