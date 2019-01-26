@@ -7,7 +7,7 @@
 
 > Vue2 Component for draggable and resizable elements.
 
-If you are looking for the version 1 of the component, it is available on the [v1 branch](/tree/v1).
+If you are looking for the version 1 of the component, it is available on the [v1 branch](https://github.com/mauricius/vue-draggable-resizable/tree/v1).
 
 ## Table of Contents
 
