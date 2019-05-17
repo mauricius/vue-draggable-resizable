@@ -61,6 +61,10 @@ export default {
   replace: true,
   name: 'vue-draggable-resizable',
   props: {
+    scaling: {
+      type: Number,
+      default: 1.0
+    },
     debug: {
       type: Boolean,
       default: false
@@ -550,8 +554,8 @@ export default {
       const grid = this.grid
       const mouseClickPosition = this.mouseClickPosition
 
-      const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX) : 0
-      const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY) : 0
+      const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX / this.scaling - (e.touches ? e.touches[0].pageX / this.scaling : e.pageX / this.scaling) : 0
+      const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY / this.scaling - (e.touches ? e.touches[0].pageY / this.scaling : e.pageY / this.scaling) : 0
 
       const [deltaX, deltaY] = this.snapToGrid(this.grid, tmpDeltaX, tmpDeltaY)
 
@@ -568,8 +572,8 @@ export default {
       const handle = this.handle
       const mouseClickPosition = this.mouseClickPosition
 
-      const tmpDeltaX = mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX)
-      const tmpDeltaY = mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY)
+      const tmpDeltaX = mouseClickPosition.mouseX / this.scaling - (e.touches ? e.touches[0].pageX / this.scaling : e.pageX / this.scaling)
+      const tmpDeltaY = mouseClickPosition.mouseY / this.scaling - (e.touches ? e.touches[0].pageY / this.scaling : e.pageY / this.scaling)
 
       const [deltaX, deltaY] = this.snapToGrid(this.grid, tmpDeltaX, tmpDeltaY)
 
@@ -652,6 +656,9 @@ export default {
   },
 
   watch: {
+    scaling (val) {
+      console.log('scaling in resizable ', val)
+    },
     active (val) {
       this.enabled = val
 
