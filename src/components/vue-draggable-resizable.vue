@@ -61,10 +61,6 @@ export default {
   replace: true,
   name: 'vue-draggable-resizable',
   props: {
-    debug: {
-      type: Boolean,
-      default: false
-    },
     className: {
       type: String,
       default: 'vdr'
