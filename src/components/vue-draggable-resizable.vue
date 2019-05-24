@@ -189,7 +189,7 @@ export default {
       default: () => [1, 1]
     },
     parent: {
-      type: [Boolean, String],
+      type: Boolean,
       default: false
     },
     onDragStart: {
@@ -299,25 +299,13 @@ export default {
       }
     },
     getParentSize () {
-      const parent = this.parent
-
-      if (parent === true) {
+      if (this.parent) {
         const style = window.getComputedStyle(this.$el.parentNode, null)
 
         return [
           parseInt(style.getPropertyValue('width'), 10),
           parseInt(style.getPropertyValue('height'), 10)
         ]
-      }
-
-      if (typeof parent === 'string') {
-        const parentNode = document.querySelector(parent)
-
-        if (!(parentNode instanceof HTMLElement)) {
-          throw new Error(`The selector ${parent} does not match any element`)
-        }
-
-        return [parentNode.offsetWidth, parentNode.offsetHeight]
       }
 
       return [null, null]

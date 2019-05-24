@@ -2,8 +2,6 @@ import { withMarkdownNotes } from '@storybook/addon-notes';
 
 import ParentBasicCase from './parent-basic-case'
 import ParentBasicCaseNotes from './notes/parent-basic-case.md'
-import ParentSelector from './parent-selector'
-import ParentSelectorNotes from './notes/parent-selector.md'
 import ParentMaxWidthMaxHeight from './parent-maxw-maxh'
 import ParentMaxWidthMaxHeightNotes from './notes/parent-maxw-maxh.md'
 import ParentGrid from './parent-grid'
@@ -20,7 +18,6 @@ import ParentUserSelect from './parent-user-select'
 
 export default {
   'Parent Basic Case' : withMarkdownNotes(ParentBasicCaseNotes)(() => (new ParentBasicCase)),
-  'Parent Selector' : withMarkdownNotes(ParentSelectorNotes)(() => (new ParentSelector)),
   'Parent MaxWidth MaxHeight' : withMarkdownNotes(ParentMaxWidthMaxHeightNotes)(() => (new ParentMaxWidthMaxHeight)),
   'Parent Grid' : withMarkdownNotes(ParentGridNotes)(() => (new ParentGrid)),
   'Parent Grid With Offset' : withMarkdownNotes(ParentGridWithOffsetNotes)(() => (new ParentGridWithOffset)),
