@@ -726,7 +726,12 @@ export default {
 
       this.bottom = newBottom
     },
-    x () {
+    x (val) {
+      if (val >= 0) {
+        this.left = val
+        this.rawLeft = val
+      }
+
       if (this.resizing || this.dragging) {
         return
       }
@@ -781,7 +786,11 @@ export default {
     maxHeight (val) {
       this.maxH = val
     },
-    w () {
+    w (val) {
+      if (val >= 0) {
+        this.rawWidth = val
+      }
+
       if (this.resizing || this.dragging) {
         return
       }
