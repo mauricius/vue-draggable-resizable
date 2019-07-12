@@ -7,22 +7,32 @@
 
 > Vue 用于可调整大小和可拖动元素的组件并支持组件之间的冲突检测与组件对齐
 
-### Features
+## 更新2.0版本
 
-* 没有依赖
-* 可拖动，可调整大小或者两者都行
-* 拥有用于调整大小的控制点
-* 限制组件调整大小和移动超出父元素
-* 自定义网格移动
-* 将拖动限制为垂直或水平移动
----
+> 说明：组件基于[vue-draggable-resizable](https://github.com/mauricius/vue-draggable-resizable)进行二次开发
+
+距离上[1.7版本](https://github.com/gorkys/vue-draggable-resizable)版本的修改已经过去快一年的时间了，原版组件在之前已经更新到了2.0版本。
+
+虽然之前适配过旧版组件，但是因为2.0版本原作者对代码进行了重构，原来修改的代码照搬是不可能的了。
+
+所以也就一直没有将**冲突检测**以及**吸附对齐**功能适配到2.0版本，最近正好有时间就适配一下。
+
 **新增特征**
-* 组件之间的冲突检测（不允许组件之间重叠）
-* 组件与组件之间进行对齐（类似于吸附效果）
-* x,y,w,h的change的监测(方便在组件外通过`input`改变组件位置大小)
-### Demo
 
-[Demo](https://mauricius.github.io/vue-draggable-resizable/)
+- 冲突检测
+- 吸附对齐
+- 默认样式优化
+
+## 功能预览
+
+![](https://cdn.jsdelivr.net/gh/gorkys/CDN-Blog@master/Project/vue-draggable-resizable/demo.gif)
+
+## 项目地址
+
+<https://github.com/gorkys/vue-draggable-resizable-gorkys>
+
+> 如果喜欢该项目，欢迎**Star**
+
 ## 增加冲突检测与元素对齐
 ### Props
 **isConflictCheck**<br>
