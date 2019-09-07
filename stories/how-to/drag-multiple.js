@@ -82,7 +82,6 @@ export default () => ({
       this.draggingId = null;
       this.prevOffsetX = 0;
       this.prevOffsetY = 0;
-      this.sync = false;
     },
     deltaX(offsetX) {
       const ret = offsetX - this.prevOffsetX;
