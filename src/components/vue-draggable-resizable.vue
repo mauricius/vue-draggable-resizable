@@ -539,8 +539,6 @@ export default {
 
       const [deltaX, deltaY] = this.snapToGrid(this.grid, tmpDeltaX, tmpDeltaY)
 
-      if (!deltaX && !deltaY) return
-
       this.rawTop = mouseClickPosition.top - deltaY
       this.rawBottom = mouseClickPosition.bottom + deltaY
       this.rawLeft = mouseClickPosition.left - deltaX
@@ -556,8 +554,6 @@ export default {
       const tmpDeltaY = mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY)
 
       const [deltaX, deltaY] = this.snapToGrid(this.grid, tmpDeltaX, tmpDeltaY)
-
-      if (!deltaX && !deltaY) return
 
       if (handle.includes('b')) {
         this.rawBottom = mouseClickPosition.bottom + deltaY
