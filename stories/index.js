@@ -10,6 +10,7 @@ import ParentStories from './parent/index'
 import StylingStories from './styling/index'
 import EventsStories from './events/index'
 import AdvancedStories from './advanced/index'
+import HowToStories from './how-to/index'
 
 for (var story in BasicStories) {
   storiesOf('Basic', module)
@@ -44,4 +45,9 @@ for (var story in EventsStories) {
 for (var story in AdvancedStories) {
   storiesOf('Advanced', module)
     .add(story, AdvancedStories[story])
+}
+
+for (var story in HowToStories) {
+  storiesOf('How To', module)
+    .add(story, HowToStories[story])
 }
