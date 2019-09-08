@@ -1,5 +1,3 @@
-import { withMarkdownNotes } from '@storybook/addon-notes';
-
 import ParentBasicCase from './parent-basic-case'
 import ParentBasicCaseNotes from './notes/parent-basic-case.md'
 import ParentMaxWidthMaxHeight from './parent-maxw-maxh'
@@ -17,12 +15,12 @@ import ParentControlledComponentNotes from './notes/parent-controlled-component.
 import ParentUserSelect from './parent-user-select'
 
 export default {
-  'Parent Basic Case' : withMarkdownNotes(ParentBasicCaseNotes)(() => (new ParentBasicCase)),
-  'Parent MaxWidth MaxHeight' : withMarkdownNotes(ParentMaxWidthMaxHeightNotes)(() => (new ParentMaxWidthMaxHeight)),
-  'Parent Grid' : withMarkdownNotes(ParentGridNotes)(() => (new ParentGrid)),
-  'Parent Grid With Offset' : withMarkdownNotes(ParentGridWithOffsetNotes)(() => (new ParentGridWithOffset)),
-  'Parent Grid With Even Offset' : withMarkdownNotes(ParentGridWithEvenOffsetNotes)(() => (new ParentGridWithEvenOffset)),
-  'Parent Grid With MaxWidth MaxHeight' : withMarkdownNotes(ParentGridMaxWidthMaxHeightNotes)(() => (new ParentGridMaxWidthMaxHeight)),
-  'Parent Controlled Component' : withMarkdownNotes(ParentControlledComponentNotes)(() => (new ParentControlledComponent)),
-  'Parent User Select': () => new ParentUserSelect
+  'Parent Basic Case' : [() => new ParentBasicCase, ParentBasicCaseNotes],
+  'Parent MaxWidth MaxHeight' : [() => new ParentMaxWidthMaxHeight, ParentMaxWidthMaxHeightNotes],
+  'Parent Grid' : [() => new ParentGrid, ParentGridNotes],
+  'Parent Grid With Offset' : [() => new ParentGridWithOffset, ParentGridWithOffsetNotes],
+  'Parent Grid With Even Offset' : [() => new ParentGridWithEvenOffset, ParentGridWithEvenOffsetNotes],
+  'Parent Grid With MaxWidth MaxHeight' : [() => new ParentGridMaxWidthMaxHeight, ParentGridMaxWidthMaxHeightNotes],
+  'Parent Controlled Component' : [() => new ParentControlledComponent, ParentControlledComponentNotes],
+  'Parent User Select': [() => new ParentUserSelect]
 }

@@ -1,5 +1,3 @@
-import { withMarkdownNotes } from '@storybook/addon-notes';
-
 import StyleComponent from './style-component'
 import StyleComponentNotes from './notes/style-component.md'
 import StyleDragging from './style-dragging'
@@ -14,10 +12,10 @@ import StyleHandleSlots from './style-handle-slots'
 import StyleHandleSlotsNotes from './notes/style-handle-slots.md'
 
 export default {
-  'Style Component' : withMarkdownNotes(StyleComponentNotes)(() => (new StyleComponent)),
-  'Style Dragging' : withMarkdownNotes(StyleDraggingNotes)(() => (new StyleDragging)),
-  'Style Resizing' : withMarkdownNotes(StyleResizingNotes)(() => (new StyleResizing)),
-  'Style Active' : withMarkdownNotes(StyleActiveNotes)(() => (new StyleActive)),
-  'Style Handles' : withMarkdownNotes(StyleHandlesNotes)(() => (new StyleHandles)),
-  'Style Handles With Slots' : withMarkdownNotes(StyleHandleSlotsNotes)(() => (new StyleHandleSlots)),
+  'Style Component' : [() => new StyleComponent, StyleComponentNotes],
+  'Style Dragging' : [() => new StyleDragging, StyleDraggingNotes],
+  'Style Resizing' : [() => new StyleResizing, StyleResizingNotes],
+  'Style Active' : [() => new StyleActive, StyleActiveNotes],
+  'Style Handles' : [() => new StyleHandles, StyleHandlesNotes],
+  'Style Handles With Slots' : [() => new StyleHandleSlots, StyleHandleSlotsNotes]
 }

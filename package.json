@@ -24,8 +24,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
-    "@storybook/addon-notes": "^4.1.4",
-    "@storybook/vue": "^4.1.4",
+    "@storybook/addon-notes": "^5.1.11",
+    "@storybook/vue": "^5.1.11",
     "@vue/cli-plugin-babel": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",

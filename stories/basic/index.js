@@ -1,5 +1,3 @@
-import { withMarkdownNotes } from '@storybook/addon-notes';
-
 import Basic from './basic'
 import BasicNotes from './notes/basic.md'
 import BasicMinWidthHeight from './basic-min-width-height'
@@ -36,21 +34,21 @@ import BasicOnResizeStart from './basic-on-resize-start'
 import BasicOnResizeStartNotes from './notes/basic-on-resize-start.md'
 
 export default {
-  'Basic component' : withMarkdownNotes(BasicNotes)(() => (new Basic)),
-  'Basic component with minw and minh' : withMarkdownNotes(BasicMinWidthHeightNotes)(() => (new BasicMinWidthHeight)),
-  'Basic component with maxw and maxh' : withMarkdownNotes(BasicMaxWidthHeightNotes)(() => (new BasicMaxWidthHeight)),
-  'Basic component with form inside' : withMarkdownNotes(BasicWithFormNotes)(() => (new BasicWithForm)),
-  'Basic component with active prop' : withMarkdownNotes(BasicActiveNotes)(() => (new BasicActive)),
-  'Basic component with deactivation prevented' : withMarkdownNotes(BasicPreventDeactivationNotes)(() => (new BasicPreventDeactivation)),
-  'Basic component not draggable' : withMarkdownNotes(BasicNotDraggableNotes)(() => (new BasicNotDraggable)),
-  'Basic component not resizable' : withMarkdownNotes(BasicNotResizableNotes)(() => (new BasicNotResizable)),
-  'Basic component with native drag disabled' : withMarkdownNotes(BasicNativeDragEnabledNotes)(() => (new BasicNativeDragEnabled)),
-  'Basic controlled component' : withMarkdownNotes(BasicControlledNotes)(() => (new BasicControlled)),
-  'Basic component with drag handle' : withMarkdownNotes(BasicDragHandleNotes)(() => (new BasicDragHandle)),
-  'Basic component with drag cancel' : withMarkdownNotes(BasicCancelHandleNotes)(() => (new BasicCancelHandle)),
-  'Basic component with z-index prop' : withMarkdownNotes(BasicZIndexNotes)(() => (new BasicZIndex)),
-  'Basic component with handles prop' : withMarkdownNotes(BasicHandlesNotes)(() => (new BasicHandles)),
-  'Basic component with axis prop' : withMarkdownNotes(BasicAxisNotes)(() => (new BasicAxis)),
-  'Basic component with onDragStart callback' : withMarkdownNotes(BasicOnDragStartNotes)(() => (new BasicOnDragStart)),
-  'Basic component with onResizeStart callback' : withMarkdownNotes(BasicOnResizeStartNotes)(() => (new BasicOnResizeStart))
+  'Basic component': [() => new Basic, BasicNotes],
+  'Basic component with minw and minh' : [() => new BasicMinWidthHeight, BasicMinWidthHeightNotes],
+  'Basic component with maxw and maxh' : [() => new BasicMaxWidthHeight, BasicMaxWidthHeightNotes],
+  'Basic component with form inside' : [() => new BasicWithForm, BasicWithFormNotes],
+  'Basic component with active prop' : [() => new BasicActive, BasicActiveNotes],
+  'Basic component with deactivation prevented' : [() => new BasicPreventDeactivation, BasicPreventDeactivationNotes],
+  'Basic component not draggable' : [() => new BasicNotDraggable, BasicNotDraggableNotes],
+  'Basic component not resizable' : [() => new BasicNotResizable, BasicNotResizableNotes],
+  'Basic component with native drag disabled' : [() => new BasicNativeDragEnabled, BasicNativeDragEnabledNotes],
+  'Basic controlled component' : [() => new BasicControlled, BasicControlledNotes],
+  'Basic component with drag handle' : [() => new BasicDragHandle, BasicDragHandleNotes],
+  'Basic component with drag cancel' : [() => new BasicCancelHandle, BasicCancelHandleNotes],
+  'Basic component with z-index prop' : [() => new BasicZIndex, BasicZIndexNotes],
+  'Basic component with handles prop' : [() => new BasicHandles, BasicHandlesNotes],
+  'Basic component with axis prop' : [() => new BasicAxis, BasicAxisNotes],
+  'Basic component with onDragStart callback' : [() => new BasicOnDragStart, BasicOnDragStartNotes],
+  'Basic component with onResizeStart callback' : [() => new BasicOnResizeStart, BasicOnResizeStartNotes],
 }
