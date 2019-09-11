@@ -2,6 +2,9 @@
 
 All notable changes to `vue-draggable-resizable` will be documented in this file
 
+## 2.0.0 - 2019-09-09
+- released 2.0.0
+
 ## 1.7.0 - 2018-04-04
 - add touch events
 

@@ -25,7 +25,7 @@ If you are looking for the version 1 of the component, it is available on the [v
 * No dependencies
 * Use draggable, resizable or both
 * Define handles for resizing
-* Restrict size and movement to parent element or custom selector
+* Restrict size and movement to parent element
 * Snap element to custom grid
 * Restrict drag to vertical or horizontal axis
 * Maintain aspect ratio
@@ -404,18 +404,14 @@ Define the grid on which the element is snapped.
 ```
 
 #### parent
-Type: `Boolean | String`<br>
+Type: `Boolean`<br>
 Required: `false`<br>
 Default: `false`
 
-Restricts the movement and the dimensions of the component to the parent (if `true` is provided), or to an element identified by a valid CSS selector.
+Restricts the movement and the dimensions of the component to the parent.
 
 ```html
 <vue-draggable-resizable :parent="true">
-```
-
-```html
-<vue-draggable-resizable :parent=".selector">
 ```
 
 #### dragHandle
