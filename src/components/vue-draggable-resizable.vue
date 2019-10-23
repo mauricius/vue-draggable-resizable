@@ -596,7 +596,7 @@ export default {
     },
     snapToGrid (grid, pendingX, pendingY) {
       pendingX = pendingX / (this.scale > 0 ? this.scale : 1)
-      pendingX = pendingX / (this.scale > 0 ? this.scale : 1)
+      pendingY = pendingY / (this.scale > 0 ? this.scale : 1)
       const x = Math.round(pendingX / grid[0]) * grid[0]
       const y = Math.round(pendingY / grid[1]) * grid[1]
 
