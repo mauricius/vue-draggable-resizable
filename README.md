@@ -4,6 +4,10 @@
 [![Latest Version on NPM](https://img.shields.io/npm/v/vue-draggable-resizable.svg?style=flat-square)](https://npmjs.com/package/vue-draggable-resizable)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![npm](https://img.shields.io/npm/dt/vue-draggable-resizable.svg?style=flat-square)](https://www.npmjs.com/package/vue-draggable-resizable)
+# 最新版本[请移步](https://github.com/gorkys/vue-draggable-resizable-gorkys)
+# 最新版本[请移步](https://github.com/gorkys/vue-draggable-resizable-gorkys)
+# 最新版本[请移步](https://github.com/gorkys/vue-draggable-resizable-gorkys)
+
 
 > Vue 用于可调整大小和可拖动元素的组件并支持组件之间的冲突检测与组件对齐
 
