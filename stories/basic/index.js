@@ -32,6 +32,8 @@ import BasicOnDragStart from './basic-on-drag-start'
 import BasicOnDragStartNotes from './notes/basic-on-drag-start.md'
 import BasicOnResizeStart from './basic-on-resize-start'
 import BasicOnResizeStartNotes from './notes/basic-on-resize-start.md'
+import BasicScale from './basic-scale'
+import BasicScaleNotes from './notes/basic-scale.md'
 
 export default {
   'Basic component': [() => new Basic, BasicNotes],
@@ -51,4 +53,5 @@ export default {
   'Basic component with axis prop' : [() => new BasicAxis, BasicAxisNotes],
   'Basic component with onDragStart callback' : [() => new BasicOnDragStart, BasicOnDragStartNotes],
   'Basic component with onResizeStart callback' : [() => new BasicOnResizeStart, BasicOnResizeStartNotes],
+  'Basic component with scale prop' : [() => new BasicScale, BasicScaleNotes],
 }

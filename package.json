@@ -1,6 +1,6 @@
 {
   "name": "vue-draggable-resizable",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
   "main": "dist/VueDraggableResizable.umd.min.js",
   "unpkg": "dist/VueDraggableResizable.umd.min.js",

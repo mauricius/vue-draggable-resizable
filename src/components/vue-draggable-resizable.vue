@@ -192,6 +192,11 @@ export default {
       type: Boolean,
       default: false
     },
+    scale: {
+      type: Number,
+      default: 1,
+      validator: (val) => val > 0
+    },
     onDragStart: {
       type: Function,
       default: null
@@ -591,8 +596,8 @@ export default {
       removeEvent(document.documentElement, eventsFor.move, this.handleMove)
     },
     snapToGrid (grid, pendingX, pendingY) {
-      const x = Math.round(pendingX / grid[0]) * grid[0]
-      const y = Math.round(pendingY / grid[1]) * grid[1]
+      const x = Math.round((pendingX / this.scale) / grid[0]) * grid[0]
+      const y = Math.round((pendingY / this.scale) / grid[1]) * grid[1]
 
       return [x, y]
     }
