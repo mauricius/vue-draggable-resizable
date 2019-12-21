@@ -594,6 +594,8 @@ export default {
       }
 
       removeEvent(document.documentElement, eventsFor.move, this.handleMove)
+      removeEvent(document.documentElement, eventsFor.move, this.handleMove)
+      removeEvent(document.documentElement, eventsFor.stop, this.handleUp)
     },
     snapToGrid (grid, pendingX, pendingY) {
       const x = Math.round((pendingX / this.scale) / grid[0]) * grid[0]
