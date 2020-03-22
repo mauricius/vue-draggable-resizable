@@ -19,8 +19,7 @@ describe('controlled props', function () {
       expect(wrapper.props().x).to.equal(200)
       expect(wrapper.props().y).to.equal(150)
 
-      expect(wrapper.vm.$el.style.top).to.equal('150px')
-      expect(wrapper.vm.$el.style.left).to.equal('200px')
+      expect(wrapper.vm.$el.style.transform).to.equal('translate(200px, 150px)')
     })
 
     it('should react to position prop changes', function () {
@@ -33,8 +32,7 @@ describe('controlled props', function () {
 
       wrapper.setProps({ x: 250, y: 200 })
 
-      expect(wrapper.vm.$el.style.top).to.equal('200px')
-      expect(wrapper.vm.$el.style.left).to.equal('250px')
+      expect(wrapper.vm.$el.style.transform).to.equal('translate(250px, 200px)')
     })
   })
 

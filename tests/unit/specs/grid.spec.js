@@ -55,8 +55,7 @@ describe('grid prop', function () {
           to: { pageX: fromX + 1, pageY: fromY + 1 }
         },
         function () {
-          expect($el.style.top).to.equal('0px')
-          expect($el.style.left).to.equal('0px')
+          expect($el.style.transform).to.equal('translate(0px, 0px)')
 
           done()
         }
@@ -90,8 +89,7 @@ describe('grid prop', function () {
           to: { pageX: fromX + 20, pageY: fromY + 40 }
         },
         function () {
-          expect($el.style.top).to.equal('40px')
-          expect($el.style.left).to.equal('20px')
+          expect($el.style.transform).to.equal('translate(20px, 40px)')
 
           done()
         }

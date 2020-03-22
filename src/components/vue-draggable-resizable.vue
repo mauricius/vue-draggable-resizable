@@ -27,6 +27,7 @@
 
 <script>
 import { matchesSelectorToParentElements, addEvent, removeEvent } from '../utils/dom'
+import { restrictToBounds } from '../utils/fns'
 
 const events = {
   mouse: {
@@ -204,6 +205,10 @@ export default {
     onResizeStart: {
       type: Function,
       default: null
+    },
+    onResize: {
+      type: Function,
+      default: () => true
     }
   },
 
@@ -552,27 +557,72 @@ export default {
       this.$emit('dragging', this.left, this.top)
     },
     handleMove (e) {
-      const handle = this.handle
+      let left = this.left
+      let top = this.top
+      let right = this.right
+      let bottom = this.bottom
+
       const mouseClickPosition = this.mouseClickPosition
+      const lockAspectRatio = this.lockAspectRatio
+      const aspectFactor = this.aspectFactor
 
       const tmpDeltaX = mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX)
       const tmpDeltaY = mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY)
 
       const [deltaX, deltaY] = this.snapToGrid(this.grid, tmpDeltaX, tmpDeltaY)
 
-      if (handle.includes('b')) {
-        this.rawBottom = mouseClickPosition.bottom + deltaY
-      } else if (handle.includes('t')) {
-        this.rawTop = mouseClickPosition.top - deltaY
+      if (this.handle.includes('b')) {
+        bottom = restrictToBounds(
+          mouseClickPosition.bottom + deltaY,
+          this.bounds.minBottom,
+          this.bounds.maxBottom
+        )
+
+        if (this.lockAspectRatio && this.resizingOnY) {
+          right = this.right - (this.bottom - bottom) * aspectFactor
+        }
+      } else if (this.handle.includes('t')) {
+        top = restrictToBounds(
+          mouseClickPosition.top - deltaY,
+          this.bounds.minTop,
+          this.bounds.maxTop
+        )
+
+        if (this.lockAspectRatio && this.resizingOnY) {
+          left = this.left - (this.top - top) * aspectFactor
+        }
       }
 
-      if (handle.includes('r')) {
-        this.rawRight = mouseClickPosition.right + deltaX
-      } else if (handle.includes('l')) {
-        this.rawLeft = mouseClickPosition.left - deltaX
+      if (this.handle.includes('r')) {
+        right = restrictToBounds(
+          mouseClickPosition.right + deltaX,
+          this.bounds.minRight,
+          this.bounds.maxRight
+        )
+
+        if (this.lockAspectRatio && this.resizingOnX) {
+          bottom = this.bottom - (this.right - right) / aspectFactor
+        }
+      } else if (this.handle.includes('l')) {
+        left = restrictToBounds(
+          mouseClickPosition.left - deltaX,
+          this.bounds.minLeft,
+          this.bounds.maxLeft
+        )
+
+        if (this.lockAspectRatio && this.resizingOnX) {
+          top = this.top - (this.left - left) / aspectFactor
+        }
       }
 
-      this.$emit('resizing', this.left, this.top, this.width, this.height)
+      if (this.onResize(left, top, this.width, this.height)) {
+        this.left = left
+        this.top = top
+        this.right = right
+        this.bottom = bottom
+
+        this.$emit('resizing', this.left, this.top, this.width, this.height)
+      }
     },
     handleUp (e) {
       this.handle = null
@@ -605,9 +655,7 @@ export default {
   computed: {
     style () {
       return {
-        position: 'absolute',
-        top: this.top + 'px',
-        left: this.left + 'px',
+        transform: `translate(${this.left}px, ${this.top}px)`,
         width: this.width + 'px',
         height: this.height + 'px',
         zIndex: this.zIndex,
@@ -715,11 +763,13 @@ export default {
       const right = this.right
       const bottom = this.bottom
 
-      if (bounds.minBottom !== null && newBottom < bounds.minBottom) {
-        newBottom = bounds.minBottom
-      } else if (bounds.maxBottom !== null && bounds.maxBottom < newBottom) {
-        newBottom = bounds.maxBottom
-      }
+      newBottom = restrictToBounds(newBottom, bounds.minBottom, bounds.maxBottom)
+
+      // if (bounds.minBottom !== null && newBottom < bounds.minBottom) {
+      //   newBottom = bounds.minBottom
+      // } else if (bounds.maxBottom !== null && bounds.maxBottom < newBottom) {
+      //   newBottom = bounds.maxBottom
+      // }
 
       if (lockAspectRatio && this.resizingOnY) {
         this.rawRight = right - (bottom - newBottom) * aspectFactor

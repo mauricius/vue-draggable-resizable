@@ -36,8 +36,7 @@ describe('parent prop', function () {
           to: { pageX: fromX + 50, pageY: fromY + 50 }
         },
         function () {
-          expect($el.style.top).to.equal('50px')
-          expect($el.style.left).to.equal('50px')
+          expect($el.style.transform).to.equal('translate(50px, 50px)')
 
           done()
         }
@@ -73,8 +72,7 @@ describe('parent prop', function () {
           to: { pageX: fromX + 50, pageY: fromY + 50 }
         },
         function () {
-          expect($el.style.top).to.equal('0px')
-          expect($el.style.left).to.equal('0px')
+          expect($el.style.transform).to.equal('translate(0px, 0px)')
 
           done()
         }
@@ -113,8 +111,7 @@ describe('parent prop', function () {
           to: { pageX: fromX + 50, pageY: fromY + 50 }
         },
         function () {
-          expect($el.style.top).to.equal('0px')
-          expect($el.style.left).to.equal('0px')
+          expect($el.style.transform).to.equal('translate(0px, 0px)')
           expect($el.style.width).to.equal('250px')
           expect($el.style.height).to.equal('250px')
 
@@ -152,8 +149,7 @@ describe('parent prop', function () {
           to: { pageX: fromX + 50, pageY: fromY + 50 }
         },
         function () {
-          expect($el.style.top).to.equal('0px')
-          expect($el.style.left).to.equal('0px')
+          expect($el.style.transform).to.equal('translate(0px, 0px)')
           expect($el.style.width).to.equal('200px')
           expect($el.style.height).to.equal('200px')
 

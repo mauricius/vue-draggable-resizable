@@ -275,8 +275,7 @@ describe('basic props', function () {
             to: { pageX: fromX + 100, pageY: fromY + 100 }
           },
           function () {
-            expect($el.style.top).to.equal('0px')
-            expect($el.style.left).to.equal('0px')
+            expect($el.style.transform).to.equal('translate(0px, 0px)')
 
             done()
           }
@@ -496,8 +495,7 @@ describe('basic props', function () {
             to: { pageX: fromX + 100, pageY: fromY + 100 }
           },
           function () {
-            expect($el.style.top).to.equal('100px')
-            expect($el.style.left).to.equal('100px')
+            expect($el.style.transform).to.equal('translate(100px, 100px)')
 
             done()
           }
@@ -586,8 +584,7 @@ describe('basic props', function () {
             to: { pageX: fromX + 100, pageY: fromY + 20 }
           },
           function () {
-            expect($el.style.top).to.equal('0px')
-            expect($el.style.left).to.equal('100px')
+            expect($el.style.transform).to.equal('translate(100px, 0px)')
 
             done()
           }
@@ -751,8 +748,7 @@ describe('basic props', function () {
             to: { pageX: fromX + 50, pageY: fromY + 50 }
           },
           function () {
-            expect($el.style.top).to.equal('100px')
-            expect($el.style.left).to.equal('100px')
+            expect($el.style.transform).to.equal('translate(100px, 100px)')
 
             done()
           }
