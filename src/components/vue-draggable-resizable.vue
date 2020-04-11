@@ -321,6 +321,7 @@ export default {
       this.elementDown(e)
     },
     elementDown (e) {
+      if(e.which !== 1) return;
       const target = e.target || e.srcElement
 
       if (this.$el.contains(target)) {
