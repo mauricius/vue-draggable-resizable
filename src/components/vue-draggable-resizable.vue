@@ -373,13 +373,13 @@ export default {
     },
     calcDragLimits () {
       return {
-        minLeft: (this.parentWidth + this.left) % this.grid[0],
+        minLeft: this.left % this.grid[0],
         maxLeft: Math.floor((this.parentWidth - this.width - this.left) / this.grid[0]) * this.grid[0] + this.left,
-        minRight: (this.parentWidth + this.right) % this.grid[0],
+        minRight: this.right % this.grid[0],
         maxRight: Math.floor((this.parentWidth - this.width - this.right) / this.grid[0]) * this.grid[0] + this.right,
-        minTop: (this.parentHeight + this.top) % this.grid[1],
+        minTop: this.top % this.grid[1],
         maxTop: Math.floor((this.parentHeight - this.height - this.top) / this.grid[1]) * this.grid[1] + this.top,
-        minBottom: (this.parentHeight + this.bottom) % this.grid[1],
+        minBottom: this.bottom % this.grid[1],
         maxBottom: Math.floor((this.parentHeight - this.height - this.bottom) / this.grid[1]) * this.grid[1] + this.bottom
       }
     },
@@ -485,13 +485,13 @@ export default {
       }
 
       if (this.parent) {
-        limits.minLeft = (this.parentWidth + left) % gridX
+        limits.minLeft = left % gridX
         limits.maxLeft = left + Math.floor((width - minW) / gridX) * gridX
-        limits.minTop = (this.parentHeight + top) % gridY
+        limits.minTop = top % gridY
         limits.maxTop = top + Math.floor((height - minH) / gridY) * gridY
-        limits.minRight = (this.parentWidth + right) % gridX
+        limits.minRight = right % gridX
         limits.maxRight = right + Math.floor((width - minW) / gridX) * gridX
-        limits.minBottom = (this.parentHeight + bottom) % gridY
+        limits.minBottom = bottom % gridY
         limits.maxBottom = bottom + Math.floor((height - minH) / gridY) * gridY
 
         if (maxW) {
