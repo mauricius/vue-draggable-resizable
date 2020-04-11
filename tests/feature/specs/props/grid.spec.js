@@ -4,8 +4,8 @@ import syn from 'syn'
 
 let wrapper
 
-describe('grid prop', function () {
-  it('should provide the grid as prop', function () {
+describe('`grid` prop', function () {
+  it('should provide the `grid` as prop', function () {
     wrapper = mount(VueDraggableResizable, {
       propsData: {
         grid: [20, 40]
@@ -16,7 +16,7 @@ describe('grid prop', function () {
     expect(wrapper.props().grid[1]).to.equal(40)
   })
 
-  it('should react to the grid prop', function () {
+  it('should react to the changes of the `grid` prop', function () {
     wrapper = mount(VueDraggableResizable, {
       propsData: {
         grid: [20, 40]
@@ -29,7 +29,7 @@ describe('grid prop', function () {
     expect(wrapper.props().grid[1]).to.equal(30)
   })
 
-  it('should not drag the component on the grid if the drag movement is too small', function (done) {
+  it('should not drag the component on the grid if the drag movement is smaller than the grid interval', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -52,7 +52,8 @@ describe('grid prop', function () {
         $el,
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 1, pageY: fromY + 1 }
+          to: { pageX: fromX + 9, pageY: fromY + 19 },
+          duration: 10
         },
         function () {
           expect($el.style.transform).to.equal('translate(0px, 0px)')
@@ -63,7 +64,7 @@ describe('grid prop', function () {
     })
   })
 
-  it('should drag the component on the grid if the drag movement matches the grid', function (done) {
+  it('should drag the component on the grid if the drag movement equals the grid interval', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -86,7 +87,8 @@ describe('grid prop', function () {
         $el,
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 20, pageY: fromY + 40 }
+          to: { pageX: fromX + 29, pageY: fromY + 59 },
+          duration: 10
         },
         function () {
           expect($el.style.transform).to.equal('translate(20px, 40px)')
@@ -97,7 +99,7 @@ describe('grid prop', function () {
     })
   })
 
-  it('should not resize the component on the grid if the resize movement is too small', function (done) {
+  it('should not resize the component on the grid if the drag movement is smaller than the grid interval', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -121,7 +123,8 @@ describe('grid prop', function () {
         $el.querySelector('div.handle-br'),
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 1, pageY: fromY + 1 }
+          to: { pageX: fromX + 9, pageY: fromY + 19 },
+          duration: 10
         },
         function () {
           expect($el.style.width).to.equal('100px')
@@ -133,7 +136,7 @@ describe('grid prop', function () {
     })
   })
 
-  it('should resize the component on the grid if the resize movement matches the grid', function (done) {
+  it('should resize the component on the grid if the resize movement equals the grid interval', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -157,7 +160,8 @@ describe('grid prop', function () {
         $el.querySelector('div.handle-br'),
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 20, pageY: fromY + 40 }
+          to: { pageX: fromX + 20, pageY: fromY + 40 },
+          duration: 10
         },
         function () {
           expect($el.style.width).to.equal('120px')
@@ -169,7 +173,7 @@ describe('grid prop', function () {
     })
   })
 
-  it('should not resize the component under lower grid values even if minHeight and minWidth are lower', function (done) {
+  it('should not resize the component under lower grid values even if `minHeight` and `minWidth` props are lower', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -195,7 +199,8 @@ describe('grid prop', function () {
         $el.querySelector('div.handle-br'),
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX - 80, pageY: fromY - 80 }
+          to: { pageX: fromX - 80, pageY: fromY - 80 },
+          duration: 10
         },
         function () {
           expect($el.style.width).to.equal('40px')

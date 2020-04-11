@@ -5,9 +5,6 @@ import syn from 'syn'
 let wrapper
 
 describe('events', function () {
-  /************
-   * Resizing *
-   ************/
   it('should emit "resizing" event while resizing the component', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
@@ -28,7 +25,8 @@ describe('events', function () {
         $el.querySelector('div.handle-br'),
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 10, pageY: fromY + 10 }
+          to: { pageX: fromX + 10, pageY: fromY + 10 },
+          duration: 10
         },
         function () {
           expect(wrapper.emitted()).to.have.property('resizing')
@@ -40,9 +38,6 @@ describe('events', function () {
     })
   })
 
-  /************
-   * Dragging *
-   ************/
   it('should emit "dragging" event while dragging the component', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
@@ -63,7 +58,8 @@ describe('events', function () {
         $el,
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 10, pageY: fromY + 10 }
+          to: { pageX: fromX + 10, pageY: fromY + 10 },
+          duration: 10
         },
         function () {
           expect(wrapper.emitted()).to.have.property('dragging')
@@ -95,7 +91,8 @@ describe('events', function () {
         $el,
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 10, pageY: fromY + 10 }
+          to: { pageX: fromX + 10, pageY: fromY + 10 },
+          duration: 10
         },
         function () {
           expect(wrapper.emitted()).to.have.property('dragstop')

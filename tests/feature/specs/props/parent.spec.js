@@ -4,11 +4,8 @@ import syn from 'syn'
 
 let wrapper
 
-describe('parent prop', function () {
-  /************
-   * Dragging *
-   ************/
-  it('should drag the component outside the parent if parent prop is false', function (done) {
+describe('`parent` prop', function () {
+  it('should drag the component outside the parent node if `parent` prop is false', function (done) {
     const ParentComponent = {
       template: `<div class="parent" style="width: 200px; height: 200px;">
         <vue-draggable-resizable :x="0" :y="0" :parent="false" :active="true"></vue-draggable-resizable>
@@ -33,7 +30,8 @@ describe('parent prop', function () {
         $el,
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 50, pageY: fromY + 50 }
+          to: { pageX: fromX + 50, pageY: fromY + 50 },
+          duration: 10
         },
         function () {
           expect($el.style.transform).to.equal('translate(50px, 50px)')
@@ -44,7 +42,7 @@ describe('parent prop', function () {
     })
   })
 
-  it('should not drag the component outside the parent if parent prop is true', function (done) {
+  it('should not drag the component outside the parent node if `parent` prop is true', function (done) {
     const ParentComponent = {
       template: `<div class="parent" style="width: 200px; height: 200px;">
         <vue-draggable-resizable :x="0" :y="0" :w="200" :h="200" :parent="true" :active="true"></vue-draggable-resizable>
@@ -69,7 +67,8 @@ describe('parent prop', function () {
         $el,
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 50, pageY: fromY + 50 }
+          to: { pageX: fromX + 50, pageY: fromY + 50 },
+          duration: 10
         },
         function () {
           expect($el.style.transform).to.equal('translate(0px, 0px)')
@@ -80,10 +79,7 @@ describe('parent prop', function () {
     })
   })
 
-  /************
-   * Resizing *
-   ************/
-  it('should resize the component outside the parent if parent prop is false', function (done) {
+  it('should resize the component outside the parent node if `parent` prop is false', function (done) {
     const ParentComponent = {
       template: `<div class="parent" style="width: 200px; height: 200px;">
         <vue-draggable-resizable :w="200" :h="200" :parent="false" :active="true"></vue-draggable-resizable>
@@ -108,7 +104,8 @@ describe('parent prop', function () {
         $el.querySelector('div.handle-br'),
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 50, pageY: fromY + 50 }
+          to: { pageX: fromX + 50, pageY: fromY + 50 },
+          duration: 10
         },
         function () {
           expect($el.style.transform).to.equal('translate(0px, 0px)')
@@ -121,7 +118,7 @@ describe('parent prop', function () {
     })
   })
 
-  it('should not resize the component outside the parent if parent prop is true', function (done) {
+  it('should not resize the component outside the parent node if `parent` prop is true', function (done) {
     const ParentComponent = {
       template: `<div class="parent" style="width: 200px; height: 200px;">
         <vue-draggable-resizable :w="200" :h="200" :parent="true" :active="true"></vue-draggable-resizable>
@@ -146,7 +143,8 @@ describe('parent prop', function () {
         $el.querySelector('div.handle-br'),
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 50, pageY: fromY + 50 }
+          to: { pageX: fromX + 50, pageY: fromY + 50 },
+          duration: 10
         },
         function () {
           expect($el.style.transform).to.equal('translate(0px, 0px)')

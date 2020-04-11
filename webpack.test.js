@@ -21,7 +21,7 @@ module.exports = {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('tests')]
       },
       {
         test: /\.vue$/,
@@ -34,7 +34,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: ['babel-loader'],
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('tests')]
       }
     ]
   },
