@@ -326,7 +326,7 @@ export default {
       this.elementDown(e)
     },
     elementDown (e) {
-      if (e.which !== 1) {
+      if (e instanceof MouseEvent && e.which !== 1) {
         return
       }
 
@@ -408,7 +408,7 @@ export default {
       this.handleDown(handle, e)
     },
     handleDown (handle, e) {
-      if (e.which !== 1) {
+      if (e instanceof MouseEvent && e.which !== 1) {
         return
       }
 
