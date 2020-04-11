@@ -82,6 +82,27 @@ describe('`active` prop', function () {
     })
   })
 
+  it('should not activate the component when right-clicking on it', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      attachToDocument: true,
+      propsData: {
+        active: false
+      }
+    })
+
+    wrapper.trigger('click', {
+      button: 1
+    })
+
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.classes()).to.not.contain('active')
+      expect(wrapper.emitted()).to.not.have.property('activated')
+      expect(wrapper.emitted()).to.not.have.property('update:active')
+
+      done()
+    })
+  })
+
   it('should resize the component also when it is activated using prop', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
