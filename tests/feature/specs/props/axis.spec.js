@@ -16,7 +16,7 @@ describe('axis prop', function () {
     expect(wrapper.props().axis).to.equal('x')
   })
 
-  it('should effectively drag the component only on the provided axis', function (done) {
+  it('should effectively drag the component only on the horizontal axis', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
       propsData: {
@@ -39,11 +39,46 @@ describe('axis prop', function () {
         $el,
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 100, pageY: fromY + 20 },
+          to: { pageX: fromX + 100, pageY: fromY + 100 },
           duration: 10
         },
         function () {
           expect($el.style.transform).to.equal('translate(100px, 0px)')
+
+          done()
+        }
+      )
+    })
+  })
+
+  it('should effectively drag the component only on the vertical axis', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      attachToDocument: true,
+      propsData: {
+        axis: 'y',
+        x: 0,
+        y: 0,
+        w: 100,
+        h: 100
+      }
+    })
+
+    wrapper.vm.$nextTick(() => {
+      const $el = wrapper.vm.$el
+
+      const rect = $el.getBoundingClientRect()
+      const fromX = rect.left
+      const fromY = rect.top
+
+      syn.drag(
+        $el,
+        {
+          from: { pageX: fromX, pageY: fromY },
+          to: { pageX: fromX + 100, pageY: fromY + 100 },
+          duration: 10
+        },
+        function () {
+          expect($el.style.transform).to.equal('translate(0px, 100px)')
 
           done()
         }
