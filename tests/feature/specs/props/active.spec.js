@@ -138,6 +138,28 @@ describe('`active` prop', function () {
     })
   })
 
+  it('should activate the component when touching on it', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      attachToDocument: true
+    })
+
+    wrapper.vm.$nextTick(() => {
+      const touch = new Touch({
+        identifier: 1,
+        target: wrapper.vm.$el
+      })
+
+      wrapper.trigger('touchstart', {
+        touches: [touch]
+      })
+
+      expect(wrapper.emitted()).to.have.property('activated')
+      expect(wrapper.emitted()).to.have.property('update:active')
+
+      done()
+    })
+  })
+
   afterEach(() => wrapper.destroy())
 })
 
