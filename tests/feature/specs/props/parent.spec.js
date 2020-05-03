@@ -8,7 +8,7 @@ describe('`parent` prop', function () {
   it('should drag the component outside the parent node if `parent` prop is false', function (done) {
     const ParentComponent = {
       template: `<div class="parent" style="width: 200px; height: 200px;">
-        <vue-draggable-resizable :x="0" :y="0" :parent="false" :active="true"></vue-draggable-resizable>
+        <vue-draggable-resizable :x="0" :y="0" :w="200" :h="200" :parent="false" :active="true"></vue-draggable-resizable>
       </div>`,
       components: {
         VueDraggableResizable

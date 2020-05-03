@@ -8,6 +8,7 @@ import GridStories from './grid/index'
 import ParentStories from './parent/index'
 import StylingStories from './styling/index'
 import EventsStories from './events/index'
+import CallbacksStories from './callbacks/index'
 import AdvancedStories from './advanced/index'
 import HowToStories from './how-to/index'
 
@@ -39,6 +40,11 @@ for (var story in StylingStories) {
 for (var story in EventsStories) {
   storiesOf('Events', module)
     .add(story, EventsStories[story][0], markdownNotes(EventsStories[story][1]))
+}
+
+for (var story in CallbacksStories) {
+  storiesOf('Callbacks', module)
+    .add(story, CallbacksStories[story][0], markdownNotes(CallbacksStories[story][1]))
 }
 
 for (var story in AdvancedStories) {

@@ -14,8 +14,11 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "build-bundle": "vue-cli-service build --target lib --name VueDraggableResizable ./src/index.js",
+    "unit": "cross-env BABEL_ENV=test mocha-webpack --webpack-config=webpack.test.js tests/unit/specs/**/*.js",
+    "unit-watch": "cross-env BABEL_ENV=test mocha-webpack --watch --webpack-config=webpack.test.js tests/unit/specs/**/*.js",
     "feature": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/feature/karma.conf.js --single-run",
     "feature-watch": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/feature/karma.conf.js",
+    "test": "npm run unit && npm run feature",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "gh-pages:clean": "rm -rf docs",
     "gh-pages:build": "build-storybook -c .storybook -o docs",
@@ -46,11 +49,13 @@
     "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^4.0.2",
     "mocha": "^6.2.0",
+    "mocha-webpack": "^2.0.0-beta.0",
     "sinon": "^7.4.2",
     "style-loader": "^1.0.0",
     "syn": "^0.14.1",
     "vue": "^2.5.21",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.5.21",
+    "webpack": "^4.42.1"
   },
   "files": [
     "/dist/*",

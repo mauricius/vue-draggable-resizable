@@ -82,6 +82,8 @@ describe('component draggable', function () {
         },
         function () {
           expect($el.style.transform).to.equal('translate(0px, 0px)')
+          expect($el.style.width).to.equal('100px')
+          expect($el.style.height).to.equal('100px')
 
           done()
         }

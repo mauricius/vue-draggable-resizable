@@ -2,11 +2,28 @@ export function isFunction (func) {
   return (typeof func === 'function' || Object.prototype.toString.call(func) === '[object Function]')
 }
 
-export function snapToGrid (grid, pendingX, pendingY) {
-  const x = Math.round(pendingX / grid[0]) * grid[0]
-  const y = Math.round(pendingY / grid[1]) * grid[1]
+export function snapToGrid (grid, pendingX, pendingY, scale = 1) {
+  const x = Math.round((pendingX / scale) / grid[0]) * grid[0]
+  const y = Math.round((pendingY / scale) / grid[1]) * grid[1]
 
   return [x, y]
+}
+
+export function getSize (el) {
+  const rect = el.getBoundingClientRect()
+
+  return [
+    parseInt(rect.width),
+    parseInt(rect.height)
+  ]
+}
+
+export function computeWidth (parentWidth, left, right) {
+  return parentWidth - left - right
+}
+
+export function computeHeight (parentHeight, top, bottom) {
+  return parentHeight - top - bottom
 }
 
 export function restrictToBounds (value, min, max) {
