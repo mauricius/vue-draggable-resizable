@@ -2,6 +2,11 @@
 
 All notable changes to `vue-draggable-resizable` will be documented in this file
 
+## 2.2.0 - 2020-05-03
+- `auto` height and width
+- `onDrag` callback
+- `onResize` callback
+
 ## 2.0.0 - 2019-09-09
 - released 2.0.0
 
