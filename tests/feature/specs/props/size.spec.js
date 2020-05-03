@@ -37,5 +37,88 @@ describe('size props', function () {
     expect(wrapper.vm.$el.style.height).to.equal('200px')
   })
 
+  it('should allow auto value for `w` and `h` props', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      propsData: {
+        w: 'auto',
+        h: 'auto'
+      }
+    })
+
+    expect(wrapper.props().w).to.equal('auto')
+    expect(wrapper.props().h).to.equal('auto')
+
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.vm.$el.style.width).to.equal('auto')
+      expect(wrapper.vm.$el.style.height).to.equal('auto')
+      done()
+    })
+  })
+
+  it('should fallback to numeric values for width and height when the component is resized', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      attachToDocument: true,
+      propsData: {
+        w: 'auto',
+        h: 'auto',
+        active: true
+      },
+      slots: {
+        default: 'VueDraggableResizable'
+      }
+    })
+
+    wrapper.vm.$nextTick(() => {
+      const $el = wrapper.vm.$el
+
+      const rect = $el.querySelector('div.handle-br').getBoundingClientRect()
+      const fromX = rect.left
+      const fromY = rect.top
+
+      const { width, height } = $el.getBoundingClientRect()
+
+      syn.drag(
+        $el.querySelector('div.handle-br'),
+        {
+          from: { pageX: fromX, pageY: fromY },
+          to: { pageX: fromX + 10, pageY: fromY + 10 },
+          duration: 10
+        },
+        function () {
+          expect($el.style.transform).to.equal('translate(0px, 0px)')
+          expect($el.style.width).to.equal(`${(width + 10).toFixed(3)}px`)
+          expect($el.style.height).to.equal(`${height + 10}px`)
+
+          done()
+        }
+      )
+    })
+  })
+
+  it('should change `auto` back to numeric values for width and height', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      attachToDocument: true,
+      propsData: {
+        w: 'auto',
+        h: 'auto',
+        active: true
+      },
+      slots: {
+        default: 'VueDraggableResizable'
+      }
+    })
+
+    wrapper.vm.$nextTick(() => {
+      const $el = wrapper.vm.$el
+
+      wrapper.setProps({ w: 250, h: 200 })
+
+      expect($el.style.width).to.equal('250px')
+      expect($el.style.height).to.equal('200px')
+
+      done()
+    })
+  })
+
   afterEach(() => wrapper.destroy())
 })

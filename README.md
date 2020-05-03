@@ -264,22 +264,22 @@ Defines it the component should be resizable or not.
 ```
 
 #### w
-Type: `Number`<br>
+Type: `Number|String`<br>
 Required: `false`<br>
 Default: `200`
 
-Define the initial width of the element.
+Define the initial width of the element. It also supports `auto`, but when you start resizing the value will fallback to a number.
 
 ```html
 <vue-draggable-resizable :w="200">
 ```
 
 #### h
-Type: `Number`<br>
+Type: `Number|String`<br>
 Required: `false`<br>
 Default: `200`
 
-Define the initial height of the element.
+Define the initial height of the element. It also supports `auto`, but when you start resizing the value will fallback to a number.
 
 ```html
 <vue-draggable-resizable :h="200">
@@ -463,6 +463,24 @@ function onDragStartCallback(ev){
 }
 ```
 
+#### onDrag
+Type: `Function`<br>
+Required: `false`<br>
+Default: `null`
+
+Called before the element is dragged. The function receives the next values of `x` and `y`. If `false` is returned by any handler, the action will cancel.
+
+```html
+<vue-draggable-resizable :onDrag="onDragCallback">
+```
+
+```js
+function onDragStartCallback(x, y){
+   ...
+   // return false; — for cancel
+}
+```
+
 
 #### onResizeStart
 Type: `Function`<br>
@@ -478,6 +496,25 @@ Called when resizing starts (handle is clicked or touched). If `false` is return
 ```js
 
 function onResizeStartCallback(handle, ev){
+   ...
+   // return false; — for cancel
+}
+```
+
+#### onResize
+Type: `Function`<br>
+Required: `false`<br>
+Default: `null`
+
+Called before the element is resized. The function receives the handle and the next values of `x`, `y`, `width` and `height`. If `false` is returned by any handler, the action will cancel.
+
+```html
+<vue-draggable-resizable :onResize="onResizeCallback">
+```
+
+```js
+
+function onResizeStartCallback(handle, x, y, width, height){
    ...
    // return false; — for cancel
 }

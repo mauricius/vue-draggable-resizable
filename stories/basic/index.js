@@ -1,5 +1,7 @@
 import Basic from './basic'
 import BasicNotes from './notes/basic.md'
+import BasicAuto from './basic-auto'
+import BasicAutoNotes from './notes/basic-auto.md'
 import BasicMinWidthHeight from './basic-min-width-height'
 import BasicMinWidthHeightNotes from './notes/basic-min-width-height.md'
 import BasicMaxWidthHeight from './basic-max-width-height'
@@ -28,15 +30,12 @@ import BasicHandles from './basic-handles'
 import BasicHandlesNotes from './notes/basic-handles.md'
 import BasicAxis from './basic-axis'
 import BasicAxisNotes from './notes/basic-axis.md'
-import BasicOnDragStart from './basic-on-drag-start'
-import BasicOnDragStartNotes from './notes/basic-on-drag-start.md'
-import BasicOnResizeStart from './basic-on-resize-start'
-import BasicOnResizeStartNotes from './notes/basic-on-resize-start.md'
 import BasicScale from './basic-scale'
 import BasicScaleNotes from './notes/basic-scale.md'
 
 export default {
   'Basic component': [() => new Basic, BasicNotes],
+  'Basic component with "auto" size': [() => new BasicAuto, BasicAutoNotes],
   'Basic component with minw and minh' : [() => new BasicMinWidthHeight, BasicMinWidthHeightNotes],
   'Basic component with maxw and maxh' : [() => new BasicMaxWidthHeight, BasicMaxWidthHeightNotes],
   'Basic component with form inside' : [() => new BasicWithForm, BasicWithFormNotes],
@@ -51,7 +50,5 @@ export default {
   'Basic component with z-index prop' : [() => new BasicZIndex, BasicZIndexNotes],
   'Basic component with handles prop' : [() => new BasicHandles, BasicHandlesNotes],
   'Basic component with axis prop' : [() => new BasicAxis, BasicAxisNotes],
-  'Basic component with onDragStart callback' : [() => new BasicOnDragStart, BasicOnDragStartNotes],
-  'Basic component with onResizeStart callback' : [() => new BasicOnResizeStart, BasicOnResizeStartNotes],
   'Basic component with scale prop' : [() => new BasicScale, BasicScaleNotes],
 }

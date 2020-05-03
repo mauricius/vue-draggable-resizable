@@ -2,6 +2,7 @@ import ParentBasicCase from './parent-basic-case'
 import ParentBasicCaseNotes from './notes/parent-basic-case.md'
 import ParentMaxWidthMaxHeight from './parent-maxw-maxh'
 import ParentMaxWidthMaxHeightNotes from './notes/parent-maxw-maxh.md'
+import ParentAuto from './parent-auto'
 import ParentGrid from './parent-grid'
 import ParentGridNotes from './notes/parent-grid.md'
 import ParentGridWithOffset from './parent-grid-with-offset'
@@ -18,6 +19,7 @@ export default {
   'Parent Basic Case' : [() => new ParentBasicCase, ParentBasicCaseNotes],
   'Parent MaxWidth MaxHeight' : [() => new ParentMaxWidthMaxHeight, ParentMaxWidthMaxHeightNotes],
   'Parent Grid' : [() => new ParentGrid, ParentGridNotes],
+  'Parent Auto': [() => new ParentAuto()],
   'Parent Grid With Offset' : [() => new ParentGridWithOffset, ParentGridWithOffsetNotes],
   'Parent Grid With Even Offset' : [() => new ParentGridWithEvenOffset, ParentGridWithEvenOffsetNotes],
   'Parent Grid With MaxWidth MaxHeight' : [() => new ParentGridMaxWidthMaxHeight, ParentGridMaxWidthMaxHeightNotes],
