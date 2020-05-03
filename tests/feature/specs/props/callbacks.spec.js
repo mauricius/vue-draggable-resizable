@@ -253,7 +253,8 @@ describe('`onDrag` and `onResize` props', function () {
         $el.querySelector('div.handle-br'),
         {
           from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 50, pageY: fromY + 50 }
+          to: { pageX: fromX + 50, pageY: fromY + 50 },
+          duration: 1500
         },
         function () {
           expect($el.style.width).to.equal('110px')
