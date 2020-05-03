@@ -197,6 +197,17 @@ renders the following:
 </div>
 ```
 
+#### scale
+Type: `Number`<br>
+Required: `false`<br>
+Default: `1`
+
+The `scale` prop controls the scale property when the CSS 3 [scale transformation](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale) is applied to one of the parent elements. If not provided the default value is 1.
+
+```html
+<vue-draggable-resizable :scale="0.5">
+```
+
 #### disableUserSelect
 Type: `Boolean`<br>
 Required: `false`<br>
