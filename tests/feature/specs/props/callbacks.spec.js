@@ -176,7 +176,7 @@ describe('`onDrag` and `onResize` props', function () {
         {
           from: { pageX: fromX, pageY: fromY },
           to: { pageX: fromX + 50, pageY: fromY + 50 },
-          duration: 500
+          duration: 1500
         },
         function () {
           expect($el.style.transform).to.equal('translate(10px, 10px)')
