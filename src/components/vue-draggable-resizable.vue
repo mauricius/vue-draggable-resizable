@@ -587,9 +587,8 @@ export default {
 
       const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX) : 0
       const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY) : 0
-      
       // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale;
+      const scaleX = this.scaleX || this.scale
       const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, scaleX, this.scaleY)
 
       const left = restrictToBounds(mouseClickPosition.left - deltaX, bounds.minLeft, bounds.maxLeft)
@@ -611,7 +610,7 @@ export default {
     },
     moveHorizontally (val) {
       // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale;
+      const scaleX = this.scaleX || this.scale
       const [deltaX, _] = snapToGrid(this.grid, val, this.top, scaleX, this.scaleY)
 
       const left = restrictToBounds(deltaX, this.bounds.minLeft, this.bounds.maxLeft)
@@ -621,7 +620,7 @@ export default {
     },
     moveVertically (val) {
       // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale;
+      const scaleX = this.scaleX || this.scale
       const [_, deltaY] = snapToGrid(this.grid, this.left, val, scaleX, this.scaleY)
 
       const top = restrictToBounds(deltaY, this.bounds.minTop, this.bounds.maxTop)
@@ -651,7 +650,7 @@ export default {
       }
 
       // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale;
+      const scaleX = this.scaleX || this.scale
       const [deltaX, deltaY] = snapToGrid(this.grid, tmpDeltaX, tmpDeltaY, scaleX, this.scaleY)
 
       if (this.handle.includes('b')) {
@@ -716,7 +715,7 @@ export default {
     },
     changeWidth (val) {
       // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale;
+      const scaleX = this.scaleX || this.scale
       const [newWidth, _] = snapToGrid(this.grid, val, 0, scaleX, this.scaleY)
 
       let right = restrictToBounds(
@@ -740,7 +739,7 @@ export default {
     },
     changeHeight (val) {
       // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale;
+      const scaleX = this.scaleX || this.scale
       const [_, newHeight] = snapToGrid(this.grid, 0, val, scaleX, this.scaleY)
 
       let bottom = restrictToBounds(

@@ -10,7 +10,7 @@ export function snapToGrid (grid, pendingX, pendingY, scaleX, scaleY) {
     return [x, y]
   }
   // compatiable with previous version (single scale value)
-  if (scaleX === undefined) scaleX = 1;
+  if (scaleX === undefined) scaleX = 1
   const x = Math.round((pendingX / scaleX) / grid[0]) * grid[0]
   const y = Math.round((pendingY / scaleX) / grid[1]) * grid[1]
   return [x, y]

@@ -202,10 +202,35 @@ Type: `Number`<br>
 Required: `false`<br>
 Default: `1`
 
+`deprecated`<br>
+This prop will remove in future, please use `scaleX` and `scaleY` instead.
+
 The `scale` prop controls the scale property when the CSS 3 [scale transformation](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale) is applied to one of the parent elements. If not provided the default value is 1.
 
 ```html
 <vue-draggable-resizable :scale="0.5">
+```
+
+#### scaleX
+Type: `Number`<br>
+Required: if set `scaleY` prop `true`, otherwise `false`<br>
+Default: `1`
+
+The `scaleX` prop controls the scaleX property when the CSS 3 [scale transformation](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale) is applied to one of the parent elements. If not provided the default value is 1.
+
+```html
+<vue-draggable-resizable :scaleX="0.5" :scaleY="0.4">
+```
+
+#### scaleY
+Type: `Number`<br>
+Required: `false`<br>
+Default: `undefined` (compatiable with old version, will be set 1 as default value in future)
+
+The `scaleY` prop controls the scale property when the CSS 3 [scale transformation](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale) is applied to one of the parent elements. If not provided the default value is 1.
+
+```html
+<vue-draggable-resizable :scaleX="0.5" :scaleY="0.4">
 ```
 
 #### disableUserSelect
