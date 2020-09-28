@@ -609,9 +609,8 @@ export default {
       this.$emit('dragging', this.left, this.top)
     },
     moveHorizontally (val) {
-      // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale
-      const [deltaX, _] = snapToGrid(this.grid, val, this.top, scaleX, this.scaleY)
+      // don't calculate input prop with scale, should calculate with ratio 1.
+      const [deltaX, _] = snapToGrid(this.grid, val, this.top, 1, 1)
 
       const left = restrictToBounds(deltaX, this.bounds.minLeft, this.bounds.maxLeft)
 
@@ -619,9 +618,8 @@ export default {
       this.right = this.parentWidth - this.width - left
     },
     moveVertically (val) {
-      // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale
-      const [_, deltaY] = snapToGrid(this.grid, this.left, val, scaleX, this.scaleY)
+      // don't calculate input prop with scale, should calculate with ratio 1.
+      const [_, deltaY] = snapToGrid(this.grid, this.left, val, 1, 1)
 
       const top = restrictToBounds(deltaY, this.bounds.minTop, this.bounds.maxTop)
 
@@ -714,9 +712,8 @@ export default {
       this.$emit('resizing', this.left, this.top, this.width, this.height)
     },
     changeWidth (val) {
-      // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale
-      const [newWidth, _] = snapToGrid(this.grid, val, 0, scaleX, this.scaleY)
+      // don't calculate input prop with scale, should calculate with ratio 1.
+      const [newWidth, _] = snapToGrid(this.grid, val, 0, 1, 1)
 
       let right = restrictToBounds(
         (this.parentWidth - newWidth - this.left),
@@ -738,9 +735,8 @@ export default {
       this.height = height
     },
     changeHeight (val) {
-      // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale
-      const [_, newHeight] = snapToGrid(this.grid, 0, val, scaleX, this.scaleY)
+      // don't calculate input prop with scale, should calculate with ratio 1.
+      const [_, newHeight] = snapToGrid(this.grid, 0, val, 1, 1)
 
       let bottom = restrictToBounds(
         (this.parentHeight - newHeight - this.top),
