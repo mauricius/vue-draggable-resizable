@@ -204,17 +204,15 @@ export default {
       default: false
     },
     scale: {
-      type: Number,
+      type: [Number, Array],
       default: 1,
-      validator: (val) => val > 0
-    },
-    scaleX: {
-      type: Number,
-      validator: (val) => val > 0
-    },
-    scaleY: {
-      type: Number,
-      validator: (val) => val > 0
+      validator: (val) => {
+        if (typeof val === 'number') {
+          return val > 0
+        }
+
+        return val[0] > 0 && val[1] > 0
+      }
     },
     onDragStart: {
       type: Function,
@@ -587,9 +585,8 @@ export default {
 
       const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX) : 0
       const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY) : 0
-      // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale
-      const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, scaleX, this.scaleY)
+
+      const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, this.scale)
 
       const left = restrictToBounds(mouseClickPosition.left - deltaX, bounds.minLeft, bounds.maxLeft)
       const top = restrictToBounds(mouseClickPosition.top - deltaY, bounds.minTop, bounds.maxTop)
@@ -609,8 +606,8 @@ export default {
       this.$emit('dragging', this.left, this.top)
     },
     moveHorizontally (val) {
-      // don't calculate input prop with scale, should calculate with ratio 1.
-      const [deltaX, _] = snapToGrid(this.grid, val, this.top, 1, 1)
+      // should calculate with scale 1.
+      const [deltaX, _] = snapToGrid(this.grid, val, this.top, 1)
 
       const left = restrictToBounds(deltaX, this.bounds.minLeft, this.bounds.maxLeft)
 
@@ -618,8 +615,8 @@ export default {
       this.right = this.parentWidth - this.width - left
     },
     moveVertically (val) {
-      // don't calculate input prop with scale, should calculate with ratio 1.
-      const [_, deltaY] = snapToGrid(this.grid, this.left, val, 1, 1)
+      // should calculate with scale 1.
+      const [_, deltaY] = snapToGrid(this.grid, this.left, val, 1)
 
       const top = restrictToBounds(deltaY, this.bounds.minTop, this.bounds.maxTop)
 
@@ -647,9 +644,7 @@ export default {
         this.heightTouched = true
       }
 
-      // compatiable with previous version (single scale value)
-      const scaleX = this.scaleX || this.scale
-      const [deltaX, deltaY] = snapToGrid(this.grid, tmpDeltaX, tmpDeltaY, scaleX, this.scaleY)
+      const [deltaX, deltaY] = snapToGrid(this.grid, tmpDeltaX, tmpDeltaY, this.scale)
 
       if (this.handle.includes('b')) {
         bottom = restrictToBounds(
@@ -712,8 +707,8 @@ export default {
       this.$emit('resizing', this.left, this.top, this.width, this.height)
     },
     changeWidth (val) {
-      // don't calculate input prop with scale, should calculate with ratio 1.
-      const [newWidth, _] = snapToGrid(this.grid, val, 0, 1, 1)
+      // should calculate with scale 1.
+      const [newWidth, _] = snapToGrid(this.grid, val, 0, 1)
 
       let right = restrictToBounds(
         (this.parentWidth - newWidth - this.left),
@@ -735,8 +730,8 @@ export default {
       this.height = height
     },
     changeHeight (val) {
-      // don't calculate input prop with scale, should calculate with ratio 1.
-      const [_, newHeight] = snapToGrid(this.grid, 0, val, 1, 1)
+      // should calculate with scale 1.
+      const [_, newHeight] = snapToGrid(this.grid, 0, val, 1)
 
       let bottom = restrictToBounds(
         (this.parentHeight - newHeight - this.top),
