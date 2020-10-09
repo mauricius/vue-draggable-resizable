@@ -275,7 +275,8 @@ describe('props validation', function () {
     const scale = getProp('scale')
 
     expect(scale.required).to.be.undefined
-    expect(scale.type).to.equal(Number)
+    expect(scale.type).to.contain(Number)
+    expect(scale.type).to.contain(Array)
     expect(scale.default).to.equal(1)
     expect(scale.validator(1)).to.be.true
     expect(scale.validator(0)).to.be.false
