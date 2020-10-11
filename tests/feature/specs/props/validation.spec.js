@@ -284,6 +284,7 @@ describe('props validation', function () {
     expect(scale.validator(-1)).to.be.false
     expect(scale.validator([0, 0])).to.be.false
     expect(scale.validator([-1, -1])).to.be.false
+    expect(scale.validator([1, 1, 1])).to.be.false
   })
 
   it('should validate `onDragStart` prop', function () {

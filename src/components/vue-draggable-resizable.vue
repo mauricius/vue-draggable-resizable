@@ -211,7 +211,7 @@ export default {
           return val > 0
         }
 
-        return val[0] > 0 && val[1] > 0
+        return val.length === 2 && val[0] > 0 && val[1] > 0
       }
     },
     onDragStart: {
