@@ -198,7 +198,7 @@ renders the following:
 ```
 
 #### scale
-Type: `Number`<br>
+Type: `Number|Array`<br>
 Required: `false`<br>
 Default: `1`
 
@@ -206,6 +206,8 @@ The `scale` prop controls the scale property when the CSS 3 [scale transformatio
 
 ```html
 <vue-draggable-resizable :scale="0.5">
+
+<vue-draggable-resizable :scale="[0.5, 0.4]">
 ```
 
 #### disableUserSelect
