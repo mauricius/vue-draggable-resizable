@@ -292,6 +292,10 @@ export default {
     this.right = this.parentWidth - this.width - this.left
     this.bottom = this.parentHeight - this.height - this.top
 
+    if (this.active) {
+      this.$emit('activated')
+    }
+
     addEvent(document.documentElement, 'mousedown', this.deselect)
     addEvent(document.documentElement, 'touchend touchcancel', this.deselect)
 

@@ -5,6 +5,21 @@ import syn from 'syn'
 let wrapper
 
 describe('events', function () {
+  it('should emit "activated" event if the component is mounted with `active` true prop', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      attachToDocument: true,
+      propsData: {
+        active: true
+      }
+    })
+
+    wrapper.vm.$nextTick().then(function () {
+      expect(wrapper.emitted()).to.have.property('activated')
+
+      done()
+    })
+  })
+
   it('should emit "resizing" event while resizing the component', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachToDocument: true,
