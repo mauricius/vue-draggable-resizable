@@ -329,6 +329,8 @@ export default {
 
         this.parentWidth = newParentWidth
         this.parentHeight = newParentHeight
+        this.right = this.parentWidth - this.width - this.left
+        this.bottom = this.parentHeight - this.height - this.top
       }
     },
     getParentSize () {
