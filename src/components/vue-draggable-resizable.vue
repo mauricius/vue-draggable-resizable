@@ -768,7 +768,8 @@ export default {
   computed: {
     style () {
       return {
-        transform: `translate(${this.left}px, ${this.top}px)`,
+        // The following line is turning a resize into a drag.
+        // transform: `translate(${this.left}px, ${this.top}px)`,
         width: this.computedWidth,
         height: this.computedHeight,
         zIndex: this.zIndex,
