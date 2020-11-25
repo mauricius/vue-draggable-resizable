@@ -102,6 +102,10 @@ export default {
       type: Boolean,
       default: false
     },
+    deactivationSelector: {
+      type: String,
+      default: null
+    },
     active: {
       type: Boolean,
       default: false
@@ -422,6 +426,11 @@ export default {
     deselect (e) {
       const target = e.target || e.srcElement
       const regex = new RegExp(this.className + '-([trmbl]{2})', '')
+
+      if (this.deactivationSelector && document.querySelector(this.deactivationSelector) && !document.querySelector(this.deactivationSelector).contains(target)) {
+        this.resetBoundsAndMouseState()
+        return
+      }
 
       if (!this.$el.contains(target) && !regex.test(target.className)) {
         if (this.enabled && !this.preventDeactivation) {
