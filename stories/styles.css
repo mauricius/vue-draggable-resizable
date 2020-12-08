@@ -131,3 +131,17 @@ html, body, #root, #root > div {
 .my-handle-class-br:hover {
     transform: scale(1.4);
 }
+.select-box-dashed{
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  padding: 0px;
+  margin: 0px;
+  border: 1px dashed #0099ff;
+  z-index:9999;
+  background-color: #c3d5ed;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  font-size: 0px;
+}
+
