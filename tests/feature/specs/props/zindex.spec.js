@@ -1,13 +1,13 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
-import syn from 'syn'
+import div from '../../div'
 
 let wrapper
 
 describe('zIndex prop', function () {
   it('should set the zIndex through the `z` prop', function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         z: 99
       }
@@ -23,15 +23,15 @@ describe('zIndex prop', function () {
     expect(wrapper.vm.$el.style.zIndex).to.equal('auto')
   })
 
-  it('should react to `z` prop changes', function () {
+  it('should react to `z` prop changes', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         z: 99
       }
     })
 
-    wrapper.setProps({ z: 999 })
+    await wrapper.setProps({ z: 999 })
 
     expect(wrapper.vm.$data.zIndex).to.equal(999)
   })

@@ -1,6 +1,7 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
+import div from '../../div'
 
 let wrapper
 
@@ -23,7 +24,7 @@ describe('size props', function () {
     })
   })
 
-  it('should react to size prop changes', function () {
+  it('should react to size prop changes', async function () {
     wrapper = mount(VueDraggableResizable, {
       propsData: {
         w: 200,
@@ -31,7 +32,7 @@ describe('size props', function () {
       }
     })
 
-    wrapper.setProps({ w: 250, h: 200 })
+    await wrapper.setProps({ w: 250, h: 200 })
 
     expect(wrapper.vm.$el.style.width).to.equal('250px')
     expect(wrapper.vm.$el.style.height).to.equal('200px')
@@ -51,13 +52,14 @@ describe('size props', function () {
     wrapper.vm.$nextTick(() => {
       expect(wrapper.vm.$el.style.width).to.equal('auto')
       expect(wrapper.vm.$el.style.height).to.equal('auto')
+
       done()
     })
   })
 
   it('should fallback to numeric values for width and height when the component is resized', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         w: 'auto',
         h: 'auto',
@@ -84,7 +86,9 @@ describe('size props', function () {
           to: { pageX: fromX + 10, pageY: fromY + 10 },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.transform).to.equal('translate(0px, 0px)')
           expect($el.style.width).to.equal(`${(width + 10).toFixed(3)}px`)
           expect($el.style.height).to.equal(`${height + 10}px`)
@@ -95,9 +99,9 @@ describe('size props', function () {
     })
   })
 
-  it('should change `auto` back to numeric values for width and height', function (done) {
+  it('should change `auto` back to numeric values for width and height', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         w: 'auto',
         h: 'auto',
@@ -108,16 +112,14 @@ describe('size props', function () {
       }
     })
 
-    wrapper.vm.$nextTick(() => {
-      const $el = wrapper.vm.$el
+    await wrapper.vm.$nextTick()
 
-      wrapper.setProps({ w: 250, h: 200 })
+    const $el = wrapper.vm.$el
 
-      expect($el.style.width).to.equal('250px')
-      expect($el.style.height).to.equal('200px')
+    await wrapper.setProps({ w: 250, h: 200 })
 
-      done()
-    })
+    expect($el.style.width).to.equal('250px')
+    expect($el.style.height).to.equal('200px')
   })
 
   afterEach(() => wrapper.destroy())

@@ -1,6 +1,6 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
-import syn from 'syn'
+import div from '../../div'
 
 let wrapper
 
@@ -26,15 +26,15 @@ describe('`handles` prop', function () {
     expect(wrapper.findAll('div.handle').length).to.equal(0)
   })
 
-  it('should react to `handles` prop changes', function () {
+  it('should react to `handles` prop changes', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         handles: []
       }
     })
 
-    wrapper.setProps({ handles: ['tl', 'tm', 'tr', 'bl', 'bm', 'br'] })
+    await wrapper.setProps({ handles: ['tl', 'tm', 'tr', 'bl', 'bm', 'br'] })
 
     expect(wrapper.props().handles).to.have.length(6)
     expect(wrapper.findAll('div.handle').length).to.equal(6)

@@ -1,6 +1,7 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
+import div from '../../div'
 
 let wrapper
 
@@ -16,7 +17,7 @@ describe('`parent` and `grid` props', function (done) {
     }
 
     wrapper = mount(ParentComponent, {
-      attachToDocument: true
+      attachTo: div()
     })
 
     wrapper.vm.$nextTick(() => {
@@ -33,7 +34,9 @@ describe('`parent` and `grid` props', function (done) {
           to: { pageX: fromX + 120, pageY: fromY + 120 },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.transform).to.equal('translate(100px, 100px)')
 
           done()
@@ -53,7 +56,7 @@ describe('`parent` and `grid` props', function (done) {
     }
 
     wrapper = mount(ParentComponent, {
-      attachToDocument: true
+      attachTo: div()
     })
 
     wrapper.vm.$nextTick(() => {
@@ -70,7 +73,9 @@ describe('`parent` and `grid` props', function (done) {
           to: { pageX: fromX + 120, pageY: fromY + 120 },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.width).to.equal('400px')
           expect($el.style.height).to.equal('400px')
 
@@ -91,7 +96,7 @@ describe('`parent` and `grid` props', function (done) {
     }
 
     wrapper = mount(ParentComponent, {
-      attachToDocument: true
+      attachTo: div()
     })
 
     wrapper.vm.$nextTick(() => {
@@ -108,7 +113,9 @@ describe('`parent` and `grid` props', function (done) {
           to: { pageX: fromX + 48, pageY: fromY + 48 },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.transform).to.equal('translate(24px, 24px)')
 
           done()
@@ -128,7 +135,7 @@ describe('`parent` and `grid` props', function (done) {
     }
 
     wrapper = mount(ParentComponent, {
-      attachToDocument: true
+      attachTo: div()
     })
 
     wrapper.vm.$nextTick(() => {
@@ -145,7 +152,9 @@ describe('`parent` and `grid` props', function (done) {
           to: { pageX: fromX + 50, pageY: fromY + 50 },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.width).to.equal('384px')
           expect($el.style.height).to.equal('384px')
 
@@ -166,7 +175,7 @@ describe('`parent` and `grid` props', function (done) {
     }
 
     wrapper = mount(ParentComponent, {
-      attachToDocument: true
+      attachTo: div()
     })
 
     wrapper.vm.$nextTick(() => {
@@ -183,7 +192,9 @@ describe('`parent` and `grid` props', function (done) {
           to: { pageX: fromX + 48, pageY: fromY + 48 },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.transform).to.equal('translate(34px, 34px)')
 
           done()
@@ -203,7 +214,7 @@ describe('`parent` and `grid` props', function (done) {
     }
 
     wrapper = mount(ParentComponent, {
-      attachToDocument: true
+      attachTo: div()
     })
 
     wrapper.vm.$nextTick(() => {
@@ -220,7 +231,9 @@ describe('`parent` and `grid` props', function (done) {
           to: { pageX: fromX + 50, pageY: fromY + 50 },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.width).to.equal('384px')
           expect($el.style.height).to.equal('384px')
 

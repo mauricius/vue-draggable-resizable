@@ -18,7 +18,7 @@ describe('position props', function () {
     expect(wrapper.vm.$el.style.transform).to.equal('translate(200px, 150px)')
   })
 
-  it('should react to position prop changes', function () {
+  it('should react to position prop changes', async function () {
     wrapper = mount(VueDraggableResizable, {
       propsData: {
         x: 200,
@@ -26,7 +26,7 @@ describe('position props', function () {
       }
     })
 
-    wrapper.setProps({ x: 250, y: 200 })
+    await wrapper.setProps({ x: 250, y: 200 })
 
     expect(wrapper.vm.$el.style.transform).to.equal('translate(250px, 200px)')
   })

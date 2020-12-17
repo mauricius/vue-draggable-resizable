@@ -1,13 +1,14 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
+import div from '../../div'
 
 let wrapper
 
-describe('`drag-handle` prop', function () {
-  it('should activate the component from the selector identified by the `drag-handle` prop', function () {
+describe('`drag-handle` prop', async function () {
+  it('should activate the component from the selector identified by the `drag-handle` prop', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         dragHandle: '.drag-handle'
       },
@@ -16,15 +17,15 @@ describe('`drag-handle` prop', function () {
       }
     })
 
-    wrapper.find('.drag-handle').trigger('mousedown')
+    await wrapper.find('.drag-handle').trigger('mousedown')
 
     expect(wrapper.emitted()).to.have.property('activated')
     expect(wrapper.emitted()).to.have.property('update:active')
   })
 
-  it('should not activate the component from outside the selector identified by the `drag-handle` prop', function () {
+  it('should not activate the component from outside the selector identified by the `drag-handle` prop', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         dragHandle: '.drag-handle'
       },
@@ -33,7 +34,7 @@ describe('`drag-handle` prop', function () {
       }
     })
 
-    wrapper.trigger('mousedown')
+    await wrapper.trigger('mousedown')
 
     expect(wrapper.emitted()).to.not.have.property('activated')
     expect(wrapper.emitted()).to.not.have.property('update:active')
@@ -41,7 +42,7 @@ describe('`drag-handle` prop', function () {
 
   it('should drag the component only from the selector identified by the `drag-handle` prop', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         dragHandle: '.drag-handle',
         x: 0,
@@ -54,34 +55,34 @@ describe('`drag-handle` prop', function () {
       }
     })
 
-    wrapper.vm.$nextTick(() => {
-      const $el = wrapper.vm.$el
+    const $el = wrapper.vm.$el
 
-      const rect = $el.querySelector('.drag-handle').getBoundingClientRect()
-      const fromX = rect.left
-      const fromY = rect.top
+    const rect = $el.querySelector('.drag-handle').getBoundingClientRect()
+    const fromX = rect.left
+    const fromY = rect.top
 
-      syn.drag(
-        $el.querySelector('.drag-handle'),
-        {
-          from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 100, pageY: fromY + 100 },
-          duration: 10
-        },
-        function () {
-          expect($el.style.transform).to.equal('translate(100px, 100px)')
+    syn.drag(
+      $el.querySelector('.drag-handle'),
+      {
+        from: { pageX: fromX, pageY: fromY },
+        to: { pageX: fromX + 100, pageY: fromY + 100 },
+        duration: 10
+      },
+      async function () {
+        await wrapper.vm.$nextTick()
 
-          done()
-        }
-      )
-    })
+        expect($el.style.transform).to.equal('translate(100px, 100px)')
+
+        done()
+      }
+    )
   })
 })
 
 describe('`drag-cancel` prop', function () {
-  it('should not activate the component from the selector identified by the `drag-cancel` prop', function () {
+  it('should not activate the component from the selector identified by the `drag-cancel` prop', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         dragCancel: '.drag-cancel'
       },
@@ -90,15 +91,15 @@ describe('`drag-cancel` prop', function () {
       }
     })
 
-    wrapper.find('.drag-cancel').trigger('mousedown')
+    await wrapper.find('.drag-cancel').trigger('mousedown')
 
     expect(wrapper.emitted()).to.not.have.property('activated')
     expect(wrapper.emitted()).to.not.have.property('update:active')
   })
 
-  it('should activate the component from outside the selector identified by the `drag-cancel` prop', function () {
+  it('should activate the component from outside the selector identified by the `drag-cancel` prop', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         dragCancel: '.drag-cancel'
       },
@@ -107,7 +108,7 @@ describe('`drag-cancel` prop', function () {
       }
     })
 
-    wrapper.trigger('mousedown')
+    await wrapper.trigger('mousedown')
 
     expect(wrapper.emitted()).to.have.property('activated')
     expect(wrapper.emitted()).to.have.property('update:active')

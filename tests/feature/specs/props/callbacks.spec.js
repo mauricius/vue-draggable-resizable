@@ -2,6 +2,7 @@ import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
 import sinon from 'sinon'
+import div from '../../div'
 
 let wrapper
 
@@ -10,7 +11,7 @@ describe('`onDragStart` and `onResizeStart` props', function () {
     const onDragStartCallback = sinon.spy()
 
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         onDragStart: onDragStartCallback
       }
@@ -21,17 +22,17 @@ describe('`onDragStart` and `onResizeStart` props', function () {
     sinon.assert.called(onDragStartCallback)
   })
 
-  it('should prevent activation of the component if the `onDragStart` callback returns false', function () {
+  it('should prevent activation of the component if the `onDragStart` callback returns false', async function () {
     const onDragStartCallback = () => false
 
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         onDragStart: onDragStartCallback
       }
     })
 
-    wrapper.trigger('mousedown')
+    await wrapper.trigger('mousedown')
 
     expect(wrapper.emitted()).to.not.have.property('activated')
     expect(wrapper.classes()).to.not.contain('active')
@@ -41,41 +42,39 @@ describe('`onDragStart` and `onResizeStart` props', function () {
     const onResizeStartCallback = sinon.spy()
 
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         active: true,
         onResizeStart: onResizeStartCallback
       }
     })
 
-    wrapper.vm.$nextTick(() => {
-      const $el = wrapper.vm.$el
+    const $el = wrapper.vm.$el
 
-      const rect = $el.querySelector('div.handle-br').getBoundingClientRect()
-      const fromX = rect.left
-      const fromY = rect.top
+    const rect = $el.querySelector('div.handle-br').getBoundingClientRect()
+    const fromX = rect.left
+    const fromY = rect.top
 
-      syn.drag(
-        $el.querySelector('div.handle-br'),
-        {
-          from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 50, pageY: fromY + 50 },
-          duration: 10
-        },
-        function () {
-          sinon.assert.called(onResizeStartCallback)
+    syn.drag(
+      $el.querySelector('div.handle-br'),
+      {
+        from: { pageX: fromX, pageY: fromY },
+        to: { pageX: fromX + 50, pageY: fromY + 50 },
+        duration: 10
+      },
+      function () {
+        sinon.assert.called(onResizeStartCallback)
 
-          done()
-        }
-      )
-    })
+        done()
+      }
+    )
   })
 
   it('should prevent resizing the component if the `onResizeStart` callback returns false', function (done) {
     const onResizeStartCallback = () => false
 
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         active: true,
         w: 100,
@@ -84,28 +83,28 @@ describe('`onDragStart` and `onResizeStart` props', function () {
       }
     })
 
-    wrapper.vm.$nextTick(() => {
-      const $el = wrapper.vm.$el
+    const $el = wrapper.vm.$el
 
-      const rect = $el.querySelector('div.handle-br').getBoundingClientRect()
-      const fromX = rect.left
-      const fromY = rect.top
+    const rect = $el.querySelector('div.handle-br').getBoundingClientRect()
+    const fromX = rect.left
+    const fromY = rect.top
 
-      syn.drag(
-        $el.querySelector('div.handle-br'),
-        {
-          from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 50, pageY: fromY + 50 },
-          duration: 10
-        },
-        function () {
-          expect($el.style.width).to.equal('100px')
-          expect($el.style.height).to.equal('100px')
+    syn.drag(
+      $el.querySelector('div.handle-br'),
+      {
+        from: { pageX: fromX, pageY: fromY },
+        to: { pageX: fromX + 50, pageY: fromY + 50 },
+        duration: 10
+      },
+      async function () {
+        await wrapper.vm.$nextTick()
 
-          done()
-        }
-      )
-    })
+        expect($el.style.width).to.equal('100px')
+        expect($el.style.height).to.equal('100px')
+
+        done()
+      }
+    )
   })
 
   afterEach(() => wrapper.destroy())
@@ -116,7 +115,7 @@ describe('`onDrag` and `onResize` props', function () {
     const onDragCallback = sinon.spy()
 
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         onDrag: onDragCallback,
         active: true,
@@ -155,7 +154,7 @@ describe('`onDrag` and `onResize` props', function () {
     }
 
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         onDrag: onDragCallback,
         active: true,
@@ -193,7 +192,7 @@ describe('`onDrag` and `onResize` props', function () {
     const onResizeCallback = sinon.spy()
 
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         onResize: onResizeCallback,
         active: true,
@@ -233,7 +232,7 @@ describe('`onDrag` and `onResize` props', function () {
     }
 
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         active: true,
         w: 100,
