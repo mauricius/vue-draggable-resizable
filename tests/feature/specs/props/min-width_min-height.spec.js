@@ -1,7 +1,7 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
-import sinon from 'sinon'
+import div from '../../div'
 
 let wrapper
 
@@ -18,16 +18,16 @@ describe('`min-height` and `min-width` props', function () {
     expect(wrapper.props().minWidth).to.equal(200)
   })
 
-  it('should react to `min-height` and `min-width` prop changes', function () {
+  it('should react to `min-height` and `min-width` prop changes', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         minHeight: 100,
         minWidth: 200
       }
     })
 
-    wrapper.setProps({ minHeight: 200, minWidth: 300 })
+    await wrapper.setProps({ minHeight: 200, minWidth: 300 })
 
     expect(wrapper.props().minHeight).to.equal(200)
     expect(wrapper.props().minWidth).to.equal(300)
@@ -35,7 +35,7 @@ describe('`min-height` and `min-width` props', function () {
 
   it('should not resize the component under `min-height` and `min-width`', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         minHeight: 100,
         minWidth: 100,
@@ -59,7 +59,9 @@ describe('`min-height` and `min-width` props', function () {
           to: { pageX: fromX - 50, pageY: fromY - 50 },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.width).to.equal('100px')
           expect($el.style.height).to.equal('100px')
 

@@ -1,13 +1,14 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
+import div from '../div'
 
 let wrapper
 
 describe('events', function () {
   it('should emit "activated" event if the component is mounted with `active` true prop', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         active: true
       }
@@ -22,7 +23,7 @@ describe('events', function () {
 
   it('should emit "resizing" event while resizing the component', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         w: 100,
         h: 100,
@@ -55,7 +56,7 @@ describe('events', function () {
 
   it('should emit "dragging" event while dragging the component', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         w: 100,
         h: 100,
@@ -88,7 +89,7 @@ describe('events', function () {
 
   it('should emit "dragstop" event while stopping dragging the component', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         w: 100,
         h: 100,

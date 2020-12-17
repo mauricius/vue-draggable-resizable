@@ -1,13 +1,14 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
+import div from '../../div'
 
 let wrapper
 
 describe('native dragging', function () {
   it('should enable native drag by setting the `enable-native-drag` prop', function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         enableNativeDrag: true
       }
@@ -24,39 +25,35 @@ describe('component draggable', function () {
     expect(wrapper.classes()).to.contain('draggable')
   })
 
-  it('should not have the `draggable` class if the `draggable` prop is false', function (done) {
+  it('should not have the `draggable` class if the `draggable` prop is false', function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         draggable: false
       }
     })
 
     expect(wrapper.props().draggable).to.be.false
-
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.classes()).to.not.contain('draggable')
-
-      done()
-    })
+    expect(wrapper.classes()).to.not.contain('draggable')
+    expect(wrapper.classes()).to.contain('resizable')
   })
 
-  it('should react to `draggable` prop changes', function () {
+  it('should react to `draggable` prop changes', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         draggable: false
       }
     })
 
-    wrapper.setProps({ draggable: true })
+    await wrapper.setProps({ draggable: true })
 
     expect(wrapper.classes()).to.contain('draggable')
   })
 
   it('should not be draggable if `draggable` prop is false', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         x: 0,
         y: 0,
@@ -66,29 +63,29 @@ describe('component draggable', function () {
       }
     })
 
-    wrapper.vm.$nextTick(() => {
-      const $el = wrapper.vm.$el
+    const $el = wrapper.vm.$el
 
-      const rect = $el.getBoundingClientRect()
-      const fromX = rect.left
-      const fromY = rect.top
+    const rect = $el.getBoundingClientRect()
+    const fromX = rect.left
+    const fromY = rect.top
 
-      syn.drag(
-        $el,
-        {
-          from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 100, pageY: fromY + 100 },
-          duration: 10
-        },
-        function () {
-          expect($el.style.transform).to.equal('translate(0px, 0px)')
-          expect($el.style.width).to.equal('100px')
-          expect($el.style.height).to.equal('100px')
+    syn.drag(
+      $el,
+      {
+        from: { pageX: fromX, pageY: fromY },
+        to: { pageX: fromX + 100, pageY: fromY + 100 },
+        duration: 10
+      },
+      async function () {
+        await wrapper.vm.$nextTick()
 
-          done()
-        }
-      )
-    })
+        expect($el.style.transform).to.equal('translate(0px, 0px)')
+        expect($el.style.width).to.equal('100px')
+        expect($el.style.height).to.equal('100px')
+
+        done()
+      }
+    )
   })
 })
 
@@ -99,26 +96,22 @@ describe('component resizable', function () {
     expect(wrapper.classes()).to.contain('resizable')
   })
 
-  it('should not have the `resizable` class if the `resizable` prop is false', function (done) {
+  it('should not have the `resizable` class if the `resizable` prop is false', function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         resizable: false
       }
     })
 
     expect(wrapper.props().resizable).to.be.false
-
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.classes()).to.not.contain('resizable')
-
-      done()
-    })
+    expect(wrapper.classes()).to.not.contain('resizable')
+    expect(wrapper.classes()).to.contain('draggable')
   })
 
   it('should not render handles if the `resizable` prop is false', function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         active: true,
         resizable: false
@@ -128,15 +121,15 @@ describe('component resizable', function () {
     expect(wrapper.findAll('div.handle').length).to.equal(0)
   })
 
-  it('should react to `resizable` prop changes', function () {
+  it('should react to `resizable` prop changes', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         resizable: false
       }
     })
 
-    wrapper.setProps({ resizable: true })
+    await wrapper.setProps({ resizable: true })
 
     expect(wrapper.classes()).to.contain('resizable')
   })

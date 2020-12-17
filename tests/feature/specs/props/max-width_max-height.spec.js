@@ -1,6 +1,7 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
+import div from '../../div'
 
 let wrapper
 
@@ -17,16 +18,16 @@ describe('`max-width` and `max-height` props', function () {
     expect(wrapper.props().maxHeight).to.equal(300)
   })
 
-  it('should react to `max-width` and `max-height` prop changes', function () {
+  it('should react to `max-width` and `max-height` prop changes', async function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         maxWidth: 200,
         maxHeight: 300
       }
     })
 
-    wrapper.setProps({ maxWidth: 300, maxHeight: 200 })
+    await wrapper.setProps({ maxWidth: 300, maxHeight: 200 })
 
     expect(wrapper.props().maxWidth).to.equal(300)
     expect(wrapper.props().maxHeight).to.equal(200)
@@ -34,7 +35,7 @@ describe('`max-width` and `max-height` props', function () {
 
   it('should not resize the component over `max-width` and `max-height` props', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         maxWidth: 100,
         maxHeight: 100,
@@ -58,7 +59,9 @@ describe('`max-width` and `max-height` props', function () {
           to: { pageX: fromX + 50, pageY: fromY + 50 },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.width).to.equal('100px')
           expect($el.style.height).to.equal('100px')
 

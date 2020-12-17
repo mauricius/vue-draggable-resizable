@@ -1,13 +1,14 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
+import div from '../../div'
 
 let wrapper
 
 describe('axis prop', function () {
   it('should provide the draggable `axis` prop to the component', function () {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         axis: 'x'
       }
@@ -18,7 +19,7 @@ describe('axis prop', function () {
 
   it('should effectively drag the component only on the horizontal axis', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         axis: 'x',
         x: 0,
@@ -28,32 +29,32 @@ describe('axis prop', function () {
       }
     })
 
-    wrapper.vm.$nextTick(() => {
-      const $el = wrapper.vm.$el
+    const $el = wrapper.vm.$el
 
-      const rect = $el.getBoundingClientRect()
-      const fromX = rect.left
-      const fromY = rect.top
+    const rect = $el.getBoundingClientRect()
+    const fromX = rect.left
+    const fromY = rect.top
 
-      syn.drag(
-        $el,
-        {
-          from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 100, pageY: fromY + 100 },
-          duration: 10
-        },
-        function () {
-          expect($el.style.transform).to.equal('translate(100px, 0px)')
+    syn.drag(
+      $el,
+      {
+        from: { pageX: fromX, pageY: fromY },
+        to: { pageX: fromX + 100, pageY: fromY + 100 },
+        duration: 10
+      },
+      async function () {
+        await wrapper.vm.$nextTick()
 
-          done()
-        }
-      )
-    })
+        expect($el.style.transform).to.equal('translate(100px, 0px)')
+
+        done()
+      }
+    )
   })
 
   it('should effectively drag the component only on the vertical axis', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         axis: 'y',
         x: 0,
@@ -63,27 +64,27 @@ describe('axis prop', function () {
       }
     })
 
-    wrapper.vm.$nextTick(() => {
-      const $el = wrapper.vm.$el
+    const $el = wrapper.vm.$el
 
-      const rect = $el.getBoundingClientRect()
-      const fromX = rect.left
-      const fromY = rect.top
+    const rect = $el.getBoundingClientRect()
+    const fromX = rect.left
+    const fromY = rect.top
 
-      syn.drag(
-        $el,
-        {
-          from: { pageX: fromX, pageY: fromY },
-          to: { pageX: fromX + 100, pageY: fromY + 100 },
-          duration: 10
-        },
-        function () {
-          expect($el.style.transform).to.equal('translate(0px, 100px)')
+    syn.drag(
+      $el,
+      {
+        from: { pageX: fromX, pageY: fromY },
+        to: { pageX: fromX + 100, pageY: fromY + 100 },
+        duration: 10
+      },
+      async function () {
+        await wrapper.vm.$nextTick()
 
-          done()
-        }
-      )
-    })
+        expect($el.style.transform).to.equal('translate(0px, 100px)')
+
+        done()
+      }
+    )
   })
 
   afterEach(() => wrapper.destroy())

@@ -1,6 +1,7 @@
 import VueDraggableResizable from '@/components/vue-draggable-resizable'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
+import div from '../../div'
 
 let wrapper
 
@@ -17,7 +18,7 @@ describe('`lock-aspect-ratio` prop', function () {
 
   it('should resize the component accordingly to its aspect ratio if `lock-aspect-ratio` is true', function (done) {
     wrapper = mount(VueDraggableResizable, {
-      attachToDocument: true,
+      attachTo: div(),
       propsData: {
         w: 200,
         h: 100,
@@ -40,7 +41,10 @@ describe('`lock-aspect-ratio` prop', function () {
           to: { pageX: fromX + 100, pageY: fromY },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
+          expect($el.style.transform).to.equal('translate(0px, 0px)')
           expect($el.style.width).to.equal('300px')
           expect($el.style.height).to.equal('150px')
 
@@ -61,7 +65,7 @@ describe('`lock-aspect-ratio` prop', function () {
     }
 
     wrapper = mount(ParentComponent, {
-      attachToDocument: true
+      attachTo: div()
     })
 
     wrapper.vm.$nextTick(() => {
@@ -78,7 +82,9 @@ describe('`lock-aspect-ratio` prop', function () {
           to: { pageX: fromX + 100, pageY: fromY },
           duration: 10
         },
-        function () {
+        async function () {
+          await wrapper.vm.$nextTick()
+
           expect($el.style.transform).to.equal('translate(0px, 0px)')
           expect($el.style.width).to.equal('375px')
           expect($el.style.height).to.equal('500px')

@@ -8,7 +8,7 @@ describe('Basic', function () {
     wrapper = mount(VueDraggableResizable)
 
     expect(wrapper.vm.$el).to.be.ok
-    expect(wrapper.is('div')).to.be.true
+    expect(wrapper.element.tagName).to.equal('DIV')
     expect(wrapper.classes()).to.contain('vdr')
   })
 
@@ -19,7 +19,7 @@ describe('Basic', function () {
       }
     })
 
-    expect(wrapper.contains('p')).to.be.true
+    expect(wrapper.find('p').exists()).to.be.true
     expect(wrapper.text()).to.equal('Resize Me')
   })
 
