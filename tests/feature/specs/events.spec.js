@@ -21,6 +21,22 @@ describe('events', function () {
     })
   })
 
+  it('should not emit "dragstop" when the component is activated', async function () {
+    wrapper = mount(VueDraggableResizable, {
+      attachTo: div(),
+      propsData: {
+        w: 100,
+        h: 100
+      }
+    })
+
+    await wrapper.trigger('click', {
+      button: 1
+    })
+
+    expect(wrapper.emitted()).to.not.have.property('dragstop')
+  })
+
   it('should emit "resizing" event while resizing the component', function (done) {
     wrapper = mount(VueDraggableResizable, {
       attachTo: div(),
@@ -51,6 +67,27 @@ describe('events', function () {
           done()
         }
       )
+    })
+  })
+
+  it('should not emit "resizestop" when a handle is clicked', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      attachTo: div(),
+      propsData: {
+        w: 100,
+        h: 100,
+        active: true
+      }
+    })
+
+    wrapper.vm.$nextTick(async () => {
+      await wrapper.find('div.handle-br').trigger('click', {
+        button: 1
+      })
+
+      expect(wrapper.emitted()).to.not.have.property('resizestop')
+
+      done()
     })
   })
 
