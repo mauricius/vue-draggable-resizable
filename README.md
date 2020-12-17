@@ -638,8 +638,8 @@ npm run build
 # build the storybook docs into gh-pages
 npm run gh-pages:build
 
-# run unit tests
-npm run unit
+# run tests
+npm run tests
 
 # run storybook at localhost:9001
 npm run storybook
