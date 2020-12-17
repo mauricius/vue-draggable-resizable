@@ -2,6 +2,12 @@
 
 All notable changes to `vue-draggable-resizable` will be documented in this file
 
+## 2.3.0 - 2020-12-17
+- `scale` prop supports one or two values
+- component with `active` prop to `true` emits `activated`
+- upgrade vue-test-utils
+- small bugfixes
+
 ## 2.2.0 - 2020-05-03
 - `auto` height and width
 - `onDrag` callback
