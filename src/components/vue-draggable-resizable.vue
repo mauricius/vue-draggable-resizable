@@ -260,6 +260,8 @@ export default {
       enabled: this.active,
       resizing: false,
       dragging: false,
+      dragEnable: false,
+      resizeEnable: false,
       zIndex: this.z
     }
   },
@@ -388,7 +390,7 @@ export default {
         }
 
         if (this.draggable) {
-          this.dragging = true
+          this.dragEnable = true
         }
 
         this.mouseClickPosition.mouseX = e.touches ? e.touches[0].pageX : e.pageX
@@ -460,7 +462,7 @@ export default {
         this.handle = handle
       }
 
-      this.resizing = true
+      this.resizeEnable = true
 
       this.mouseClickPosition.mouseX = e.touches ? e.touches[0].pageX : e.pageX
       this.mouseClickPosition.mouseY = e.touches ? e.touches[0].pageY : e.pageY
@@ -579,7 +581,7 @@ export default {
     move (e) {
       if (this.resizing) {
         this.handleResize(e)
-      } else if (this.dragging) {
+      } else if (this.dragEnable) {
         this.handleDrag(e)
       }
     },
@@ -610,6 +612,7 @@ export default {
       this.bottom = bottom
 
       this.$emit('dragging', this.left, this.top)
+      this.dragging = true
     },
     moveHorizontally (val) {
       // should calculate with scale 1.
@@ -711,6 +714,7 @@ export default {
       this.height = height
 
       this.$emit('resizing', this.left, this.top, this.width, this.height)
+      this.resizing = true
     },
     changeWidth (val) {
       // should calculate with scale 1.
@@ -763,10 +767,14 @@ export default {
 
       this.resetBoundsAndMouseState()
 
+      this.dragEnable = false
+      this.resizeEnable = false
+
       if (this.resizing) {
         this.resizing = false
         this.$emit('resizestop', this.left, this.top, this.width, this.height)
       }
+
       if (this.dragging) {
         this.dragging = false
         this.$emit('dragstop', this.left, this.top)
