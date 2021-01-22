@@ -37,3 +37,15 @@ export function restrictToBounds (value, min, max) {
 
   return value
 }
+
+export function between (value, min, max) {
+  return value >= min && value <= max
+}
+
+export function subtractPaddings (len, startPadding, endPadding) {
+  return len - startPadding - endPadding
+}
+
+export function scaledDifference (value, opposite, scale) {
+  return opposite * scale - value
+}
