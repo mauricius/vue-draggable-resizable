@@ -454,13 +454,7 @@ export default {
 
       if (e.stopPropagation) e.stopPropagation()
 
-      // Here we avoid a dangerous recursion by faking
-      // corner handles as middle handles
-      if (this.lockAspectRatio && !handle.includes('m')) {
-        this.handle = 'm' + handle.substring(1)
-      } else {
-        this.handle = handle
-      }
+      this.handle = handle
 
       this.resizeEnable = true
 
@@ -543,10 +537,12 @@ export default {
         }
 
         if (this.lockAspectRatio) {
-          limits.minLeft = Math.max(limits.minLeft, left - top * aspectFactor)
-          limits.minTop = Math.max(limits.minTop, top - left / aspectFactor)
-          limits.minRight = Math.max(limits.minRight, right - bottom * aspectFactor)
-          limits.minBottom = Math.max(limits.minBottom, bottom - right / aspectFactor)
+          const maxWidthPad = Math.max(left, right)
+          const maxHeightPad = Math.max(top, bottom)
+          limits.minLeft = Math.max(limits.minLeft, left - maxHeightPad * aspectFactor)
+          limits.minTop = Math.max(limits.minTop, top - maxWidthPad / aspectFactor)
+          limits.minRight = Math.max(limits.minRight, right - maxHeightPad * aspectFactor)
+          limits.minBottom = Math.max(limits.minBottom, bottom - maxWidthPad / aspectFactor)
         }
       } else {
         limits.minLeft = null
@@ -655,49 +651,101 @@ export default {
 
       const [deltaX, deltaY] = snapToGrid(this.grid, tmpDeltaX, tmpDeltaY, this.scale)
 
-      if (this.handle.includes('b')) {
+      const expandsToTop = this.handle.includes('t') || (this.handle === 'ml' && lockAspectRatio)
+      const expandsToBottom = this.handle.includes('b') || (this.handle === 'mr' && lockAspectRatio)
+      const expandsToRight = this.handle.includes('r') || (this.handle === 'bm' && lockAspectRatio)
+      const expandsToLeft = this.handle.includes('l') || (this.handle === 'tm' && lockAspectRatio)
+      const expandsVertical = this.handle.includes('m') && this.resizingOnY
+
+      if (expandsToBottom) {
         bottom = restrictToBounds(
           mouseClickPosition.bottom + deltaY,
           this.bounds.minBottom,
           this.bounds.maxBottom
         )
-
-        if (this.lockAspectRatio && this.resizingOnY) {
-          right = this.right - (this.bottom - bottom) * aspectFactor
-        }
-      } else if (this.handle.includes('t')) {
+      } else if (expandsToTop) {
         top = restrictToBounds(
           mouseClickPosition.top - deltaY,
           this.bounds.minTop,
           this.bounds.maxTop
         )
-
-        if (this.lockAspectRatio && this.resizingOnY) {
-          left = this.left - (this.top - top) * aspectFactor
-        }
       }
 
-      if (this.handle.includes('r')) {
+      if (expandsToRight) {
         right = restrictToBounds(
           mouseClickPosition.right + deltaX,
           this.bounds.minRight,
           this.bounds.maxRight
         )
-
-        if (this.lockAspectRatio && this.resizingOnX) {
-          bottom = this.bottom - (this.right - right) / aspectFactor
-        }
-      } else if (this.handle.includes('l')) {
+      } else if (expandsToLeft) {
         left = restrictToBounds(
           mouseClickPosition.left - deltaX,
           this.bounds.minLeft,
           this.bounds.maxLeft
         )
+      }
 
-        if (this.lockAspectRatio && this.resizingOnX) {
-          top = this.top - (this.left - left) / aspectFactor
+      if (lockAspectRatio) {
+        debugger
+        const noScaledHeight = this.parentHeight - top - bottom
+        const noScaledWidth = this.parentWidth - left - right
+
+        const heightScaledByWidth = noScaledWidth / aspectFactor
+        const heightDifference = heightScaledByWidth - noScaledHeight
+        const widthScaledByHeight = noScaledHeight * aspectFactor
+        let scaleByY = false
+
+        if (expandsToBottom && !expandsVertical) {
+          const scaledBottom = bottom - heightDifference
+          if (scaledBottom < this.bounds.minBottom || scaledBottom > this.bounds.maxBottom) {
+            scaleByY = true
+          } else {
+            bottom = scaledBottom
+          }
+        } else {
+          const scaledTop = top - heightDifference
+          if (scaledTop < this.bounds.minTop || scaledTop > this.bounds.maxTop) {
+            scaleByY = true
+          } else {
+            top = scaledTop
+          }
+        }
+
+        if (scaleByY || expandsVertical) {
+          const widthDifference = widthScaledByHeight - noScaledWidth
+          if (expandsToRight) {
+            right -= widthDifference
+          } else {
+            left -= widthDifference
+          }
         }
       }
+
+      /*
+      if (expandsToRight) {
+        const targetRight = right - targetWidth + width
+        if (targetRight < this.bounds.minRight || targetRight > this.bounds.maxRight) {
+          changeHeight = true
+        } else {
+          right = targetRight
+        }
+      } else {
+        const targetLeft = left + width - targetWidth
+        if (targetLeft < this.bounds.minLeft || targetLeft > this.bounds.maxLeft) {
+          changeHeight = true
+        } else {
+          left = targetLeft
+        }
+      }
+      if (changeHeight) {
+        const targetHeight = width / aspectFactor
+        if (expandsToBottom) {
+          bottom -= targetHeight - height
+        } else {
+          top -= targetHeight - height
+        }
+      }
+      */
 
       const width = computeWidth(this.parentWidth, left, right)
       const height = computeHeight(this.parentHeight, top, bottom)
