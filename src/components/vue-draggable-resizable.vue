@@ -655,7 +655,6 @@ export default {
       const expandsToBottom = this.handle.includes('b') || (this.handle === 'mr' && lockAspectRatio)
       const expandsToRight = this.handle.includes('r') || (this.handle === 'bm' && lockAspectRatio)
       const expandsToLeft = this.handle.includes('l') || (this.handle === 'tm' && lockAspectRatio)
-      const expandsVertical = this.handle.includes('m') && this.resizingOnY
 
       if (expandsToBottom) {
         bottom = restrictToBounds(
@@ -685,67 +684,71 @@ export default {
         )
       }
 
+      /* Resizing with locked aspect ratio, previous script guaranteed, that  */
       if (lockAspectRatio) {
-        debugger
         const noScaledHeight = this.parentHeight - top - bottom
         const noScaledWidth = this.parentWidth - left - right
 
+        /*
+          Calculate scaled values two cases -
+          change width to it corresponds height
+          and change height to it corresponds width
+        */
         const heightScaledByWidth = noScaledWidth / aspectFactor
         const heightDifference = heightScaledByWidth - noScaledHeight
         const widthScaledByHeight = noScaledHeight * aspectFactor
-        let scaleByY = false
+        const widthDifference = widthScaledByHeight - noScaledWidth
 
-        if (expandsToBottom && !expandsVertical) {
-          const scaledBottom = bottom - heightDifference
-          if (scaledBottom < this.bounds.minBottom || scaledBottom > this.bounds.maxBottom) {
-            scaleByY = true
-          } else {
-            bottom = scaledBottom
-          }
-        } else {
-          const scaledTop = top - heightDifference
-          if (scaledTop < this.bounds.minTop || scaledTop > this.bounds.maxTop) {
-            scaleByY = true
-          } else {
-            top = scaledTop
-          }
+        /* Create scaled rectangles */
+        const scaleXByYRect = {
+          valid: true,
+          left: left,
+          right: right,
+          top: top,
+          bottom: bottom
         }
 
-        if (scaleByY || expandsVertical) {
-          const widthDifference = widthScaledByHeight - noScaledWidth
-          if (expandsToRight) {
-            right -= widthDifference
-          } else {
-            left -= widthDifference
-          }
+        if (expandsToRight) {
+          scaleXByYRect.right -= widthDifference
+          scaleXByYRect.valid = scaleXByYRect.right >= this.bounds.minRight && scaleXByYRect.right <= this.bounds.maxRight
+        } else {
+          scaleXByYRect.left -= widthDifference
+          scaleXByYRect.valid = scaleXByYRect.left >= this.bounds.minLeft && scaleXByYRect.left <= this.bounds.maxLeft
         }
-      }
 
-      /*
-      if (expandsToRight) {
-        const targetRight = right - targetWidth + width
-        if (targetRight < this.bounds.minRight || targetRight > this.bounds.maxRight) {
-          changeHeight = true
-        } else {
-          right = targetRight
+        const scaleYByXRect = {
+          valid: true,
+          left: left,
+          right: right,
+          top: top,
+          bottom: bottom
         }
-      } else {
-        const targetLeft = left + width - targetWidth
-        if (targetLeft < this.bounds.minLeft || targetLeft > this.bounds.maxLeft) {
-          changeHeight = true
-        } else {
-          left = targetLeft
-        }
-      }
-      if (changeHeight) {
-        const targetHeight = width / aspectFactor
+
         if (expandsToBottom) {
-          bottom -= targetHeight - height
+          scaleYByXRect.bottom -= heightDifference
+          scaleYByXRect.valid = scaleYByXRect.bottom >= this.bounds.minBottom && scaleYByXRect.bottom <= this.bounds.maxBottom
         } else {
-          top -= targetHeight - height
+          scaleYByXRect.top -= heightDifference
+          scaleYByXRect.valid = scaleYByXRect.top >= this.bounds.minTop && scaleYByXRect.top <= this.bounds.maxTop
         }
+
+        /*
+          Use rectngle that have valid coordinates or (if both are valid) use the biggest one
+        */
+        let useRect = null
+        if (!scaleXByYRect.valid) {
+          useRect = scaleYByXRect
+        } else if (!scaleYByXRect.valid) {
+          useRect = scaleXByYRect
+        } else {
+          useRect = (heightDifference < 0) ? scaleXByYRect : scaleYByXRect
+        }
+
+        left = useRect.left
+        right = useRect.right
+        top = useRect.top
+        bottom = useRect.bottom
       }
-      */
 
       const width = computeWidth(this.parentWidth, left, right)
       const height = computeHeight(this.parentHeight, top, bottom)
