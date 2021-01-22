@@ -27,7 +27,7 @@
 
 <script>
 import { matchesSelectorToParentElements, getComputedSize, addEvent, removeEvent } from '../utils/dom'
-import { computeWidth, computeHeight, restrictToBounds, snapToGrid } from '../utils/fns'
+import { computeWidth, computeHeight, restrictToBounds, snapToGrid, between, subtractPaddings, scaledDifference } from '../utils/fns'
 
 const events = {
   mouse: {
@@ -454,13 +454,7 @@ export default {
 
       if (e.stopPropagation) e.stopPropagation()
 
-      // Here we avoid a dangerous recursion by faking
-      // corner handles as middle handles
-      if (this.lockAspectRatio && !handle.includes('m')) {
-        this.handle = 'm' + handle.substring(1)
-      } else {
-        this.handle = handle
-      }
+      this.handle = handle
 
       this.resizeEnable = true
 
@@ -543,10 +537,12 @@ export default {
         }
 
         if (this.lockAspectRatio) {
-          limits.minLeft = Math.max(limits.minLeft, left - top * aspectFactor)
-          limits.minTop = Math.max(limits.minTop, top - left / aspectFactor)
-          limits.minRight = Math.max(limits.minRight, right - bottom * aspectFactor)
-          limits.minBottom = Math.max(limits.minBottom, bottom - right / aspectFactor)
+          const maxWidthPad = Math.max(left, right)
+          const maxHeightPad = Math.max(top, bottom)
+          limits.minLeft = Math.max(limits.minLeft, left - maxHeightPad * aspectFactor)
+          limits.minTop = Math.max(limits.minTop, top - maxWidthPad / aspectFactor)
+          limits.minRight = Math.max(limits.minRight, right - maxHeightPad * aspectFactor)
+          limits.minBottom = Math.max(limits.minBottom, bottom - maxWidthPad / aspectFactor)
         }
       } else {
         limits.minLeft = null
@@ -655,47 +651,131 @@ export default {
 
       const [deltaX, deltaY] = snapToGrid(this.grid, tmpDeltaX, tmpDeltaY, this.scale)
 
-      if (this.handle.includes('b')) {
+      const expandsToTop = this.handle.includes('t')
+      const expandsToBottom = this.handle.includes('b')
+      const expandsToRight = this.handle.includes('r')
+      const expandsToLeft = this.handle.includes('l')
+      const midHandle = this.handle.includes('m')
+
+      if (expandsToBottom) {
         bottom = restrictToBounds(
           mouseClickPosition.bottom + deltaY,
           this.bounds.minBottom,
           this.bounds.maxBottom
         )
-
-        if (this.lockAspectRatio && this.resizingOnY) {
-          right = this.right - (this.bottom - bottom) * aspectFactor
-        }
-      } else if (this.handle.includes('t')) {
+      } else if (expandsToTop) {
         top = restrictToBounds(
           mouseClickPosition.top - deltaY,
           this.bounds.minTop,
           this.bounds.maxTop
         )
-
-        if (this.lockAspectRatio && this.resizingOnY) {
-          left = this.left - (this.top - top) * aspectFactor
-        }
       }
 
-      if (this.handle.includes('r')) {
+      if (expandsToRight) {
         right = restrictToBounds(
           mouseClickPosition.right + deltaX,
           this.bounds.minRight,
           this.bounds.maxRight
         )
-
-        if (this.lockAspectRatio && this.resizingOnX) {
-          bottom = this.bottom - (this.right - right) / aspectFactor
-        }
-      } else if (this.handle.includes('l')) {
+      } else if (expandsToLeft) {
         left = restrictToBounds(
           mouseClickPosition.left - deltaX,
           this.bounds.minLeft,
           this.bounds.maxLeft
         )
+      }
 
-        if (this.lockAspectRatio && this.resizingOnX) {
-          top = this.top - (this.left - left) / aspectFactor
+      /* Resizing with locked aspect ratio, previous script guaranteed, that  */
+      if (lockAspectRatio) {
+        const noScaledHeight = subtractPaddings(this.parentHeight, top, bottom)
+        const noScaledWidth = subtractPaddings(this.parentWidth, left, right)
+
+        const heightDifference = scaledDifference(noScaledHeight, noScaledWidth, 1 / aspectFactor)
+        const widthDifference = scaledDifference(noScaledWidth, noScaledHeight, aspectFactor)
+
+        const minLeft = this.bounds.minLeft
+        const minRight = this.bounds.minRight
+        const minTop = this.bounds.minTop
+        const minBottom = this.bounds.minBottom
+
+        const maxLeft = this.bounds.maxLeft
+        const maxRight = this.bounds.maxRight
+        const maxTop = this.bounds.maxTop
+        const maxBottom = this.bounds.maxBottom
+
+        if (midHandle) {
+          /* Middle handle case */
+          if (expandsToTop) {
+            /* handle-tm */
+            const scaledLeft = left - widthDifference
+            left = restrictToBounds(scaledLeft, minLeft, maxLeft)
+            top -= scaledDifference(noScaledHeight, this.parentWidth - left - right, 1 / aspectFactor)
+          } else if (expandsToBottom) {
+            /* handle-bm */
+            const scaledRight = right - widthDifference
+            right = restrictToBounds(scaledRight, minRight, maxRight)
+            bottom -= scaledDifference(noScaledHeight, this.parentWidth - left - right, 1 / aspectFactor)
+          } else if (expandsToLeft) {
+            /* handle-ml */
+            const scaledTop = top - heightDifference
+            top = restrictToBounds(scaledTop, minTop, maxTop)
+            left -= scaledDifference(noScaledWidth, this.parentHeight - top - bottom, aspectFactor)
+          } else {
+            /* handle-mr */
+            const scaledBottom = bottom - heightDifference
+            bottom = restrictToBounds(scaledBottom, minBottom, maxBottom)
+            right -= scaledDifference(noScaledWidth, this.parentHeight - top - bottom, aspectFactor)
+          }
+        } else {
+          /* Create rectangle, where X axis is scaled to correspond to Y axis */
+          const scaleXByYRect = {
+            valid: false,
+            left: left,
+            right: right,
+            top: top,
+            bottom: bottom
+          }
+
+          if (expandsToRight) {
+            scaleXByYRect.right -= widthDifference
+            scaleXByYRect.valid = between(scaleXByYRect.right, minRight, maxRight)
+          } else if (expandsToLeft) {
+            scaleXByYRect.left -= widthDifference
+            scaleXByYRect.valid = between(scaleXByYRect.left, minLeft, maxLeft)
+          }
+
+          /* Create rectangle, where Y axis is scaled to correspond to X axis */
+          const scaleYByXRect = {
+            valid: false,
+            left: left,
+            right: right,
+            top: top,
+            bottom: bottom
+          }
+
+          if (expandsToBottom) {
+            scaleYByXRect.bottom -= heightDifference
+            scaleYByXRect.valid = between(scaleYByXRect.bottom, minBottom, maxBottom)
+          } else if (expandsToTop) {
+            scaleYByXRect.top -= heightDifference
+            scaleYByXRect.valid = between(scaleYByXRect.top, minTop, maxTop)
+          }
+
+          let useRect = null
+          /* Select rectangle to render */
+          if (scaleXByYRect.valid && scaleYByXRect.valid) {
+            /* if both are valid - select the biggest possible rectangle (mouse on area border) */
+            useRect = (heightDifference < 0) ? scaleXByYRect : scaleYByXRect
+          } else if (scaleYByXRect.valid) {
+            useRect = scaleYByXRect
+          } else if (scaleXByYRect.valid) {
+            useRect = scaleXByYRect
+          }
+
+          left = useRect.left
+          right = useRect.right
+          top = useRect.top
+          bottom = useRect.bottom
         }
       }
 
