@@ -810,16 +810,16 @@ export default {
 
       return this.height + 'px'
     },
-    minW: function () {
+    minW () {
       return this.minWidth
     },
-    minH: function () {
+    minH () {
       return this.minHeight
     },
-    maxW: function () {
+    maxW () {
       return this.maxWidth
     },
-    maxH: function () {
+    maxH () {
       return this.maxHeight
     },
     resizingOnX () {
