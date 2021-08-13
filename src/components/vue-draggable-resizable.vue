@@ -280,11 +280,11 @@ export default {
       const [width, height] = getComputedSize(this.$el)
       if (this.width !== width) {
         this.width = width
-        this.$forceUpdate()
+        this.recalculatePos()
       }
       if (this.height !== height) {
         this.height = height
-        this.$forceUpdate()
+        this.recalculatePos()
       }
     }
   },
@@ -329,6 +329,21 @@ export default {
   },
 
   methods: {
+    recalculatePos() {
+      if (this.parent) {
+        const grid = this.grid
+        const bounds = this.calcDragLimits()
+        const [deltaX, deltaY] = snapToGrid(grid, this.x, this.y, this.scale)
+        const left = restrictToBounds(deltaX, bounds.minLeft, bounds.maxLeft)
+        const right = restrictToBounds(this.width + deltaX, bounds.minRight, bounds.maxRight)
+        const top = restrictToBounds(deltaY, bounds.minTop, bounds.maxTop)
+        const bottom = restrictToBounds(this.height + deltaY, bounds.minBottom, bounds.maxBottom)
+        this.left = left
+        this.right = right
+        this.top = top
+        this.bottom = bottom
+      }
+    },
     resetBoundsAndMouseState () {
       this.mouseClickPosition = { mouseX: 0, mouseY: 0, x: 0, y: 0, w: 0, h: 0 }
 
