@@ -274,6 +274,20 @@ export default {
 
     this.resetBoundsAndMouseState()
   },
+  updated() {
+    if (this.w === 'auto' || this.h === 'auto') {
+      // if w or h auto,need recalculate the width or height,or the boundary is not right
+      const [width, height] = getComputedSize(this.$el)
+      if (this.width !== width) {
+        this.width = width
+        this.$forceUpdate()
+      }
+      if (this.height !== height) {
+        this.height = height
+        this.$forceUpdate()
+      }
+    }
+  },
   mounted: function () {
     if (!this.enableNativeDrag) {
       this.$el.ondragstart = () => false
