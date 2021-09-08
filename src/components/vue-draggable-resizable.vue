@@ -877,22 +877,6 @@ export default {
         this.aspectFactor = undefined
       }
     },
-    minWidth (val) {
-      if (val > 0 && val <= this.width) {
-        this.minW = val
-      }
-    },
-    minHeight (val) {
-      if (val > 0 && val <= this.height) {
-        this.minH = val
-      }
-    },
-    maxWidth (val) {
-      this.maxW = val
-    },
-    maxHeight (val) {
-      this.maxH = val
-    },
     w (val) {
       if (this.resizing || this.dragging) {
         return
