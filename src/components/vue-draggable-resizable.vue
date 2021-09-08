@@ -250,12 +250,6 @@ export default {
       parentWidth: null,
       parentHeight: null,
 
-      minW: this.minWidth,
-      minH: this.minHeight,
-
-      maxW: this.maxWidth,
-      maxH: this.maxHeight,
-
       handle: null,
       enabled: this.active,
       resizing: false,
@@ -815,6 +809,18 @@ export default {
       }
 
       return this.height + 'px'
+    },
+    minW () {
+      return this.minWidth
+    },
+    minH () {
+      return this.minHeight
+    },
+    maxW () {
+      return this.maxWidth
+    },
+    maxH () {
+      return this.maxHeight
     },
     resizingOnX () {
       return (Boolean(this.handle) && (this.handle.includes('l') || this.handle.includes('r')))
