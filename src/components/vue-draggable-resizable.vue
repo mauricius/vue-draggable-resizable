@@ -28,6 +28,7 @@
 <script>
 import { matchesSelectorToParentElements, getComputedSize, addEvent, removeEvent } from '../utils/dom'
 import { computeWidth, computeHeight, restrictToBounds, snapToGrid } from '../utils/fns'
+import { modulo } from '../utils/caculate';
 
 const events = {
   mouse: {
@@ -405,13 +406,13 @@ export default {
     },
     calcDragLimits () {
       return {
-        minLeft: this.left % this.grid[0],
+        minLeft: modulo(this.left, this.grid[0]),
         maxLeft: Math.floor((this.parentWidth - this.width - this.left) / this.grid[0]) * this.grid[0] + this.left,
-        minRight: this.right % this.grid[0],
+        minRight: modulo(this.right, this.grid[0]),
         maxRight: Math.floor((this.parentWidth - this.width - this.right) / this.grid[0]) * this.grid[0] + this.right,
-        minTop: this.top % this.grid[1],
+        minTop: modulo(this.top, this.grid[1]),
         maxTop: Math.floor((this.parentHeight - this.height - this.top) / this.grid[1]) * this.grid[1] + this.top,
-        minBottom: this.bottom % this.grid[1],
+        minBottom: modulo(this.bottom, this.grid[1]),
         maxBottom: Math.floor((this.parentHeight - this.height - this.bottom) / this.grid[1]) * this.grid[1] + this.bottom
       }
     },
@@ -502,8 +503,8 @@ export default {
         }
       }
 
-      maxW = maxW - (maxW % gridX)
-      maxH = maxH - (maxH % gridY)
+      maxW = maxW - modulo(maxW, gridX)
+      maxH = maxH - modulo(maxH, gridY)
 
       const limits = {
         minLeft: null,
@@ -517,13 +518,13 @@ export default {
       }
 
       if (this.parent) {
-        limits.minLeft = left % gridX
+        limits.minLeft = modulo(left, gridX)
         limits.maxLeft = left + Math.floor((width - minW) / gridX) * gridX
-        limits.minTop = top % gridY
+        limits.minTop = modulo(top, gridY)
         limits.maxTop = top + Math.floor((height - minH) / gridY) * gridY
-        limits.minRight = right % gridX
+        limits.minRight = modulo(right, gridX)
         limits.maxRight = right + Math.floor((width - minW) / gridX) * gridX
-        limits.minBottom = bottom % gridY
+        limits.minBottom = modulo(bottom, gridY)
         limits.maxBottom = bottom + Math.floor((height - minH) / gridY) * gridY
 
         if (maxW) {
