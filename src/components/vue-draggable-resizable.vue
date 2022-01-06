@@ -256,7 +256,9 @@ export default {
       dragging: false,
       dragEnable: false,
       resizeEnable: false,
-      zIndex: this.z
+      zIndex: this.z,
+
+      parentResizeObserver: null
     }
   },
 
@@ -295,7 +297,13 @@ export default {
     addEvent(document.documentElement, 'mousedown', this.deselect)
     addEvent(document.documentElement, 'touchend touchcancel', this.deselect)
 
-    addEvent(window, 'resize', this.checkParentSize)
+    if ('ResizeObserver' in window) {
+        this.parentResizeObserver = new ResizeObserver(() => this.checkParentSize())
+		this.parentResizeObserver.observe(this.$el.parentNode)
+    } else {
+        // Fallback to standard event listener
+        addEvent(window, 'resize', this.checkParentSize)
+    }
   },
   beforeDestroy: function () {
     removeEvent(document.documentElement, 'mousedown', this.deselect)
@@ -305,7 +313,11 @@ export default {
     removeEvent(document.documentElement, 'mouseup', this.handleUp)
     removeEvent(document.documentElement, 'touchend touchcancel', this.deselect)
 
-    removeEvent(window, 'resize', this.checkParentSize)
+    if (this.parentResizeObserver) {
+        this.parentResizeObserver.disconnect()
+    } else {
+        removeEvent(window, 'resize', this.checkParentSize)
+    }
   },
 
   methods: {
