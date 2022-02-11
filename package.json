@@ -39,7 +39,7 @@
     "chai": "^4.1.2",
     "cross-env": "^5.2.1",
     "git-directory-deploy": "^1.5.1",
-    "karma": "^5.0.1",
+    "karma": "^6.3.14",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-coverage": "^2.0.1",
