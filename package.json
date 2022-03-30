@@ -1,5 +1,5 @@
 {
-  "name": "vue-draggable-resizable",
+  "name": "@advisr/vue-draggable-resizable",
   "version": "2.3.0",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
   "main": "dist/VueDraggableResizable.umd.min.js",
@@ -69,13 +69,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mauricius/vue-draggable-resizable.git"
+    "url": "https://github.com/advisr-io/vue-draggable-resizable.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mauricius/vue-draggable-resizable/issues"
+    "url": "https://github.com/advisr-io/vue-draggable-resizable/issues"
   },
-  "homepage": "https://github.com/mauricius/vue-draggable-resizable",
+  "homepage": "https://github.com/advisr-io/vue-draggable-resizable",
   "keywords": [
     "vue",
     "component",
