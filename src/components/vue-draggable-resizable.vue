@@ -766,12 +766,12 @@ export default {
 
       if (this.resizing) {
         this.resizing = false
-        this.$emit('resizestop', this.left, this.top, this.width, this.height)
+        this.$emit('resizestop', this.left, this.top, this.width, this.height, e)
       }
 
       if (this.dragging) {
         this.dragging = false
-        this.$emit('dragstop', this.left, this.top)
+        this.$emit('dragstop', this.left, this.top, e)
       }
 
       removeEvent(document.documentElement, eventsFor.move, this.handleResize)
