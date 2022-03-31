@@ -62,7 +62,7 @@ describe('events', function () {
         },
         function () {
           expect(wrapper.emitted()).to.have.property('resizing')
-          expect(wrapper.emitted().resizing.pop()).to.deep.equal([0, 0, 110, 110])
+          expect(wrapper.emitted().resizing.pop().slice(0, 4)).to.deep.equal([0, 0, 110, 110])
 
           done()
         }
@@ -116,7 +116,7 @@ describe('events', function () {
         },
         function () {
           expect(wrapper.emitted()).to.have.property('dragging')
-          expect(wrapper.emitted().dragging.pop()).to.deep.equal([10, 10])
+          expect(wrapper.emitted().dragging.pop().slice(0, 2)).to.deep.equal([10, 10])
 
           done()
         }
@@ -149,7 +149,7 @@ describe('events', function () {
         },
         function () {
           expect(wrapper.emitted()).to.have.property('dragstop')
-          expect(wrapper.emitted().dragstop[0]).to.deep.equal([10, 10])
+          expect(wrapper.emitted().dragstop[0].slice(0, 2)).to.deep.equal([10, 10])
 
           done()
         }

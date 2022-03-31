@@ -131,7 +131,7 @@ describe('`active` prop', function () {
         },
         function () {
           expect(wrapper.emitted()).to.have.property('resizing')
-          expect(wrapper.emitted().resizing.pop()).to.deep.equal([0, 0, 110, 110])
+          expect(wrapper.emitted().resizing.pop().slice(0, 4)).to.deep.equal([0, 0, 110, 110])
 
           done()
         }
