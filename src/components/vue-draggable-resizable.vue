@@ -605,7 +605,7 @@ export default {
       this.right = right
       this.bottom = bottom
 
-      this.$emit('dragging', this.left, this.top)
+      this.$emit('dragging', this.left, this.top, e)
       this.dragging = true
     },
     moveHorizontally (val) {
@@ -707,7 +707,7 @@ export default {
       this.width = width
       this.height = height
 
-      this.$emit('resizing', this.left, this.top, this.width, this.height)
+      this.$emit('resizing', this.left, this.top, this.width, this.height, e)
       this.resizing = true
     },
     changeWidth (val) {
