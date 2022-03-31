@@ -379,7 +379,7 @@ export default {
         if (!this.enabled) {
           this.enabled = true
 
-          this.$emit('activated')
+          this.$emit('activated', e)
           this.$emit('update:active', true)
         }
 
