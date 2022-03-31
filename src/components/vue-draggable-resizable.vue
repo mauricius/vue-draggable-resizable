@@ -382,6 +382,7 @@ export default {
           this.$emit('activated', e)
           this.$emit('update:active', true)
         }
+        this.$emit('mousedown', e)
 
         if (this.draggable) {
           this.dragEnable = true
