@@ -38,6 +38,7 @@
 <script>
 import { matchesSelectorToParentElements, getComputedSize, addEvent, removeEvent } from '../utils/dom'
 import { computeWidth, computeHeight, restrictToBounds, snapToGrid } from '../utils/fns'
+import Vector from '@minogin/vector'
 
 const events = {
   mouse: {
@@ -268,6 +269,8 @@ export default {
 
       parentWidth: null,
       parentHeight: null,
+
+      mouseClickPosition: { mouseX: 0, mouseY: 0, x: 0, y: 0, w: 0, h: 0 },
 
       handle: null,
       enabled: this.active,
@@ -518,18 +521,25 @@ export default {
       addEvent(document.documentElement, eventsFor.stop, this.handleUp)
     },
     handleRotate (e) {
+      const mouseClickPosition = this.mouseClickPosition
       const axis = this.axis
       const grid = this.grid
-      const mouseClickPosition = this.mouseClickPosition
 
       const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX) : 0
       const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY) : 0
 
       const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, this.scale)
 
-      this.rotationAmount -= 10
-      if (this.rotationAmount < 0) this.rotationAmount = 360 + this.rotationAmount
-      else if (this.rotationAmount > 360) this.rotationAmount = this.rotationAmount - 360
+      const delta = new Vector(
+        deltaX,
+        deltaY
+      )
+
+      let up = new Vector(0, (-(this.height) / 2 - 40) / this.scale) // 40 is the rotate stick height
+      const rotationRad = Vector.rad(this.rotationAmount)
+      up = up.rotate(rotationRad)
+      const v = up.add(delta)
+      this.rotationAmount = Vector.deg(v.angle()) + 90
 
       this.$emit('rotating', this.rotationAmount)
       this.rotating = true
