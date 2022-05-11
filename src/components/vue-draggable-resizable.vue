@@ -22,6 +22,16 @@
       <slot :name="handle"></slot>
     </div>
     <slot></slot>
+    <div
+      v-if="enabled && rotatable"
+      class="handle-rotate-stick"
+    />
+    <div
+      v-if="enabled && rotatable"
+      :class="[classNameHandle, classNameHandle + '-rotate']"
+      @mousedown.stop.prevent="handleRotateDown($event)"
+      @touchstart.stop.prevent="handleRotateTouchDown($event)"
+    />
   </div>
 </template>
 
@@ -114,6 +124,10 @@ export default {
       type: Boolean,
       default: true
     },
+    rotatable: {
+      type: Boolean,
+      default: false
+    },
     lockAspectRatio: {
       type: Boolean,
       default: false
@@ -172,6 +186,10 @@ export default {
       type: [String, Number],
       default: 'auto',
       validator: (val) => (typeof val === 'string' ? val === 'auto' : val >= 0)
+    },
+    rotation: {
+      type: Number,
+      default: 0
     },
     handles: {
       type: Array,
@@ -238,6 +256,7 @@ export default {
       top: this.y,
       right: null,
       bottom: null,
+      rotationAmount: this.rotation,
 
       width: null,
       height: null,
@@ -254,8 +273,10 @@ export default {
       enabled: this.active,
       resizing: false,
       dragging: false,
+      rotating: false,
       dragEnable: false,
       resizeEnable: false,
+      rotateEnable: false,
       zIndex: this.z
     }
   },
@@ -471,6 +492,48 @@ export default {
       addEvent(document.documentElement, eventsFor.move, this.handleResize)
       addEvent(document.documentElement, eventsFor.stop, this.handleUp)
     },
+    handleRotateTouchDown (e) {
+      eventsFor = events.touch
+
+      this.handleRotateDown(e)
+    },
+    handleRotateDown (e) {
+      if (e instanceof MouseEvent && e.which !== 1) {
+        return
+      }
+
+      if (e.stopPropagation) e.stopPropagation()
+
+      this.rotateEnable = true
+
+      this.mouseClickPosition.mouseX = e.touches ? e.touches[0].pageX : e.pageX
+      this.mouseClickPosition.mouseY = e.touches ? e.touches[0].pageY : e.pageY
+      this.mouseClickPosition.left = this.left
+      this.mouseClickPosition.right = this.right
+      this.mouseClickPosition.top = this.top
+      this.mouseClickPosition.bottom = this.bottom
+
+      this.bounds = this.calcResizeLimits()
+
+      addEvent(document.documentElement, eventsFor.stop, this.handleUp)
+    },
+    handleRotate (e) {
+      const axis = this.axis
+      const grid = this.grid
+      const mouseClickPosition = this.mouseClickPosition
+
+      const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX) : 0
+      const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY) : 0
+
+      const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, this.scale)
+
+      this.rotationAmount -= 10
+      if (this.rotationAmount < 0) this.rotationAmount = 360 + this.rotationAmount
+      else if (this.rotationAmount > 360) this.rotationAmount = this.rotationAmount - 360
+
+      this.$emit('rotating', this.rotationAmount)
+      this.rotating = true
+    },
     calcResizeLimits () {
       let minW = this.minW
       let minH = this.minH
@@ -578,6 +641,8 @@ export default {
         this.handleResize(e)
       } else if (this.dragEnable) {
         this.handleDrag(e)
+      } else if (this.rotateEnable) {
+        this.handleRotate(e)
       }
     },
     handleDrag (e) {
@@ -764,6 +829,7 @@ export default {
 
       this.dragEnable = false
       this.resizeEnable = false
+      this.rotateEnable = false
 
       if (this.resizing) {
         this.resizing = false
@@ -775,13 +841,24 @@ export default {
         this.$emit('dragstop', this.left, this.top, e)
       }
 
+      if (this.rotating) {
+        this.rotating = false
+        this.$emit('rotatestop', e)
+      }
+
       removeEvent(document.documentElement, eventsFor.move, this.handleResize)
     }
   },
   computed: {
     style () {
+      const transform = [
+        `translate(${this.left}px, ${this.top}px)`
+      ]
+      if (this.rotatable) {
+        transform.push(`rotate(${this.rotationAmount}deg)`)
+      }
       return {
-        transform: `translate(${this.left}px, ${this.top}px)`,
+        transform: transform.join(' '),
         width: this.computedWidth,
         height: this.computedHeight,
         zIndex: this.zIndex,
