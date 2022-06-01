@@ -58,14 +58,14 @@
   cursor: se-resize;
 }
 .handle-rotate {
-  bottom: -40px;
+  top: -40px;
   left: 50%;
   margin-left: -7px;
   cursor: ew-resize;
 }
 .handle-rotate-stick {
   left: 50%;
-  bottom: -40px;
+  top: -40px;
   box-sizing: border-box;
   position: absolute;
   font-size: 1px;
