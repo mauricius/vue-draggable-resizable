@@ -525,17 +525,18 @@ export default {
       const axis = this.axis
       const grid = this.grid
 
-      const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX) : 0
-      const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY) : 0
+      const deltaX = axis && axis !== 'y' ? (e.touches ? e.touches[0].pageX : e.pageX) - mouseClickPosition.mouseX : 0
+      const deltaY = axis && axis !== 'x' ? (e.touches ? e.touches[0].pageY : e.pageY) - mouseClickPosition.mouseY : 0
 
-      const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, this.scale)
+      // const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, this.scale)
 
       const delta = new Vector(
         deltaX,
         deltaY
       )
 
-      let up = new Vector(0, (-(this.height) / 2 - 40) / this.scale) // 40 is the rotate stick height
+      const y = (-(this.height / this.scale) / 2) - (40 / this.scale) // 40 is the rotate stick height
+      let up = new Vector(0, y)
       const rotationRad = Vector.rad(this.rotationAmount)
       up = up.rotate(rotationRad)
       const v = up.add(delta)
