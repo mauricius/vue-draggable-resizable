@@ -78,7 +78,9 @@
 }
 .handle-rotate-tooltip {
   position: absolute;
-  left: 30px;
+  left: 40px;
+  top: 50%;
+  margin-top: -14px;
   width: auto;
   white-space: nowrap;
   padding: 8px 10px;

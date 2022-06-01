@@ -29,6 +29,7 @@
     <div
       v-if="enabled && rotatable"
       :class="[classNameHandle + '-rotate']"
+      :style="rotateHandleStyles"
       @mousedown.stop.prevent="handleRotateDown($event)"
       @touchstart.stop.prevent="handleRotateTouchDown($event)"
       @mouseover="rotateHandleHover = true"
@@ -37,7 +38,6 @@
       <div
         v-if="shouldShowRotateTooltip"
         class="handle-rotate-tooltip"
-        :style="rotateTooltipStyles"
       >
         {{ rotateTooltipContent }}
       </div>
@@ -552,7 +552,7 @@ export default {
       const rotationRad = Vector.rad(this.rotationAmount)
       up = up.rotate(rotationRad)
       const v = up.add(delta)
-      this.rotationAmount = Vector.deg(v.angle()) + 90
+      this.rotationAmount = Math.round(Vector.deg(v.angle()) + 90)
 
       this.$emit('rotating', this.rotationAmount)
       this.rotating = true
@@ -932,10 +932,7 @@ export default {
     isCornerHandle () {
       return (Boolean(this.handle) && ['tl', 'tr', 'br', 'bl'].includes(this.handle))
     },
-    shouldShowRotateTooltip () {
-      return this.rotateHandleHover || this.rotating
-    },
-    rotateTooltipStyles () {
+    rotateHandleStyles () {
       if (!this.rotatable) return {}
 
       const transform = [
@@ -945,8 +942,11 @@ export default {
         transform: transform.join(' ')
       }
     },
+    shouldShowRotateTooltip () {
+      return this.rotateHandleHover || this.rotating
+    },
     rotateTooltipContent () {
-      if (this.rotating) return `Rotate ${Math.round(this.rotationAmount)}°`
+      if (this.rotating) return `Rotate ${this.rotationAmount}°`
       return 'Rotate'
     }
   },
