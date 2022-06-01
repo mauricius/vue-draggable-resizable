@@ -76,6 +76,18 @@
   margin-left: -11px;
   cursor: ew-resize;
 }
+.handle-rotate-tooltip {
+  position: absolute;
+  left: 30px;
+  width: auto;
+  white-space: nowrap;
+  padding: 8px 10px;
+  background-color: #333;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10%;
+  opacity: .8;
+}
 .handle-rotate-stick {
   left: 50%;
   top: -50px;

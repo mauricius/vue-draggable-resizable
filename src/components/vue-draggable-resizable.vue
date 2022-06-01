@@ -31,7 +31,18 @@
       :class="[classNameHandle + '-rotate']"
       @mousedown.stop.prevent="handleRotateDown($event)"
       @touchstart.stop.prevent="handleRotateTouchDown($event)"
-    />
+      @mouseover="rotateHandleHover = true"
+      @mouseout="rotateHandleHover = false"
+    >
+      <div
+        v-if="shouldShowRotateTooltip"
+        class="handle-rotate-tooltip"
+        :style="rotateTooltipStyles"
+      >
+        {{ rotateTooltipContent }}
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -280,7 +291,8 @@ export default {
       dragEnable: false,
       resizeEnable: false,
       rotateEnable: false,
-      zIndex: this.z
+      zIndex: this.z,
+      rotateHandleHover: false
     }
   },
 
@@ -919,6 +931,23 @@ export default {
     },
     isCornerHandle () {
       return (Boolean(this.handle) && ['tl', 'tr', 'br', 'bl'].includes(this.handle))
+    },
+    shouldShowRotateTooltip () {
+      return this.rotateHandleHover || this.rotating
+    },
+    rotateTooltipStyles () {
+      if (!this.rotatable) return {}
+
+      const transform = [
+        `rotate(${0 - this.rotationAmount}deg)`
+      ]
+      return {
+        transform: transform.join(' ')
+      }
+    },
+    rotateTooltipContent () {
+      if (this.rotating) return `Rotate ${Math.round(this.rotationAmount)}°`
+      return 'Rotate'
     }
   },
 
