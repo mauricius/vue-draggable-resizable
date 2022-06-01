@@ -58,20 +58,33 @@
   cursor: se-resize;
 }
 .handle-rotate {
-  top: -40px;
+  box-sizing: border-box;
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  border: 1px solid #333;
+  border-radius: 50%;
+  z-index: 1;
+
+  background: #EEE url('data:image/svg+xml,<svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.36979 9.80539L2.31242 10.8856C3.19483 11.5702 4.21417 11.9886 5.27153 12.1179L5.27153 10.5813C4.60973 10.4748 3.96313 10.2162 3.36979 9.80539ZM1.54412 6.84628L0.00750798 6.84628C0.136827 7.90364 0.547604 8.93059 1.23223 9.813L2.32763 8.71759C1.91686 8.14707 1.65062 7.50808 1.54412 6.84628ZM6.79293 12.1179C7.87262 11.9824 8.89532 11.5565 9.75204 10.8856L8.67185 9.80539C8.10133 10.2162 7.45474 10.4748 6.79293 10.5813L6.79293 12.1179ZM10.9387 8.78605L14.3999 5.32488L12.0646 5.32488C11.6918 2.32773 9.13588 -2.30098e-07 6.03223 -3.65763e-07C2.92859 -5.01427e-07 0.372643 2.32013 -9.84612e-05 5.32488L1.53651 5.32488C1.90164 3.1645 3.77296 1.52139 6.03223 1.52139C8.2915 1.52139 10.1628 3.1645 10.528 5.32488L7.55363 5.32488L10.9387 8.78605Z" fill="black"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 4.5px center; 
+  background-size: 15px 13px;
+
+  top: -50px;
   left: 50%;
-  margin-left: -7px;
+  margin-left: -11px;
   cursor: ew-resize;
 }
 .handle-rotate-stick {
   left: 50%;
-  top: -40px;
+  top: -50px;
   box-sizing: border-box;
   position: absolute;
   font-size: 1px;
   border: 1px dashed black;
   width: 0px;
-  height: 40px;
+  height: 50px;
 }
 @media only screen and (max-width: 768px) {
   [class*="handle-"]:before {

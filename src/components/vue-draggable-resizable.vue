@@ -28,7 +28,7 @@
     />
     <div
       v-if="enabled && rotatable"
-      :class="[classNameHandle, classNameHandle + '-rotate']"
+      :class="[classNameHandle + '-rotate']"
       @mousedown.stop.prevent="handleRotateDown($event)"
       @touchstart.stop.prevent="handleRotateTouchDown($event)"
     />
