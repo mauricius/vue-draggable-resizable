@@ -853,7 +853,7 @@ export default {
 
       if (this.rotating) {
         this.rotating = false
-        this.$emit('rotatestop', e)
+        this.$emit('rotatestop', this.rotationAmount, e)
       }
 
       removeEvent(document.documentElement, eventsFor.move, this.handleResize)
