@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="draggableEl"
     :style="style"
     :class="[{
       [classNameActive]: enabled,
@@ -533,26 +534,19 @@ export default {
       addEvent(document.documentElement, eventsFor.stop, this.handleUp)
     },
     handleRotate (e) {
-      const mouseClickPosition = this.mouseClickPosition
-      const axis = this.axis
-      const grid = this.grid
+      const mousePosition = {
+        x: (e.touches ? e.touches[0].pageX : e.pageX),
+        y: (e.touches ? e.touches[0].pageY : e.pageY)
+      }
 
-      const deltaX = axis && axis !== 'y' ? (e.touches ? e.touches[0].pageX : e.pageX) - mouseClickPosition.mouseX : 0
-      const deltaY = axis && axis !== 'x' ? (e.touches ? e.touches[0].pageY : e.pageY) - mouseClickPosition.mouseY : 0
+      const elementBoundingBox = this.$refs.draggableEl.getBoundingClientRect()
+      const elementCenter = {
+        x: Math.round(elementBoundingBox.left + (elementBoundingBox.width / 2)),
+        y: Math.round(elementBoundingBox.top + (elementBoundingBox.height / 2))
+      }
 
-      // const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, this.scale)
-
-      const delta = new Vector(
-        deltaX,
-        deltaY
-      )
-
-      const y = (-(this.height / this.scale) / 2) - (40 / this.scale) // 40 is the rotate stick height
-      let up = new Vector(0, y)
-      const rotationRad = Vector.rad(this.rotationAmount)
-      up = up.rotate(rotationRad)
-      const v = up.add(delta)
-      this.rotationAmount = Math.round(Vector.deg(v.angle()) + 90)
+      const vector = { x: mousePosition.x - elementCenter.x, y: mousePosition.y - elementCenter.y }
+      this.rotationAmount = Math.round(Math.atan2(vector.y, vector.x) * 180 / Math.PI) + 90
 
       this.$emit('rotating', this.rotationAmount)
       this.rotating = true
