@@ -297,7 +297,7 @@ export default {
 
     addEvent(window, 'resize', this.checkParentSize)
   },
-  beforeDestroy: function () {
+  beforeUnmount: function () {
     removeEvent(document.documentElement, 'mousedown', this.deselect)
     removeEvent(document.documentElement, 'touchstart', this.handleUp)
     removeEvent(document.documentElement, 'mousemove', this.move)
@@ -714,7 +714,7 @@ export default {
       // should calculate with scale 1.
       const [newWidth, _] = snapToGrid(this.grid, val, 0, 1)
 
-      let right = restrictToBounds(
+      const right = restrictToBounds(
         (this.parentWidth - newWidth - this.left),
         this.bounds.minRight,
         this.bounds.maxRight
@@ -737,7 +737,7 @@ export default {
       // should calculate with scale 1.
       const [_, newHeight] = snapToGrid(this.grid, 0, val, 1)
 
-      let bottom = restrictToBounds(
+      const bottom = restrictToBounds(
         (this.parentHeight - newHeight - this.top),
         this.bounds.minBottom,
         this.bounds.maxBottom

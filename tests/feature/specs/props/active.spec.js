@@ -1,4 +1,5 @@
-import VueDraggableResizable from '@/components/vue-draggable-resizable'
+import VueDraggableResizable from '@/components/vue-draggable-resizable.vue'
+import { describe, it, expect, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import syn from 'syn'
 import div from '../../div'
@@ -161,7 +162,7 @@ describe('`active` prop', function () {
     })
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })
 
 describe('`prevent-deactivation` prop', function () {
@@ -186,5 +187,5 @@ describe('`prevent-deactivation` prop', function () {
     })
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })

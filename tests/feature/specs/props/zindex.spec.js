@@ -1,4 +1,5 @@
-import VueDraggableResizable from '@/components/vue-draggable-resizable'
+import VueDraggableResizable from '@/components/vue-draggable-resizable.vue'
+import { describe, it, expect, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import div from '../../div'
 
@@ -36,5 +37,5 @@ describe('zIndex prop', function () {
     expect(wrapper.vm.$data.zIndex).to.equal(999)
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })

@@ -1,5 +1,6 @@
-import VueDraggableResizable from '@/components/vue-draggable-resizable'
+import VueDraggableResizable from '@/components/vue-draggable-resizable.vue'
 import { mount } from '@vue/test-utils'
+import { describe, it, expect, afterEach } from 'vitest'
 import div from '../../div'
 
 let wrapper
@@ -40,5 +41,5 @@ describe('`handles` prop', function () {
     expect(wrapper.findAll('div.handle').length).to.equal(6)
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })

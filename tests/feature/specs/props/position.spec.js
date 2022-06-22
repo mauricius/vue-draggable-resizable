@@ -1,5 +1,6 @@
-import VueDraggableResizable from '@/components/vue-draggable-resizable'
+import VueDraggableResizable from '@/components/vue-draggable-resizable.vue'
 import { mount } from '@vue/test-utils'
+import { describe, it, expect, afterEach } from 'vitest'
 
 let wrapper
 
@@ -31,5 +32,5 @@ describe('position props', function () {
     expect(wrapper.vm.$el.style.transform).to.equal('translate(250px, 200px)')
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })

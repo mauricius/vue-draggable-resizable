@@ -1,25 +1,25 @@
-import VueDraggableResizable from '@/components/vue-draggable-resizable'
+import VueDraggableResizable from '@/components/vue-draggable-resizable.vue'
 import { mount } from '@vue/test-utils'
+import { describe, it, expect, afterEach, vi } from 'vitest'
 import syn from 'syn'
-import sinon from 'sinon'
 import div from '../../div'
 
 let wrapper
 
 describe('`onDragStart` and `onResizeStart` props', function () {
   it('should call `onDragStart` callback when the component is clicked', function () {
-    const onDragStartCallback = sinon.spy()
-
+    const onDragStartCallback = vi.fn()
+    
     wrapper = mount(VueDraggableResizable, {
       attachTo: div(),
       propsData: {
         onDragStart: onDragStartCallback
       }
     })
-
+    
     wrapper.trigger('mousedown')
-
-    sinon.assert.called(onDragStartCallback)
+    
+    expect(onDragStartCallback).toHaveBeenCalled()
   })
 
   it('should prevent activation of the component if the `onDragStart` callback returns false', async function () {
@@ -39,7 +39,7 @@ describe('`onDragStart` and `onResizeStart` props', function () {
   })
 
   it('should call `onResizeStart` callback when the component is resized', function (done) {
-    const onResizeStartCallback = sinon.spy()
+    const onResizeStartCallback = vi.fn()
 
     wrapper = mount(VueDraggableResizable, {
       attachTo: div(),
@@ -63,7 +63,7 @@ describe('`onDragStart` and `onResizeStart` props', function () {
         duration: 10
       },
       function () {
-        sinon.assert.called(onResizeStartCallback)
+        expect(onDragStartCallback).toHaveBeenCalled()
 
         done()
       }
@@ -107,12 +107,12 @@ describe('`onDragStart` and `onResizeStart` props', function () {
     )
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })
 
 describe('`onDrag` and `onResize` props', function () {
   it('should call `onDrag` callback when the component is dragged', function (done) {
-    const onDragCallback = sinon.spy()
+    const onDragCallback = vi.fn()
 
     wrapper = mount(VueDraggableResizable, {
       attachTo: div(),
@@ -138,8 +138,8 @@ describe('`onDrag` and `onResize` props', function () {
           to: { pageX: fromX + 50, pageY: fromY + 50 }
         },
         function () {
-          sinon.assert.called(onDragCallback)
-          sinon.assert.calledWith(onDragCallback, 0, 0)
+          expect(onDragStartCallback).toHaveBeenCalled()
+          expect(onDragStartCallback).toHaveBeenCalledWith('br', 0, 0, 100, 100)
 
           done()
         }
@@ -189,7 +189,7 @@ describe('`onDrag` and `onResize` props', function () {
   })
 
   it('should call `onResize` callback when the component is resized', function (done) {
-    const onResizeCallback = sinon.spy()
+    const onResizeCallback = vi.fn()
 
     wrapper = mount(VueDraggableResizable, {
       attachTo: div(),
@@ -216,8 +216,8 @@ describe('`onDrag` and `onResize` props', function () {
           duration: 10
         },
         function () {
-          sinon.assert.called(onResizeCallback)
-          sinon.assert.calledWith(onResizeCallback, 'br', 0, 0, 100, 100)
+          expect(onDragStartCallback).toHaveBeenCalled()
+          expect(onDragStartCallback).toHaveBeenCalledWith('br', 0, 0, 100, 100)
 
           done()
         }
@@ -265,5 +265,5 @@ describe('`onDrag` and `onResize` props', function () {
     })
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })
