@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import VueDraggableResizable from './components/vue-draggable-resizable'
+import VueDraggableResizable from './components/vue-draggable-resizable.vue'
 import './components/vue-draggable-resizable.css'
 
 export default {

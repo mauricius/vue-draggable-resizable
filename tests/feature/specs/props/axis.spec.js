@@ -1,5 +1,6 @@
-import VueDraggableResizable from '@/components/vue-draggable-resizable'
+import VueDraggableResizable from '@/components/vue-draggable-resizable.vue'
 import { mount } from '@vue/test-utils'
+import { describe, it, expect, afterEach } from 'vitest'
 import syn from 'syn'
 import div from '../../div'
 
@@ -87,5 +88,5 @@ describe('axis prop', function () {
     )
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })

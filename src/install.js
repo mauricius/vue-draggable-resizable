@@ -1,6 +1,6 @@
 import './components/vue-draggable-resizable.css'
 
-import VueDraggableResizable from './components/vue-draggable-resizable'
+import VueDraggableResizable from './components/vue-draggable-resizable.vue'
 
 export function install (Vue) {
   if (install.installed) return

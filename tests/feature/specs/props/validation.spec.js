@@ -1,5 +1,6 @@
-import VueDraggableResizable from '@/components/vue-draggable-resizable'
+import VueDraggableResizable from '@/components/vue-draggable-resizable.vue'
 import { mount } from '@vue/test-utils'
+import { describe, it, expect, afterEach, beforeEach } from 'vitest'
 
 let wrapper
 
@@ -319,5 +320,5 @@ describe('props validation', function () {
     expect(onResize.default()).to.equal(true)
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })

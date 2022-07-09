@@ -1,4 +1,5 @@
-import VueDraggableResizable from '@/components/vue-draggable-resizable'
+import VueDraggableResizable from '@/components/vue-draggable-resizable.vue'
+import { describe, it, expect, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 
 let wrapper
@@ -58,5 +59,5 @@ describe('classes props', function () {
     expect(wrapper.findAll('div.my-handle-class').length).to.equal(8)
   })
 
-  afterEach(() => wrapper.destroy())
+  afterEach(() => wrapper.unmount())
 })

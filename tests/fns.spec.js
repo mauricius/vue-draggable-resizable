@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import { describe, it, expect } from 'vitest'
 import { isFunction, snapToGrid } from '@/utils/fns'
 
 describe('fns', function () {

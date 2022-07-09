@@ -1,6 +1,6 @@
 {
   "name": "vue-draggable-resizable",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
   "main": "dist/VueDraggableResizable.umd.min.js",
   "unpkg": "dist/VueDraggableResizable.umd.min.js",
@@ -8,78 +8,27 @@
     "./sfc": "src/vue-draggable-resizable.vue"
   },
   "private": false,
-  "description": "Vue2 Component for resizable and draggable elements",
+  "description": "Vue3 Component for resizable and draggable elements",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "build-bundle": "vue-cli-service build --target lib --name VueDraggableResizable ./src/index.js",
-    "unit": "cross-env BABEL_ENV=test mocha-webpack --webpack-config=webpack.test.js tests/unit/specs/**/*.js",
-    "unit-watch": "cross-env BABEL_ENV=test mocha-webpack --watch --webpack-config=webpack.test.js tests/unit/specs/**/*.js",
-    "feature": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/feature/karma.conf.js --single-run",
-    "feature-watch": "cross-env BABEL_ENV=test node_modules/karma/bin/karma start tests/feature/karma.conf.js",
-    "test": "npm run unit && npm run feature",
-    "storybook": "start-storybook -p 9001 -c .storybook",
-    "gh-pages:clean": "rm -rf docs",
-    "gh-pages:build": "build-storybook -c .storybook -o docs",
-    "gh-pages:publish": "$(npm bin)/git-directory-deploy --directory docs",
-    "gh-pages": "npm run gh-pages:clean && npm run gh-pages:build && npm run gh-pages:publish"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "jsdom": "^19.0.0",
+    "syn": "^0.15.0",
+    "vue": "^3.2.25"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@storybook/addon-notes": "^5.1.11",
-    "@storybook/vue": "^5.1.11",
-    "@vue/cli-plugin-babel": "^3.11.0",
-    "@vue/cli-plugin-eslint": "^3.11.0",
-    "@vue/cli-service": "^4.3.1",
-    "@vue/eslint-config-standard": "^4.0.0",
-    "@vue/test-utils": "^1.1.1",
-    "babel-plugin-istanbul": "^5.2.0",
-    "babel-preset-vue": "^2.0.2",
-    "chai": "^4.1.2",
-    "cross-env": "^5.2.1",
-    "git-directory-deploy": "^1.5.1",
-    "karma": "^5.0.1",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-coverage": "^2.0.1",
-    "karma-coverage-istanbul-reporter": "^2.1.0",
-    "karma-mocha": "^1.3.0",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-spec-reporter": "0.0.32",
-    "karma-webpack": "^4.0.2",
-    "mocha": "^6.2.0",
-    "mocha-webpack": "^2.0.0-beta.0",
-    "sinon": "^7.4.2",
-    "style-loader": "^1.0.0",
-    "syn": "^0.14.1",
-    "vue": "^2.5.21",
-    "vue-template-compiler": "^2.5.21",
-    "webpack": "^4.42.1"
-  },
-  "files": [
-    "/dist/*",
-    "/src/*",
-    "*.json",
-    "*.js"
-  ],
-  "engines": {
-    "node": ">= 4.0.0",
-    "npm": ">= 3.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mauricius/vue-draggable-resizable.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mauricius/vue-draggable-resizable/issues"
-  },
-  "homepage": "https://github.com/mauricius/vue-draggable-resizable",
-  "keywords": [
-    "vue",
-    "component",
-    "dragabble",
-    "resizable"
-  ]
+    "@vitejs/plugin-vue": "^2.3.3",
+    "@vitest/ui": "^0.15.1",
+    "@vue/test-utils": "^2.0.0-rc.18",
+    "c8": "^7.11.3",
+    "vite": "^2.9.9",
+    "vitest": "^0.15.1"
+  }
 }

@@ -1,11 +1,11 @@
 <p align="center"><img src="https://rawgit.com/mauricius/vue-draggable-resizable/v1/docs/resources/logo.png" alt="logo"></p>
-<h1 align="center">VueDraggableResizable 2</h1>
+<h1 align="center">VueDraggableResizable 3</h1>
 
 [![Latest Version on NPM](https://img.shields.io/npm/v/vue-draggable-resizable.svg?style=flat-square)](https://npmjs.com/package/vue-draggable-resizable)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![npm](https://img.shields.io/npm/dt/vue-draggable-resizable.svg?style=flat-square)](https://www.npmjs.com/package/vue-draggable-resizable)
 
-> Vue2 Component for draggable and resizable elements.
+> Vue Component for draggable and resizable elements.
 
 If you are looking for the version 1 of the component, it is available on the [v1 branch](https://github.com/mauricius/vue-draggable-resizable/tree/v1).
 
@@ -53,16 +53,18 @@ $ npm install --save vue-draggable-resizable
 ```
 
 
-Register the component
+Register the component globally
 
 ```js
-import Vue from 'vue'
+// main.js
+import createApp from 'vue'
 import VueDraggableResizable from 'vue-draggable-resizable'
-
 // optionally import default styles
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
+import App from '/src/App.vue'
 
-Vue.component('vue-draggable-resizable', VueDraggableResizable)
+const app = createApp(App)
+app.component('vue-draggable-resizable', VueDraggableResizable)
 ```
 
 You may now use the component in your markup
@@ -81,6 +83,9 @@ You may now use the component in your markup
 import VueDraggableResizable from 'vue-draggable-resizable'
 
 export default {
+  components: {
+    'vue-draggable-resizable': VueDraggableResizable
+  },
   data: function () {
     return {
       width: 0,
