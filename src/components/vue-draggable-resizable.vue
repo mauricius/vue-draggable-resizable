@@ -448,13 +448,7 @@ export default {
 
       if (e.stopPropagation) e.stopPropagation()
 
-      // Here we avoid a dangerous recursion by faking
-      // corner handles as middle handles
-      if (this.lockAspectRatio && !handle.includes('m')) {
-        this.handle = 'm' + handle.substring(1)
-      } else {
-        this.handle = handle
-      }
+      this.handle = handle
 
       this.resizeEnable = true
 
@@ -656,7 +650,7 @@ export default {
           this.bounds.maxBottom
         )
 
-        if (this.lockAspectRatio && this.resizingOnY) {
+        if (this.lockAspectRatio && this.handle.includes('m') && this.resizingOnY) {
           right = this.right - (this.bottom - bottom) * aspectFactor
         }
       } else if (this.handle.includes('t')) {
@@ -666,7 +660,7 @@ export default {
           this.bounds.maxTop
         )
 
-        if (this.lockAspectRatio && this.resizingOnY) {
+        if (this.lockAspectRatio && this.handle.includes('m') && this.resizingOnY) {
           left = this.left - (this.top - top) * aspectFactor
         }
       }
@@ -679,7 +673,11 @@ export default {
         )
 
         if (this.lockAspectRatio && this.resizingOnX) {
-          bottom = this.bottom - (this.right - right) / aspectFactor
+          if (this.handle.includes('t')) {
+            top = this.top - (this.right - right) / aspectFactor
+          } else {
+            bottom = this.bottom - (this.right - right) / aspectFactor
+          }
         }
       } else if (this.handle.includes('l')) {
         left = restrictToBounds(
@@ -689,7 +687,11 @@ export default {
         )
 
         if (this.lockAspectRatio && this.resizingOnX) {
-          top = this.top - (this.left - left) / aspectFactor
+          if (this.handle.includes('t')) {
+            top = this.top - (this.left - left) / aspectFactor
+          } else {
+            bottom = this.bottom - (this.left - left) / aspectFactor
+          }
         }
       }
 
