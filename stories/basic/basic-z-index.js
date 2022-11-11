@@ -6,6 +6,9 @@ export default () => ({
       <vue-draggable-resizable :z="z">
         <p>Controlling the z-index from outside the component by providing the <b>:z</b> prop.</p>
       </vue-draggable-resizable>
+      <vue-draggable-resizable :z="2">
+        <p>Controlling the z-index from outside the component by providing the <b>:z</b> prop.</p>
+      </vue-draggable-resizable>
       <div style="width: 200px; height: 200px; background-color: red; position: absolute; top: 100px; left: 100px; z-index: 1; text-align: center; font-size: 24px">
         1
       </div>
