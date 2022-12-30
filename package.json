@@ -48,7 +48,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^4.0.2",
-    "mocha": "^6.2.0",
+    "mocha": "^10.2.0",
     "mocha-webpack": "^2.0.0-beta.0",
     "sinon": "^7.4.2",
     "style-loader": "^1.0.0",
