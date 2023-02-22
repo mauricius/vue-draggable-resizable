@@ -374,7 +374,7 @@ Type: `Number|String`<br>
 Required: `false`<br>
 Default: `auto`
 
-Define the zIndex of the element.
+Define the z-index of the element.
 
 ```html
 <vue-draggable-resizable :z="999">

@@ -356,7 +356,7 @@ export default {
       this.elementDown(e)
     },
     elementDown (e) {
-      if (e instanceof MouseEvent && e.which !== 1) {
+      if (e instanceof MouseEvent && e.button !== 0) {
         return
       }
 
@@ -633,7 +633,6 @@ export default {
       let bottom = this.bottom
 
       const mouseClickPosition = this.mouseClickPosition
-      const lockAspectRatio = this.lockAspectRatio
       const aspectFactor = this.aspectFactor
 
       const tmpDeltaX = mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX)
@@ -766,12 +765,12 @@ export default {
 
       if (this.resizing) {
         this.resizing = false
-        this.$emit('resizestop', this.left, this.top, this.width, this.height)
+        this.$emit('resize-stop', this.left, this.top, this.width, this.height)
       }
 
       if (this.dragging) {
         this.dragging = false
-        this.$emit('dragstop', this.left, this.top)
+        this.$emit('drag-stop', this.left, this.top)
       }
 
       removeEvent(document.documentElement, eventsFor.move, this.handleResize)

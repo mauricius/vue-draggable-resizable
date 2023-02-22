@@ -10,6 +10,17 @@ html, body, #root, #root > div {
   padding: 0px;
 }
 
+#toolbar {
+  position: fixed;
+  bottom: 0;
+  height: 24px;
+  padding: 12px 0;
+  width: 100%;
+  border-top: 1px solid #999;
+  background-color: #CCC;
+  z-index: 999;
+}
+
 .drag-handle,
 .drag-cancel {
   padding: 6px;

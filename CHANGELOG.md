@@ -7,6 +7,8 @@ All notable changes to `vue-draggable-resizable` will be documented in this file
 - Updates all packages
 - Adds vitest instead of mocha and karma for testing
 - Adds vite instead of raw webpack
+- Adds Cypress to component-test the package in real browsers
+- Fix `drag-stop` and `resize-stop` events
 - And minor changes
 
 ## 2.3.0 - 2020-12-17
