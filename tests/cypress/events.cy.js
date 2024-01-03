@@ -37,7 +37,7 @@ describe('VueDraggableResizable events', () => {
       .should('have.been.calledWith', 50, 50)
   })
 
-  it('should emit "drag-stop" event while stopping dragging the component', () => {
+  it('should emit "dragStop" event while stopping dragging the component', () => {
     const onDragStop = cy.spy().as('onDragStopSpy')
 
     cy.mount(VueDraggableResizable, {
@@ -56,7 +56,7 @@ describe('VueDraggableResizable events', () => {
       .should('have.been.calledWith', 50, 50)
   })
 
-  it('should not emit "drag-stop" when the component is activated', () => {
+  it('should not emit "dragStop" when the component is activated', () => {
     const onDragStop = cy.spy().as('onDragStopSpy')
 
     cy.mount(VueDraggableResizable, {
@@ -92,7 +92,7 @@ describe('VueDraggableResizable events', () => {
       .should('have.been.calledWith', 0, 0, 150, 150)
   })
 
-  it('should emit "resize-stop" event while stopping resizing the component', () => {
+  it('should emit "resizeStop" event while stopping resizing the component', () => {
     const onResizeStop = cy.spy().as('onResizeStopSpy')
 
     cy.mount(VueDraggableResizable, {
@@ -111,7 +111,7 @@ describe('VueDraggableResizable events', () => {
       .should('have.been.calledWith', 0, 0, 150, 150)
   })
 
-  it('should not emit "resize-stop" when a handle is clicked', () => {
+  it('should not emit "resizeStop" when a handle is clicked', () => {
     const onResizeStop = cy.spy().as('onResizeStopSpy')
 
     cy.mount(VueDraggableResizable, {

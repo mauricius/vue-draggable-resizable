@@ -619,7 +619,7 @@ Called whenever the component stops getting dragged.
 
 You can style the component using appropriate class names passed as props to the component. Moreover you can replace the default styles for the handles, provided in the source file `vue-draggable-resizable.css`, but you should take care to define position and size for them. The default classes for handles are `handle` and `handle-tl`, `handle-br` and so on.
 
-The component also provides [named slots](https://vuejs.org/v2/guide/components-slots.html#Named-Slots) for each handle, so you can use your markup inside each one.
+The component also provides [named slots](https://vuejs.org/guide/components/slots.html#named-slots) for each handle, so you can use your markup inside each one.
 
 ## Thanks
 

@@ -2,33 +2,68 @@
   "name": "vue-draggable-resizable",
   "version": "3.0.0",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
-  "main": "dist/VueDraggableResizable.umd.min.js",
-  "unpkg": "dist/VueDraggableResizable.umd.min.js",
+  "private": false,
+  "description": "Vue3 Component for resizable and draggable elements",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/VueDraggableResizable.umd.cjs",
+  "module": "dist/VueDraggableResizable.js",
+  "unpkg": "dist/VueDraggableResizable.umd.cjs",
   "browser": {
     "./sfc": "src/vue-draggable-resizable.vue"
   },
-  "private": false,
-  "description": "Vue3 Component for resizable and draggable elements",
+  "exports": {
+    ".": {
+      "import": "./dist/VueDraggableResizable.js",
+      "require": "./dist/VueDraggableResizable.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "test:watch": "vitest"
-  },
-  "dependencies": {
-    "jsdom": "^19.0.0",
-    "syn": "^0.15.0",
-    "vue": "^3.2.25"
+    "test:watch": "vitest",
+    "cypress": "npx cypress open",
+    "story:dev": "histoire dev",
+    "story:build": "histoire build",
+    "story:preview": "histoire preview"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.3.3",
+    "@4tw/cypress-drag-drop": "^2.2.5",
+    "@babel/core": "^7.18.6",
+    "@histoire/plugin-vue": "^0.17.6",
+    "@vitejs/plugin-vue": "^4.3.4",
     "@vitest/ui": "^0.15.1",
-    "@vue/test-utils": "^2.0.0-rc.18",
-    "c8": "^7.11.3",
-    "vite": "^2.9.9",
-    "vitest": "^0.15.1"
-  }
+    "@vue/test-utils": "^2.2.7",
+    "babel-loader": "^8.2.5",
+    "cypress": "^13.6.2",
+    "histoire": "^0.17.6",
+    "jsdom": "^19.0.0",
+    "vite": "^4.4.9",
+    "vitest": "^0.28.4",
+    "vue": "^3.2.25",
+    "vue-loader": "^16.8.3"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.25"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mauricius/vue-draggable-resizable.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mauricius/vue-draggable-resizable/issues"
+  },
+  "homepage": "https://github.com/mauricius/vue-draggable-resizable",
+  "keywords": [
+    "vue",
+    "component",
+    "dragabble",
+    "resizable"
+  ]
 }

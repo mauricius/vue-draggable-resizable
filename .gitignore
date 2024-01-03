@@ -3,7 +3,7 @@ node_modules
 /dist
 /tests/feature/coverage/*
 /docs
-
+.histoire
 # local env files
 .env.local
 .env.*.local
