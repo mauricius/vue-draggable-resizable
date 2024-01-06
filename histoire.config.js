@@ -2,6 +2,10 @@ import { defineConfig } from 'histoire'
 import { HstVue } from '@histoire/plugin-vue'
 
 export default defineConfig({
+  vite: {
+    base: "",
+  },
+  routerMode: 'hash',
   plugins: [
     HstVue(),
   ],

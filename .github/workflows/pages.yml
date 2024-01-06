@@ -35,7 +35,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./.histoire/dist/*
+          path: ./.histoire/dist
 
   deploy:
     runs-on: ubuntu-latest
