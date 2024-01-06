@@ -2,8 +2,6 @@ name: Continuous tests
 
 on:
   push:
-    branches:
-      - v3
     pull_request:
     workflow_dispatch:
 
