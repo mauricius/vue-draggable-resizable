@@ -41,8 +41,8 @@ Alternatively you can run the playground on your own computer:
 
 * Clone this repository
 * `npm install`
-* `npm run storybook`
-* Visit [http://localhost:9001/](http://localhost:9001/)
+* `npm run story:dev`
+* Visit [http://localhost:6006/](http://localhost:6006/)
 
 ---
 
@@ -635,19 +635,19 @@ Any contribution to the code or any part of the documentation and any idea and/o
 
 ``` bash
 # serve with hot reload at localhost:8080
-npm run serve
+npm run dev
 
 # distribution build
 npm run build
 
-# build the storybook docs into gh-pages
-npm run gh-pages:build
+# build the histoire docs
+npm run story:build
 
 # run tests
-npm run tests
+npm run test
 
-# run storybook at localhost:9001
-npm run storybook
+# run histoire at localhost:6006
+npm run story:dev
 ```
 
 ## License
