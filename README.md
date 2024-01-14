@@ -639,7 +639,7 @@ npm run build
 npm run gh-pages:build
 
 # run tests
-npm run tests
+npm run test
 
 # run storybook at localhost:9001
 npm run storybook
