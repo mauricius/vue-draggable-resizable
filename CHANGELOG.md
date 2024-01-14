@@ -2,11 +2,11 @@
 
 All notable changes to `vue-draggable-resizable` will be documented in this file
 
-## 3.0.0 - ?
-- Migrates to vue 3
+## 3.0.0 - 2024-01-14
+- Migrates to Vue 3
 - Updates all packages
-- Adds vitest instead of mocha and karma for testing
-- Adds vite instead of webpack
+- Adds Vitest instead of Mocha and Karma for testing
+- Adds Vite instead of Webpack
 - Adds Cypress to component-test the package in real browsers
 - Fix `drag-stop` and `resize-stop` events
 - And minor changes
