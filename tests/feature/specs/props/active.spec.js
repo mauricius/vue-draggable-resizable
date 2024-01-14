@@ -188,3 +188,29 @@ describe('`prevent-deactivation` prop', function () {
 
   afterEach(() => wrapper.destroy())
 })
+
+describe('`deactivation-selector` prop', function () {
+  it('should not deactivate the component when clicking outside the deactivationSelector ', function (done) {
+    wrapper = mount(VueDraggableResizable, {
+      attachToDocument: true,
+      propsData: {
+        active: true,
+        preventDeactivation: false,
+        deactivationSelector: 'body'
+      }
+    })
+
+    expect(wrapper.props().active).to.be.true
+
+    syn.click(document.documentElement)
+
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.props().active).to.be.true
+      expect(wrapper.emitted()).to.not.have.property('deactivated')
+
+      done()
+    })
+  })
+
+  afterEach(() => wrapper.destroy())
+})
