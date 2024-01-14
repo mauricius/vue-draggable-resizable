@@ -256,7 +256,9 @@ export default {
       dragging: false,
       dragEnable: false,
       resizeEnable: false,
-      zIndex: this.z
+      zIndex: this.z,
+
+      parentResizeObserver: null
     }
   },
 
@@ -295,7 +297,16 @@ export default {
     addEvent(document.documentElement, 'mousedown', this.deselect)
     addEvent(document.documentElement, 'touchend touchcancel', this.deselect)
 
-    addEvent(window, 'resize', this.checkParentSize)
+    if ('ResizeObserver' in window) {
+      this.parentResizeObserver = new ResizeObserver(() => {
+        this.checkParentSize()
+        this.handleParentResize()
+      })
+		  this.parentResizeObserver.observe(this.$el.parentNode)
+    } else {
+      // Fallback to standard event listener
+      addEvent(window, 'resize', this.checkParentSize)
+    }
   },
   beforeDestroy: function () {
     removeEvent(document.documentElement, 'mousedown', this.deselect)
@@ -305,7 +316,11 @@ export default {
     removeEvent(document.documentElement, 'mouseup', this.handleUp)
     removeEvent(document.documentElement, 'touchend touchcancel', this.deselect)
 
-    removeEvent(window, 'resize', this.checkParentSize)
+    if (this.parentResizeObserver) {
+        this.parentResizeObserver.disconnect()
+    } else {
+        removeEvent(window, 'resize', this.checkParentSize)
+    }
   },
 
   methods: {
@@ -625,6 +640,21 @@ export default {
 
       this.top = top
       this.bottom = this.parentHeight - this.height - top
+    },
+    handleParentResize() {
+      const grid = this.grid
+      this.bounds = this.calcDragLimits();
+
+      const left = restrictToBounds(this.left, this.bounds.minLeft, this.bounds.maxLeft)
+      const top = restrictToBounds(this.top, this.bounds.minTop, this.bounds.maxTop)
+
+      const right = restrictToBounds(this.right, this.bounds.minRight, this.bounds.maxRight)
+      const bottom = restrictToBounds(this.bottom, this.bounds.minBottom, this.bounds.maxBottom)
+
+      this.left = left
+      this.top = top
+      this.right = right
+      this.bottom = bottom
     },
     handleResize (e) {
       let left = this.left
