@@ -28,6 +28,7 @@ If you are looking for the version 1 of the component, it is available on the [v
 * Restrict size and movement to parent element
 * Snap element to custom grid
 * Restrict drag to vertical or horizontal axis
+* Restrict sizes to vertical or horizontal axis
 * Maintain aspect ratio
 * Touch enabled
 * Use your own classes
@@ -403,6 +404,17 @@ Define the axis on which the element is draggable. Available values are `x`, `y`
 
 ```html
 <vue-draggable-resizable axis="x">
+```
+
+#### resizeAxis
+Type: `String`<br>
+Required: `false`<br>
+Default: `both`
+
+Define the axis on which the element is resizeable. Available values are `x`, `y` or `both`.
+
+```html
+<vue-draggable-resizable resizesAxis="x">
 ```
 
 #### grid

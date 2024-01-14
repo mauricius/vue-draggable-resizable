@@ -195,6 +195,11 @@ export default {
       default: 'both',
       validator: (val) => ['x', 'y', 'both'].includes(val)
     },
+    resizeAxis: {
+      type: String,
+      default: 'both',
+      validator: (val) => ['x', 'y', 'both'].includes(val)
+    },
     grid: {
       type: Array,
       default: () => [1, 1]
@@ -631,13 +636,14 @@ export default {
       let top = this.top
       let right = this.right
       let bottom = this.bottom
+      const axis = this.resizeAxis
 
       const mouseClickPosition = this.mouseClickPosition
       const lockAspectRatio = this.lockAspectRatio
       const aspectFactor = this.aspectFactor
 
-      const tmpDeltaX = mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX)
-      const tmpDeltaY = mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY)
+      const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX) : 0
+      const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY) : 0
 
       if (!this.widthTouched && tmpDeltaX) {
         this.widthTouched = true
@@ -780,7 +786,8 @@ export default {
   computed: {
     style () {
       return {
-        transform: `translate(${this.left}px, ${this.top}px)`,
+        // The following line is turning a resize into a drag.
+        // transform: `translate(${this.left}px, ${this.top}px)`,
         width: this.computedWidth,
         height: this.computedHeight,
         zIndex: this.zIndex,
