@@ -253,6 +253,7 @@ export default {
       handle: null,
       enabled: this.active,
       resizing: false,
+      clicking: false,
       dragging: false,
       dragEnable: false,
       resizeEnable: false,
@@ -395,6 +396,8 @@ export default {
         this.mouseClickPosition.top = this.top
         this.mouseClickPosition.bottom = this.bottom
 
+        this.clicking = true
+
         if (this.parent) {
           this.bounds = this.calcDragLimits()
         }
@@ -418,7 +421,7 @@ export default {
     deselect (e) {
       const target = e.target || e.srcElement
       const regex = new RegExp(this.className + '-([trmbl]{2})', '')
-
+      
       if (!this.$el.contains(target) && !regex.test(target.className)) {
         if (this.enabled && !this.preventDeactivation) {
           this.enabled = false
@@ -430,7 +433,7 @@ export default {
         removeEvent(document.documentElement, eventsFor.move, this.handleResize)
       }
 
-      this.resetBoundsAndMouseState()
+      !this.clicking && this.resetBoundsAndMouseState()
     },
     handleTouchDown (handle, e) {
       eventsFor = events.touch
@@ -466,6 +469,8 @@ export default {
       this.mouseClickPosition.bottom = this.bottom
 
       this.bounds = this.calcResizeLimits()
+
+      this.clicking = true
 
       addEvent(document.documentElement, eventsFor.move, this.handleResize)
       addEvent(document.documentElement, eventsFor.stop, this.handleUp)
@@ -771,6 +776,10 @@ export default {
       if (this.dragging) {
         this.dragging = false
         this.$emit('dragStop', this.left, this.top)
+      }
+
+      if (this.clicking) {
+        this.clicking = false
       }
 
       removeEvent(document.documentElement, eventsFor.move, this.handleResize)
