@@ -57,57 +57,34 @@ Register the component globally
 
 ```js
 // main.js
-import createApp from 'vue'
+import { createApp } from 'vue'
 import VueDraggableResizable from 'vue-draggable-resizable'
-// optionally import default styles
-import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
-import App from '/src/App.vue'
+import App from './App.vue'
 
-const app = createApp(App)
-app.component('vue-draggable-resizable', VueDraggableResizable)
+createApp(App)
+  .component("vue-draggable-resizable", VueDraggableResizable)
+  .mount('#app')
 ```
 
 You may now use the component in your markup
 
 ```vue
+// App.vue
 <template>
   <div style="height: 500px; width: 500px; border: 1px solid red; position: relative;">
-    <vue-draggable-resizable :w="100" :h="100" @dragging="onDrag" @resizing="onResize" :parent="true">
-      <p>Hello! I'm a flexible component. You can drag me around and you can resize me.<br>
-      X: {{ x }} / Y: {{ y }} - Width: {{ width }} / Height: {{ height }}</p>
+    <vue-draggable-resizable :w="100" :h="100" :parent="true">
+      <p>Hello! I'm a flexible component. You can drag me around and you can resize me.</p>
     </vue-draggable-resizable>
   </div>
 </template>
+```
 
-<script>
-import VueDraggableResizable from 'vue-draggable-resizable'
+The component itself does not include any CSS. You'll need to include it separately in your `App.vue`:
 
-export default {
-  components: {
-    'vue-draggable-resizable': VueDraggableResizable
-  },
-  data: function () {
-    return {
-      width: 0,
-      height: 0,
-      x: 0,
-      y: 0
-    }
-  },
-  methods: {
-    onResize: function (x, y, width, height) {
-      this.x = x
-      this.y = y
-      this.width = width
-      this.height = height
-    },
-    onDrag: function (x, y) {
-      this.x = x
-      this.y = y
-    }
-  }
-}
-</script>
+```vue
+<style>
+@import "vue-draggable-resizable/style.css";
+</style>
 ```
 
 ### Props
