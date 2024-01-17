@@ -8,16 +8,20 @@
   "files": [
     "dist"
   ],
-  "main": "dist/VueDraggableResizable.umd.cjs",
-  "module": "dist/VueDraggableResizable.js",
-  "unpkg": "dist/VueDraggableResizable.umd.cjs",
+  "main": "dist/vue-draggable-resizable.umd.cjs",
+  "module": "dist/vue-draggable-resizable.js",
+  "unpkg": "dist/vue-draggable-resizable.umd.cjs",
   "browser": {
     "./sfc": "src/vue-draggable-resizable.vue"
   },
   "exports": {
     ".": {
-      "import": "./dist/VueDraggableResizable.js",
-      "require": "./dist/VueDraggableResizable.umd.cjs"
+      "import": "./dist/vue-draggable-resizable.js",
+      "require": "./dist/vue-draggable-resizable.umd.cjs"
+    },
+    "./style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "scripts": {
