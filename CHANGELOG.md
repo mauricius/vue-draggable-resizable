@@ -2,7 +2,7 @@
 
 All notable changes to `vue-draggable-resizable` will be documented in this file
 
-## 3.0.0 - 2024-01-14
+## 3.0.0 - 2024-01-27
 - Migrates to Vue 3
 - Updates all packages
 - Adds Vitest instead of Mocha and Karma for testing
