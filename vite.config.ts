@@ -10,7 +10,7 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/install.js'),
+      entry: resolve(__dirname, 'src/install.ts'),
       name: 'VueDraggableResizable',
       fileName: 'vue-draggable-resizable'
     },
