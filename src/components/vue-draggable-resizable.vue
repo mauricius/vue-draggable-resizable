@@ -447,12 +447,7 @@ export default {
     },
     getParentSize() {
       if (this.parent) {
-        const style = window.getComputedStyle(this.$el.parentNode, null);
-
-        return [
-          parseInt(style.getPropertyValue("width"), 10),
-          parseInt(style.getPropertyValue("height"), 10),
-        ];
+        return getComputedSize(this.$el.parentNode);
       }
 
       return [null, null];
