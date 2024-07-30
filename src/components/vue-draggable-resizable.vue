@@ -771,6 +771,7 @@ export default {
       if (this.dragging) {
         this.dragging = false
         this.$emit('dragStop', this.left, this.top)
+        removeEvent(document.documentElement, eventsFor.move, this.move)
       }
 
       removeEvent(document.documentElement, eventsFor.move, this.handleResize)
