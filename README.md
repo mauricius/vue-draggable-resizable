@@ -552,7 +552,7 @@ Called whenever the component gets resized.
 <vue-draggable-resizable @resizing="onResizing">
 ```
 
-#### resizestop
+#### resize-stop
 
 Parameters:
 * `left` the X position of the element
@@ -563,7 +563,7 @@ Parameters:
 Called whenever the component stops getting resized.
 
 ```html
-<vue-draggable-resizable @resizestop="onResizestop">
+<vue-draggable-resizable @resize-stop="onResizeStop">
 ```
 
 #### dragging
@@ -578,7 +578,7 @@ Called whenever the component gets dragged.
 <vue-draggable-resizable @dragging="onDragging">
 ```
 
-#### dragstop
+#### drag-stop
 
 Parameters:
 * `left` the X position of the element
@@ -587,7 +587,7 @@ Parameters:
 Called whenever the component stops getting dragged.
 
 ```html
-<vue-draggable-resizable @dragstop="onDragstop">
+<vue-draggable-resizable @drag-stop="onDragStop">
 ```
 
 ---
