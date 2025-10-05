@@ -249,6 +249,7 @@ export default {
 
       parentWidth: null,
       parentHeight: null,
+      parentResizeObserver: null,
 
       handle: null,
       enabled: this.active,
@@ -296,6 +297,13 @@ export default {
     addEvent(document.documentElement, 'touchend touchcancel', this.deselect)
 
     addEvent(window, 'resize', this.checkParentSize)
+
+    if (this.parent && this.$el.parentNode) {
+      this.parentResizeObserver = new ResizeObserver(() => {
+        this.checkParentSize()
+      })
+      this.parentResizeObserver.observe(this.$el.parentNode)
+    }
   },
   beforeUnmount: function () {
     removeEvent(document.documentElement, 'mousedown', this.deselect)
@@ -306,6 +314,11 @@ export default {
     removeEvent(document.documentElement, 'touchend touchcancel', this.deselect)
 
     removeEvent(window, 'resize', this.checkParentSize)
+
+    if (this.parentResizeObserver) {
+      this.parentResizeObserver.disconnect()
+      this.parentResizeObserver = null
+    }
   },
 
   methods: {
@@ -327,10 +340,47 @@ export default {
       if (this.parent) {
         const [newParentWidth, newParentHeight] = this.getParentSize()
 
-        this.parentWidth = newParentWidth
-        this.parentHeight = newParentHeight
-        this.right = this.parentWidth - this.width - this.left
-        this.bottom = this.parentHeight - this.height - this.top
+        const parentWidthChanged = this.parentWidth !== newParentWidth
+        const parentHeightChanged = this.parentHeight !== newParentHeight
+
+        if (parentWidthChanged || parentHeightChanged) {
+          const oldParentWidth = this.parentWidth
+          const oldParentHeight = this.parentHeight
+
+          this.parentWidth = newParentWidth
+          this.parentHeight = newParentHeight
+
+          if (parentWidthChanged && newParentWidth < oldParentWidth) {
+            const overflow = (this.left + this.width) - newParentWidth
+            if (overflow > 0) {
+              this.left = Math.max(0, this.left - overflow)
+              const remainingOverflow = (this.left + this.width) - newParentWidth
+              if (remainingOverflow > 0) {
+                this.width = Math.max(this.minWidth, this.width - remainingOverflow)
+              }
+            }
+          }
+
+          if (parentHeightChanged && newParentHeight < oldParentHeight) {
+            const overflow = (this.top + this.height) - newParentHeight
+            if (overflow > 0) {
+              this.top = Math.max(0, this.top - overflow)
+              const remainingOverflow = (this.top + this.height) - newParentHeight
+              if (remainingOverflow > 0) {
+                this.height = Math.max(this.minHeight, this.height - remainingOverflow)
+              }
+            }
+          }
+
+          this.right = this.parentWidth - this.width - this.left
+          this.bottom = this.parentHeight - this.height - this.top
+
+          if (this.resizing) {
+            this.bounds = this.calcResizeLimits()
+          } else if (this.dragging) {
+            this.bounds = this.calcDragLimits()
+          }
+        }
       }
     },
     getParentSize () {
